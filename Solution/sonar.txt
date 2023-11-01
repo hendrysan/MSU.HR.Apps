@@ -1,0 +1,9 @@
+sqp_47409a04302a4bcc5ebb68ae79b373230d9f0f7a
+
+
+
+dotnet tool install --global dotnet-sonarscanner	
+dotnet sonarscanner begin /k:"template-core" /d:sonar.host.url="http://103.171.164.79:9000"  /d:sonar.login="sqp_47409a04302a4bcc5ebb68ae79b373230d9f0f7a"
+dotnet build
+dotnet sonarscanner end /d:sonar.login="sqp_47409a04302a4bcc5ebb68ae79b373230d9f0f7a"
+

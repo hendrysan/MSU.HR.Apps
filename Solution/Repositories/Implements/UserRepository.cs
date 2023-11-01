@@ -27,12 +27,12 @@ namespace Repositories.Implements
                 };
                 _context.Users.Add(entity);
                 var task = await _context.SaveChangesAsync();
-                return task > 0 ? true : false;
+                return task > 0;
 
             }
             catch (Exception e)
             {
-                throw new Exception(e.Message);
+                throw new NullReferenceException(e.Message, e.InnerException);
             }
         }
 
