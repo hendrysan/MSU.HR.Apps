@@ -8,15 +8,26 @@ namespace UnitTest.CommonTest
         [Fact]
         public async Task Send()
         {
-            //List<string> recipients = new List<string>();
-            //recipients.Add("hendry.priyatno@gmail.com");
-            //string subject = "test kirim email " + DateTime.Now.ToString();
-            //string body = "body content email";
+            string objectName = "Setting VPN v2.jpeg";
+            string contentType = "application/JPEG";
 
-            //var status = await MailUtility.SendAsync(recipients, subject, body);
-            //Assert.True(status);
+            string filePath = "C:\\Users\\Hendry Priyatno\\Documents\\Project Ongoing\\BitHealth\\Setting VPN v2.jpeg";
 
-            var task = await MinioUtility.SendAsync();
+            var bs = File.ReadAllBytes(filePath);
+
+            using (var ms = new MemoryStream(bs))
+            {
+                var status = await MinioUtility.SendAsync(objectName, ms, contentType);
+                Assert.True(status);
+            }
+
+            //using (MemoryStream ms = new MemoryStream())
+            //{
+            //    FileStream fs = File.Open(filePath, FileMode.Open);
+            //    fs.CopyTo(ms);
+            //    var status = await MinioUtility.SendAsync(objectName, ms.ToArray(), contentType);
+            //    Assert.True(status);
+            //}
         }
     }
 }
