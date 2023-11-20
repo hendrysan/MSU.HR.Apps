@@ -7,8 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Share\" />
+    <Folder Include="Models\" />
     <Folder Include="Others\" />
+    <Folder Include="Share\" />
   </ItemGroup>
 
   <ItemGroup>

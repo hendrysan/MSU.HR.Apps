@@ -130,7 +130,7 @@ namespace Commons.Loggers
                 Type = ex.GetType().FullName,
                 Message = ex.Message,
                 Source = ex.Source,
-                StackTrace = ex.StackTrace != null ,
+                StackTrace = ex.StackTrace != null,
                 InnerException = ex.InnerException != null ? ExceptionInformation(ex.InnerException) : null
             };
 

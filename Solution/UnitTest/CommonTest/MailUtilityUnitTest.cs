@@ -8,8 +8,13 @@ namespace UnitTest.CommonTest
         [Fact]
         public async Task Send()
         {
-            var status = await MailUtility.SendAsync();
+            List<string> recipients = new List<string>();
+            recipients.Add("hendry.priyatno@gmail.com");
+            string subject = "test kirim email " + DateTime.Now.ToString();
+            string body = "body content email";
+
+            var status = await MailUtility.SendAsync(recipients, subject, body);
             Assert.True(status);
-        }   
+        }
     }
 }

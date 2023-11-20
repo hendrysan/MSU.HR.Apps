@@ -6,42 +6,35 @@ namespace Commons.Utilities
 {
     public class MailUtility
     {
-        public static async Task<bool> SendAsync()
+        private static string GetConfig(string key)
+        {
+            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
+            var config = builder.Build();
+
+            return config[key].ToString();
+        }
+
+        public static async Task<bool> SendAsync(List<string> recipients, string subject, string body)
         {
             try
             {
-                var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
-                var config = builder.Build();
+                string fromAddress = GetConfig("Smtp:FormAddress");
 
-
-                string pengirimEmail = "noreply.apps.001A@gmail.com";
-                string pengirimPassword = "tkit kggl odxx ynue";
-                //string pengirimPassword = "lezy yrmo yucm hfby";
-
-                // Informasi penerima
-                string penerimaEmail = "hendry.priyatno@mitrasolutech.com";
-
-                // Konfigurasi SMTP Server
-                string smtpServer = "smtp.gmail.com";
-                int smtpPort = 587;
-
-
-                // Membuat objek MailMessage
                 MailMessage email = new MailMessage();
-                email.From = new MailAddress(pengirimEmail);
-                email.To.Add(penerimaEmail);
-                email.Subject = "Contoh Email";
-                email.Body = "Ini adalah contoh email yang dikirim menggunakan C#.";
+                email.From = new MailAddress(fromAddress);
 
-                // Mengirim email menggunakan SmtpClient
-                SmtpClient smtpClient = new SmtpClient(smtpServer, smtpPort);
-                smtpClient.Credentials = new NetworkCredential(pengirimEmail, pengirimPassword);
-                smtpClient.EnableSsl = true;
-                smtpClient.UseDefaultCredentials = false;
-                smtpClient.Send(email);
+                foreach (var recipient in recipients)
+                {
+                    email.To.Add(recipient);
+                }
 
-                Console.WriteLine("Email berhasil dikirim.");
-                return true;
+                email.Subject = subject;
+                email.Body = body;
+                email.IsBodyHtml = true;
+
+                var task = await SmtpClient(email);
+
+                return task;
 
             }
             catch (Exception ex)
@@ -50,5 +43,27 @@ namespace Commons.Utilities
                 return false;
             }
         }
+
+        private static async Task<bool> SmtpClient(MailMessage email)
+        {
+            string userName = GetConfig("Smtp:UserName");
+            string password = GetConfig("Smtp:Password");
+            string smtpHost = GetConfig("Smtp:Host");
+            int smtpPort = Convert.ToInt32(GetConfig("Smtp:Port"));
+
+            SmtpClient smtpClient = new SmtpClient(smtpHost, smtpPort);
+            smtpClient.Credentials = new NetworkCredential(userName, password);
+            smtpClient.EnableSsl = true;
+            smtpClient.UseDefaultCredentials = false;
+
+
+            await Task.Run(() =>
+            {
+                 smtpClient.Send(email);
+            });
+
+            return true;
+        }
+
     }
 }
