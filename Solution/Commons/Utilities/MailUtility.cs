@@ -13,26 +13,36 @@ namespace Commons.Utilities
                 var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
                 var config = builder.Build();
 
-                var host = "mail.mitrasolutech.com";//config["Smtp:Host"];
-                var port = "465";// config["Smtp:Port"];
-                var username = "hendry.priyatno@mitrasolutech.com";//config["Smtp:Username"];
-                var to = "hendry.priyatno@gmail.com";
+
+                string pengirimEmail = "noreply.apps.001A@gmail.com";
+                string pengirimPassword = "tkit kggl odxx ynue";
+                //string pengirimPassword = "lezy yrmo yucm hfby";
+
+                // Informasi penerima
+                string penerimaEmail = "hendry.priyatno@mitrasolutech.com";
+
+                // Konfigurasi SMTP Server
+                string smtpServer = "smtp.gmail.com";
+                int smtpPort = 587;
 
 
-                MailMessage mail = new MailMessage();
-                SmtpClient SmtpServer = new SmtpClient();
-                mail.To.Add(to);
-                mail.From = new MailAddress(username);
-                mail.Subject = "test email";
-                mail.IsBodyHtml = true;
-                mail.Body = "test body";
-                SmtpServer.Host = host;
-                SmtpServer.Port = Convert.ToInt32(port);
-                SmtpServer.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+                // Membuat objek MailMessage
+                MailMessage email = new MailMessage();
+                email.From = new MailAddress(pengirimEmail);
+                email.To.Add(penerimaEmail);
+                email.Subject = "Contoh Email";
+                email.Body = "Ini adalah contoh email yang dikirim menggunakan C#.";
 
-                SmtpServer.Send(mail);
+                // Mengirim email menggunakan SmtpClient
+                SmtpClient smtpClient = new SmtpClient(smtpServer, smtpPort);
+                smtpClient.Credentials = new NetworkCredential(pengirimEmail, pengirimPassword);
+                smtpClient.EnableSsl = true;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Send(email);
 
+                Console.WriteLine("Email berhasil dikirim.");
                 return true;
+
             }
             catch (Exception ex)
             {
