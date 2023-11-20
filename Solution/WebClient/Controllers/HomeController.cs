@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using WebClient.Models;
+using WebClient.ViewModels.Others;
 
 namespace WebClient.Controllers
 {
