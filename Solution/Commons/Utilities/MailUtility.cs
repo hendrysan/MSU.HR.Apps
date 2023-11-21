@@ -19,9 +19,10 @@ namespace Commons.Utilities
             try
             {
                 string fromAddress = GetConfig("Smtp:FormAddress");
+                string displayName = GetConfig("Smtp:DisplayName");
 
                 MailMessage email = new MailMessage();
-                email.From = new MailAddress(fromAddress);
+                email.From = new MailAddress(fromAddress, displayName);
 
                 foreach (var recipient in recipients)
                 {
