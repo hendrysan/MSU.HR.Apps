@@ -27,8 +27,7 @@ namespace Commons.Utilities
                 var json = JsonSerializer.Serialize(model);
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
-                var config = builder.Build();
+                var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
                 string? baseUrl = config["WhatsApp:Url"];
                 string? token = config["WhatsApp:Token"];
@@ -45,7 +44,7 @@ namespace Commons.Utilities
             }
             catch (Exception ex)
             {
-                await Loggers.DiscordLogger.SendAsync("WhatsAppUtility", ex, null, model);
+                await Loggers.DiscordLogger.SendAsync("WhatsAppUtility SendAsync", ex, null, model);
                 return System.Net.HttpStatusCode.BadRequest;
             }
         }

@@ -6,20 +6,14 @@ namespace Commons.Utilities
 {
     public class MailUtility
     {
-        private static string GetConfig(string key)
-        {
-            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
-            var config = builder.Build();
-
-            return config[key].ToString();
-        }
-
         public static async Task<bool> SendAsync(List<string> recipients, string subject, string body)
         {
             try
             {
-                string fromAddress = GetConfig("Smtp:FormAddress");
-                string displayName = GetConfig("Smtp:DisplayName");
+
+                var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+                string fromAddress = config["Smtp:FormAddress"] ?? ""; ;
+                string displayName = config["Smtp:DisplayName"] ?? "";
 
                 MailMessage email = new MailMessage();
                 email.From = new MailAddress(fromAddress, displayName);
@@ -33,7 +27,7 @@ namespace Commons.Utilities
                 email.Body = body;
                 email.IsBodyHtml = true;
 
-                var task = await SmtpClient(email);
+                var task = await SmtpClient(email, config);
 
                 return task;
 
@@ -45,12 +39,12 @@ namespace Commons.Utilities
             }
         }
 
-        private static async Task<bool> SmtpClient(MailMessage email)
+        private static async Task<bool> SmtpClient(MailMessage email, IConfigurationRoot config)
         {
-            string userName = GetConfig("Smtp:UserName");
-            string password = GetConfig("Smtp:Password");
-            string smtpHost = GetConfig("Smtp:Host");
-            int smtpPort = Convert.ToInt32(GetConfig("Smtp:Port"));
+            string userName = config["Smtp:UserName"] ?? "";
+            string password = config["Smtp:Password"] ?? "";
+            string smtpHost = config["Smtp:Host"] ?? "";
+            int smtpPort = Convert.ToInt32(config["Smtp:Port"]);
 
             SmtpClient smtpClient = new SmtpClient(smtpHost, smtpPort);
             smtpClient.Credentials = new NetworkCredential(userName, password);
@@ -60,7 +54,7 @@ namespace Commons.Utilities
 
             await Task.Run(() =>
             {
-                 smtpClient.Send(email);
+                smtpClient.Send(email);
             });
 
             return true;

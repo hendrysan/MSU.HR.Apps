@@ -10,19 +10,11 @@ namespace Commons.Utilities
 {
     public class MinioUtility
     {
-        private static string GetConfig(string key)
+        private static async Task<IMinioClient> BuildMinioClinet(IConfigurationRoot config)
         {
-            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
-            var config = builder.Build();
-
-            return config[key].ToString();
-        }
-
-        private static async Task<IMinioClient> BuildMinioClinet()
-        {
-            string endpoint = GetConfig("Minio:EndPoint");
-            var accessKey = GetConfig("Minio:AccessKey");
-            var secretKey = GetConfig("Minio:SecretKey");
+            string endpoint = config["Minio:EndPoint"] ?? "";
+            var accessKey = config["Minio:AccessKey"] ?? "";
+            var secretKey = config["Minio:SecretKey"] ?? "";
 
             IMinioClient minio = new MinioClient()
                                     .WithEndpoint(endpoint)
@@ -37,8 +29,9 @@ namespace Commons.Utilities
 
             try
             {
-                var bucketName = GetConfig("Minio:BucketName");//"test";
-                var minio = await BuildMinioClinet();
+                var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+                var bucketName = config["Minio:BucketName"] ?? "";//"test";
+                var minio = await BuildMinioClinet(config);
                 // Make a bucket on the server, if not already present.
                 var beArgs = new BucketExistsArgs()
                     .WithBucket(bucketName);
@@ -62,7 +55,7 @@ namespace Commons.Utilities
             }
             catch (MinioException ex)
             {
-                await Loggers.DiscordLogger.SendAsync("MinioUtility", ex);
+                await Loggers.DiscordLogger.SendAsync("MinioUtility SendAsync", ex);
                 return false;
             }
         }
@@ -71,8 +64,9 @@ namespace Commons.Utilities
         {
             try
             {
-                var bucketName = GetConfig("Minio:BucketName");//"test";
-                var minio = await BuildMinioClinet();
+                var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+                var bucketName = config["Minio:BucketName"] ?? "";//"test";
+                var minio = await BuildMinioClinet(config);
                 // Make a bucket on the server, if not already present.
                 var beArgs = new BucketExistsArgs()
                     .WithBucket(bucketName);
@@ -93,7 +87,7 @@ namespace Commons.Utilities
             }
             catch (MinioException ex)
             {
-                await Loggers.DiscordLogger.SendAsync("MinioUtility", ex);
+                await Loggers.DiscordLogger.SendAsync("MinioUtility RemoveAsync", ex);
                 return false;
             }
         }
@@ -102,13 +96,14 @@ namespace Commons.Utilities
         {
             try
             {
-                var bucketName = GetConfig("Minio:BucketName");//"test";
-                string endpoint = GetConfig("Minio:EndPoint");
+                var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+                var bucketName = config["Minio:BucketName"] ?? "";//"test";
+                string endpoint = config["Minio:EndPoint"] ?? "";
                 return $"http://{endpoint}/{bucketName}/{objectName}";
             }
             catch (MinioException ex)
             {
-                await Loggers.DiscordLogger.SendAsync("MinioUtility", ex);
+                await Loggers.DiscordLogger.SendAsync("MinioUtility GetAsync", ex);
                 return string.Empty;
             }
         }
