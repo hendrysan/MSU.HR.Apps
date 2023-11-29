@@ -6,10 +6,18 @@ namespace Models.Entities
     {
         [Key]
         public Guid Id { get; set; }
-        public string? Name { get; set; }
+        [Required]
+        [StringLength(250, MinimumLength = 3)]
+        public string? FullName { get; set; }
         public string? Email { get; set; }
-        public string? Password { get; set; }
+        public bool EmailConfirmed { get; set; } = false;
+        public string? PhoneNumber { get; set; }
+        public bool PhoneNumberConfirmed { get; set; } = false;
+        public string? PasswordHash { get; set; }
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiryTime { get; set; }
+        public bool IsActive { get; set; } = false;
         public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set;}
+        public DateTime UpdatedAt { get; set; }
     }
 }
