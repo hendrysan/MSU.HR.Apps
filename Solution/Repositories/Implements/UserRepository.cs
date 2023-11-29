@@ -19,8 +19,8 @@ namespace Repositories.Implements
             {
                 var entity = new Models.Entities.User()
                 {
-                    Name = request.Name,
-                    Password = request.Password,
+                    FullName= request.Name,
+                    PasswordHash = request.Password,
                     Email = request.Email,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow

@@ -28,15 +28,14 @@ NuGet\Install-Package Microsoft.EntityFrameworkCore.SqlServer -Version 8.0.0
 ```
 
 
-
-
-
-
-
-
 ### Migrating Database
 
 ```
 Add-Migration InitialCreate
 Update-Database
+```
+
+### Remove Migration
+```
+Remove-Migration
 ```
