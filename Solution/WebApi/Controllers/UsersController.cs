@@ -6,14 +6,9 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController(IUserRepository userRepository) : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
-
-        public UsersController(IUserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
+        private readonly IUserRepository _userRepository = userRepository;
 
         [HttpPost]
         [Route("Register")]
@@ -24,7 +19,14 @@ namespace WebApi.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-              
+                var response = await _userRepository.Register(new RegisterRequest()
+                {
+                    Email = request.Email,
+                    Name = request.Name,
+                    Password = request.Password,
+                });
+
+
                 return Ok();
             }
             catch (Exception ex)

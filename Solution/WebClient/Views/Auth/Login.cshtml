@@ -1,0 +1,88 @@
+﻿@using WebClient.ViewModels.Auth
+@model LoginRequest;
+@{
+    Layout = "_LayoutLogin";
+}
+
+@section Styles {
+    <style>
+        .field-validation-error {
+            color: red;
+        }
+
+        .field-validation-valid {
+            display: none;
+        }
+
+        input.input-validation-error {
+            border: 1px solid red;
+        }
+
+        .validation-summary-errors {
+            color: red;
+            font-size: 1.1em;
+        }
+
+        .validation-summary-valid {
+            display: none;
+        }
+    </style>
+}
+
+<div>
+    <div>
+        <a class="logo" href="#">
+            <img class="img-fluid for-light" src="https://www.mitrasolutech.com/mitrasolutech.com/payroll/image/logo.png" alt="looginpage">
+        </a>
+    </div>
+    <div class="login-main">
+        <form class="theme-form" method="post" asp-controller="Auth" asp-action="Login" needs-validation asp-route-returnurl="@ViewData["returnUrl"]">
+            <h4>Sign in to account</h4>
+            <p>Enter your Identity & password to login</p>
+
+            @* @Html.ValidationSummary(true, "", new { @class = "validation-summary-errors" }) *@
+            @Html.AntiForgeryToken()
+            @* <div asp-validation-summary="All"></div> *@
+
+            <div class="form-group">
+                <label class="col-form-label">ID Identity</label>
+                @Html.TextBoxFor(m => m.CodeNIK, new { @class = "form-control", @type = "text", @placeholder = "123456789", @autofocus = "autofocus" })
+            </div>
+            <span asp-validation-for="CodeNIK" class="text-danger"></span>
+            <div class="form-group">
+                <label class="col-form-label">Password</label>
+                <div class="form-input position-relative">
+                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @type = "password", @id = "passInput" })
+                    <div class="show-hide">
+                        <span class="show" id="showPass"></span>
+                    </div>
+                </div>
+            </div>
+            <span asp-validation-for="Password" class="text-danger"></span>
+            <div class="form-group mb-0">
+                <a class="link" href="#">Forgot password?</a>
+                <div class="text-end mt-3">
+                    <input class="btn btn-primary btn-block w-100" type="submit" value="Login" />
+                </div>
+            </div>
+            <p class="mt-4 mb-0 text-small">Don't have account?<a class="ms-2" href="@Url.Action(action: "Registration", controller:"Auth")">Create Account</a></p>
+            <p class="mt-4 mb-0 text-small">Don't remember password?<a class="ms-2" href="@Url.Action("ForgotPassword","Auth")">Forgot Password</a></p>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#showPass').on('click', function () {
+                var passInput = $("#passInput");
+                if (passInput.attr('type') === 'password') {
+                    passInput.attr('type', 'text');
+                } else {
+                    passInput.attr('type', 'password');
+                }
+            })
+        })
+
+    </script>
+}

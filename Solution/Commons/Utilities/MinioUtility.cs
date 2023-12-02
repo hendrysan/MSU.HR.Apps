@@ -10,7 +10,9 @@ namespace Commons.Utilities
 {
     public class MinioUtility
     {
-        private static async Task<IMinioClient> BuildMinioClinet(IConfigurationRoot config)
+        private const string File = "appsettings.json";
+
+        private static Task<IMinioClient> BuildMinioClient(IConfigurationRoot config)
         {
             string endpoint = config["Minio:EndPoint"] ?? "";
             var accessKey = config["Minio:AccessKey"] ?? "";
@@ -21,7 +23,7 @@ namespace Commons.Utilities
                                     .WithCredentials(accessKey, secretKey)
                                     .Build();
 
-            return minio;
+            return Task.FromResult(minio);
         }
 
         public static async Task<bool> SendAsync(string objectName, Stream streamObject, string contentType)
@@ -29,9 +31,9 @@ namespace Commons.Utilities
 
             try
             {
-                var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+                IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile(File).Build();
                 var bucketName = config["Minio:BucketName"] ?? "";//"test";
-                var minio = await BuildMinioClinet(config);
+                var minio = await BuildMinioClient(config);
                 // Make a bucket on the server, if not already present.
                 var beArgs = new BucketExistsArgs()
                     .WithBucket(bucketName);
@@ -66,7 +68,7 @@ namespace Commons.Utilities
             {
                 var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
                 var bucketName = config["Minio:BucketName"] ?? "";//"test";
-                var minio = await BuildMinioClinet(config);
+                var minio = await BuildMinioClient(config);
                 // Make a bucket on the server, if not already present.
                 var beArgs = new BucketExistsArgs()
                     .WithBucket(bucketName);

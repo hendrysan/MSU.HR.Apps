@@ -1,25 +1,38 @@
 ﻿using Infrastructures;
+using Microsoft.EntityFrameworkCore;
 using Models.Request;
 using Repositories.Interfaces;
+using System.Net;
 
 namespace Repositories.Implements
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository(ConnectionContext context) : IUserRepository
     {
-        private readonly ConnectionContext _context;
+        private readonly ConnectionContext _context = context;
 
-        public UserRepository(ConnectionContext context)
+        public Task<DefaultResponse> Login(string userName, string password)
         {
-            _context = context;
+            throw new NotImplementedException();
         }
 
-        public async Task<bool> Register(RegisterRequest request)
+        public async Task<DefaultResponse> Register(RegisterRequest request)
         {
+            DefaultResponse response = new();
+            response.Data = response;
             try
             {
+                var user = await _context.Users.Where(i => i.Email == request.Email && i.IsActive).FirstOrDefaultAsync();
+
+                if (user != null)
+                {
+                    response.Message = "Email is registered";
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    return response;
+                }
+
                 var entity = new Models.Entities.User()
                 {
-                    FullName= request.Name,
+                    FullName = request.Name,
                     PasswordHash = request.Password,
                     Email = request.Email,
                     CreatedAt = DateTime.UtcNow,
@@ -27,40 +40,19 @@ namespace Repositories.Implements
                 };
                 _context.Users.Add(entity);
                 var task = await _context.SaveChangesAsync();
-                return task > 0;
 
+                if (task > 0)
+                    response.StatusCode = HttpStatusCode.Created;
             }
             catch (Exception e)
             {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Message = e.Message;
                 throw new NullReferenceException(e.Message, e.InnerException);
             }
+
+            return response;
         }
 
-        public Task<bool> ChangePassword()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> ConfirmPassword()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> Delete()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> Login()
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-        public Task<bool> ResetPassword()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

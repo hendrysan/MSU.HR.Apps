@@ -15,11 +15,9 @@ namespace UnitTest.CommonTest
 
             var bs = File.ReadAllBytes(filePath);
 
-            using (var ms = new MemoryStream(bs))
-            {
-                var status = await MinioUtility.SendAsync(objectName, ms, contentType);
-                Assert.True(status);
-            }
+            using var ms = new MemoryStream(bs);
+            var status = await MinioUtility.SendAsync(objectName, ms, contentType);
+            Assert.True(status);
 
             //using (MemoryStream ms = new MemoryStream())
             //{

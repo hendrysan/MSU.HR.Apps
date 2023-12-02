@@ -17,9 +17,9 @@ namespace Commons.Utilities
         {
             var model = new WhatsAppModel
             {
-                target = target,
-                countryCode = countryCode,
-                message = message
+                Target = target,
+                CountryCode = countryCode,
+                Message = message
             };
 
             try
@@ -32,7 +32,7 @@ namespace Commons.Utilities
                 string? baseUrl = config["WhatsApp:Url"];
                 string? token = config["WhatsApp:Token"];
 
-                HttpClient client = new HttpClient();
+                HttpClient client = new();
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Add("Authorization", token);
@@ -52,9 +52,9 @@ namespace Commons.Utilities
 
     class WhatsAppModel
     {
-        public string target { get; set; }
-        public string countryCode { get; set; }
-        public string message { get; set; }
+        public string? Target { get; set; }
+        public string? CountryCode { get; set; }
+        public string? Message { get; set; }
     }
 
 

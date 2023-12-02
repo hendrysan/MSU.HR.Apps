@@ -10,8 +10,14 @@ namespace UnitTest.InterfaceTest
     public class IUserUnitTest
     {
         private readonly IUserRepository _service;
-        private readonly ConnectionContext _context;
-        private int timeSleep = 1000;
+
+        public IUserUnitTest(IUserRepository service)
+        {
+            _service = service;
+        }
+
+        private readonly ConnectionContext? _context;
+        private readonly int timeSleep = 1000;
 
         public IUserUnitTest()
         {
@@ -36,7 +42,7 @@ namespace UnitTest.InterfaceTest
             };
 
             var result = await _service.Register(request);
-            Assert.True(result);
+            Assert.True(result.StatusCode == System.Net.HttpStatusCode.Created);
             Thread.Sleep(timeSleep);
         }
 

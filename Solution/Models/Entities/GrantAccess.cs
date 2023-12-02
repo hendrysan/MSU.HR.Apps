@@ -1,4 +1,5 @@
-﻿using static Models.Entities.EnumEntities;
+﻿using System.ComponentModel.DataAnnotations;
+using static Models.Entities.EnumEntities;
 
 namespace Models.Entities
 {
@@ -8,6 +9,8 @@ namespace Models.Entities
         public Role? Role { get; set; }
         public EnumSource Source { get; set; }
         public EnumModule Module { get; set; }
+
+        [StringLength(250, MinimumLength = 3)]
         public string ActionName { get; set; } = string.Empty;
         public bool IsView { get; set; }
         public bool IsCreate { get; set; } = false;
