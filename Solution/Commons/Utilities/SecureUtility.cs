@@ -98,7 +98,7 @@ namespace Commons.Utilities
             }
             catch (Exception ex)
             {
-                await DiscordLogger.SendAsync("Common Encrypt", ex);
+                await DiscordLogger.SendAsync("Common Decrypt", ex);
                 throw;
             }
 
