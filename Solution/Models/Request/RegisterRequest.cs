@@ -2,9 +2,16 @@
 {
     public class RegisterRequest
     {
-
-        public string? Name { get; set; }
-        public string? Email { get; set; }
+        public RegisterVerify RegisterVerify { get; set; }
+        public string? IdNumber { get; set; }
+        public string? FullName { get; set; }
+        public string? UserInput { get; set; }
         public string? Password { get; set; }
+    }
+
+    public enum RegisterVerify
+    {
+        Email,
+        PhoneNumber
     }
 }

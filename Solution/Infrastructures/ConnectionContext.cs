@@ -4,18 +4,15 @@ using Models.Entities;
 
 namespace Infrastructures
 {
-    public class ConnectionContext : DbContext
+    public class ConnectionContext(DbContextOptions<ConnectionContext> options, IConfiguration configuration) : DbContext(options)
     {
-        protected readonly IConfiguration _configuration;
-        public DbSet<User> Users { get; set; }
-        public DbSet<GrantAccess> GrantAccesses { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<Employee> Employees { get; set; }
+        protected readonly IConfiguration _configuration = configuration;
 
-        public ConnectionContext(DbContextOptions<ConnectionContext> options, IConfiguration configuration) : base(options)
-        {
-            _configuration = configuration;
-        }
+        public DbSet<MasterUser> MasterUsers { get; set; }
+        public DbSet<GrantAccess> GrantAccesses { get; set; }
+        public DbSet<MasterRole> MasterRoles { get; set; }
+        public DbSet<MasterEmployee> MasterEmployees { get; set; }
+        public DbSet<StagingVerify> StagingVerifies { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {

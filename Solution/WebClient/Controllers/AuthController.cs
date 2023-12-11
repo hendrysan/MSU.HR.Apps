@@ -28,7 +28,7 @@ namespace WebClient.Controllers
         //{
         //}
 
-        public IActionResult Register()
+        public IActionResult RegisterEmail()
         {
             return View();
         }

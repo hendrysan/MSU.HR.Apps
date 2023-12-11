@@ -6,7 +6,7 @@ namespace Models.Entities
     public class GrantAccess
     {
         public Guid Id { get; set; }
-        public Role? Role { get; set; }
+        public MasterRole? Role { get; set; }
         public EnumSource Source { get; set; }
         public EnumModule Module { get; set; }
 

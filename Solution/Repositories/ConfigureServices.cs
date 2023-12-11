@@ -9,9 +9,10 @@ namespace Repositories
     {
 
         public static IConfiguration? Configuration { get; }
-        public static IServiceCollection AddRepositoryServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddRepositoryServices(this IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IMailRepository, MailRepository>();
             return services;
         }
     }

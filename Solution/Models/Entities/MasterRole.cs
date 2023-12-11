@@ -2,7 +2,7 @@
 
 namespace Models.Entities
 {
-    public class Role
+    public class MasterRole
     {
         public Guid Id { get; set; }
         [Required]

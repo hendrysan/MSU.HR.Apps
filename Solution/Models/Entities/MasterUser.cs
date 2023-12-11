@@ -2,7 +2,7 @@
 
 namespace Models.Entities
 {
-    public class User
+    public class MasterUser
     {
         [Key]
         public Guid Id { get; set; }
@@ -14,6 +14,7 @@ namespace Models.Entities
         public bool EmailConfirmed { get; set; } = false;
         public string? PhoneNumber { get; set; }
         public bool PhoneNumberConfirmed { get; set; } = false;
+        public string? IdNumber { get; set; }
         [StringLength(250, MinimumLength = 3)]
         public string? PasswordHash { get; set; }
         [StringLength(250, MinimumLength = 3)]

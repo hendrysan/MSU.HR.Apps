@@ -1,16 +1,66 @@
 ﻿using Commons.Utilities;
+using Discord.Net;
+using Infrastructures;
+using Models.Entities;
+using Repositories.Interfaces;
+using System.Net;
+using System.Net.Http.Headers;
 
-namespace UnitTest.CommonTest
+namespace Repositories.Implements
 {
-    public class MailUtilityUnitTest
+    public class MailRepository(ConnectionContext context) : IMailRepository
     {
-
-        [Fact]
-        public async Task Send()
+        private readonly ConnectionContext _context = context;
+        public async Task<DefaultResponse> SendEmailRegister(string idNumber, string requester, string? remarks = null)
         {
-            List<string> recipients = ["hendry.priyatno@gmail.com"];
-            string subject = "test kirim email " + DateTime.Now.ToString();
-            string body = @"<!DOCTYPE html>
+            DefaultResponse response = new()
+            {
+                Data = null
+            };
+            try
+            {
+                List<string> recipients = [];
+                string url = string.Empty;
+                Guid id = Guid.NewGuid();
+
+#if debug
+url = "https://localhost:5100";
+#endif
+
+                string tokenSecure = await SecureUtility.AesEncryptAsync(id.ToString());
+
+                string subject = "Please confirm your account email";
+                string body = this.bodyEmailRegister.Replace("@[UrlRequest]", $"{url}/Auth/Verify/{tokenSecure}");
+
+                await MailUtility.SendAsync(recipients, subject, body);
+
+
+                var staging = new StagingVerify()
+                {
+                    Remarks = remarks,
+                    CreateDate = DateTime.Now,
+                    ExpiredToken = DateTime.Now.AddDays(1),
+                    Id = id,
+                    IdNumber = idNumber,
+                    IsUsed = false,
+                    Requester = requester,
+                    TokenSecure = tokenSecure
+                };
+
+                _context.Add(staging);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Message = e.Message;
+                throw new NullReferenceException(e.Message, e.InnerException);
+            }
+            return response;
+        }
+
+        #region TemplateEmail
+        private readonly string bodyEmailRegister = @"<!DOCTYPE html>
 <html>
 <head>
 
@@ -192,7 +242,9 @@ namespace UnitTest.CommonTest
                     <table border=""0"" cellpadding=""0"" cellspacing=""0"">
                       <tr>
                         <td align=""center"" bgcolor=""#1a82e2"" style=""border-radius: 6px;"">
-                          <a href=""https://www.blogdesire.com"" target=""_blank"" style=""display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;"">Do Something Sweet</a>
+                          <a href=""@[UrlRequest]"" target=""_blank"" style=""display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;"">
+                            Click Here
+                          </a>
                         </td>
                       </tr>
                     </table>
@@ -207,7 +259,7 @@ namespace UnitTest.CommonTest
           <tr>
             <td align=""left"" bgcolor=""#ffffff"" style=""padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">
               <p style=""margin: 0;"">If that doesn't work, copy and paste the following link in your browser:</p>
-              <p style=""margin: 0;""><a href=""https://blogdesire.com"" target=""_blank"">https://blogdesire.com/xxx-xxx-xxxx</a></p>
+              <p style=""margin: 0;""><a href=""@[UrlRequest]"" target=""_blank"">@[UrlRequest]</a></p>
             </td>
           </tr>
           <!-- end copy -->
@@ -215,7 +267,7 @@ namespace UnitTest.CommonTest
           <!-- start copy -->
           <tr>
             <td align=""left"" bgcolor=""#ffffff"" style=""padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-bottom: 3px solid #d4dadf"">
-              <p style=""margin: 0;"">Cheers,<br> Paste</p>
+              <p style=""margin: 0;"">Regrads,<br> Administrator</p>
             </td>
           </tr>
           <!-- end copy -->
@@ -230,51 +282,12 @@ namespace UnitTest.CommonTest
     </tr>
     <!-- end copy block -->
 
-    <!-- start footer -->
-    <tr>
-      <td align=""center"" bgcolor=""#e9ecef"" style=""padding: 24px;"">
-        <!--[if (gte mso 9)|(IE)]>
-        <table align=""center"" border=""0"" cellpadding=""0"" cellspacing=""0"" width=""600"">
-        <tr>
-        <td align=""center"" valign=""top"" width=""600"">
-        <![endif]-->
-        <table border=""0"" cellpadding=""0"" cellspacing=""0"" width=""100%"" style=""max-width: 600px;"">
-
-          <!-- start permission -->
-          <tr>
-            <td align=""center"" bgcolor=""#e9ecef"" style=""padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;"">
-              <p style=""margin: 0;"">You received this email because we received a request for [type_of_action] for your account. If you didn't request [type_of_action] you can safely delete this email.</p>
-            </td>
-          </tr>
-          <!-- end permission -->
-
-          <!-- start unsubscribe -->
-          <tr>
-            <td align=""center"" bgcolor=""#e9ecef"" style=""padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;"">
-              <p style=""margin: 0;"">To stop receiving these emails, you can <a href=""https://www.blogdesire.com"" target=""_blank"">unsubscribe</a> at any time.</p>
-              <p style=""margin: 0;"">Paste 1234 S. Broadway St. City, State 12345</p>
-            </td>
-          </tr>
-          <!-- end unsubscribe -->
-
-        </table>
-        <!--[if (gte mso 9)|(IE)]>
-        </td>
-        </tr>
-        </table>
-        <![endif]-->
-      </td>
-    </tr>
-    <!-- end footer -->
-
+   
   </table>
   <!-- end body -->
 
 </body>
 </html>";
-
-            var status = await MailUtility.SendAsync(recipients, subject, body);
-            Assert.True(status);
-        }
+        #endregion
     }
 }

@@ -21,8 +21,8 @@ namespace WebApi.Controllers
 
                 var response = await _userRepository.Register(new RegisterRequest()
                 {
-                    Email = request.Email,
-                    Name = request.Name,
+                    UserInput = request.UserInput,
+                    FullName = request.FullName,
                     Password = request.Password,
                 });
 

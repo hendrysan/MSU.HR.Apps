@@ -7,7 +7,7 @@ namespace WebClient
     {
         public static IConfiguration? Configuration { get; }
 
-        public static IServiceCollection AddWebClientServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddWebClientServices(this IServiceCollection services)
         {
             services.AddSession(options =>
             {
@@ -41,7 +41,7 @@ namespace WebClient
 
             services.AddMvc();
             services.AddHttpContextAccessor();
-            services.AddRepositoryServices(configuration);
+            services.AddRepositoryServices();
 
             return services;
         }

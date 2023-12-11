@@ -32,13 +32,15 @@ namespace UnitTest.InterfaceTest
         }
 
         [Fact]
-        public async Task Register()
+        public async Task RegisterWithEmail()
         {
             var request = new RegisterRequest
             {
-                Email = "test@gmail.com",
+                RegisterVerify = RegisterVerify.Email,
+                IdNumber = "123",
+                UserInput = "test@gmail.com",
                 Password = "123456",
-                Name = "test"
+                FullName = "test"
             };
 
             var result = await _service.Register(request);
