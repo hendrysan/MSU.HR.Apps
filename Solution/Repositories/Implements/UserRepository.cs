@@ -146,6 +146,7 @@ namespace Repositories.Implements
                     _context.Update(user);
                     await _context.SaveChangesAsync();
                     response.Data = user;
+                    response.StatusCode = HttpStatusCode.OK;
                 }
             }
             catch (Exception e)

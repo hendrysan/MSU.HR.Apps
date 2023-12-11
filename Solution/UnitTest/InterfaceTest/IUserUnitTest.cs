@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Models.Request;
 using Repositories.Implements;
 using Repositories.Interfaces;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace UnitTest.InterfaceTest
 {
@@ -129,6 +130,15 @@ namespace UnitTest.InterfaceTest
             };
 
             var result = await _service.Login(data);
+            Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async Task AllowLogin()
+        {
+            Guid userId = Guid.Parse("27263d2c-e82c-4f55-a070-f9cf6ba546b2");
+            var result = await _service.AllowLogin(userId, "123", true);
+
             Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
         }
     }
