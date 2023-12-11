@@ -50,7 +50,23 @@ namespace UnitTest.InterfaceTest
 
             var result = await _service.Register(request);
             Assert.True(result.StatusCode == System.Net.HttpStatusCode.Created);
-            Thread.Sleep(timeSleep);
+            
+        }
+
+        [Fact]
+        public async Task RegisterWithPhoneNumber()
+        {
+            var request = new RegisterRequest
+            {
+                RegisterVerify = RegisterVerify.PhoneNumber,
+                IdNumber = "123",
+                UserInput = "6281281101180",
+                Password = "123456",
+                FullName = "test"
+            };
+
+            var result = await _service.Register(request);
+            Assert.True(result.StatusCode == System.Net.HttpStatusCode.Created);
         }
 
     }

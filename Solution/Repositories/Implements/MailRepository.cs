@@ -29,13 +29,12 @@ namespace Repositories.Implements
                 recipients.Add(requester);
                 string tokenSecure = HttpUtility.UrlEncode(await SecureUtility.AesEncryptAsync(id.ToString()));
 
-                string absoluteUrl = $"{url}/Auth/Verify/{tokenSecure}";
+                string absoluteUrl = $"{url}/Auth/Verify?secure={tokenSecure}&requester={requester}";
 
                 string subject = "Please confirm your account email";
                 string body = this.bodyEmailRegister.Replace("@[UrlRequest]", absoluteUrl);
 
                 await MailUtility.SendAsync(recipients, subject, body);
-
 
                 var staging = new StagingVerify()
                 {

@@ -42,9 +42,7 @@ namespace Repositories.Implements
                     return response;
                 }
 
-#pragma warning disable CS8604 // Possible null reference argument.
                 await CleanUserAsync(request.IdNumber);
-#pragma warning restore CS8604 // Possible null reference argument.
                 var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == request.IdNumber && i.IsActive);
 
                 if (user != null)
@@ -54,9 +52,10 @@ namespace Repositories.Implements
                     return response;
                 }
 
-#pragma warning disable CS8604 // Possible null reference argument.
                 string passwordHash = await SecureUtility.AesEncryptAsync(value: request.Password);
-#pragma warning restore CS8604 // Possible null reference argument.
+                string requester = request.UserInput;
+
+
 
                 switch (request.RegisterVerify)
                 {
@@ -65,7 +64,7 @@ namespace Repositories.Implements
                         {
                             Id = Guid.NewGuid(),
                             FullName = request.FullName,
-                            Email = request.UserInput,
+                            Email = requester,
                             IdNumber = request.IdNumber,
                             PasswordHash = passwordHash,
                             IsActive = false,
@@ -74,17 +73,16 @@ namespace Repositories.Implements
                         };
 
                         _context.Add(entityEmail);
-
                         await _context.SaveChangesAsync();
+                        await _mailRepository.SendEmailRegister(idNumber: request.IdNumber, requester: requester);
                         response.StatusCode = HttpStatusCode.Created;
-                        await _mailRepository.SendEmailRegister(idNumber: request.IdNumber, requester: request.UserInput);
                         break;
                     case RegisterVerify.PhoneNumber:
                         var entityPhone = new MasterUser()
                         {
                             Id = Guid.NewGuid(),
                             FullName = request.FullName,
-                            Email = request.UserInput,
+                            PhoneNumber = requester,
                             IdNumber = request.IdNumber,
                             PasswordHash = passwordHash,
                             IsActive = false,
@@ -94,6 +92,7 @@ namespace Repositories.Implements
 
                         _context.Add(entityPhone);
                         await _context.SaveChangesAsync();
+                        await SendCodeRegister(idNumber: request.IdNumber, requester: requester);
                         response.StatusCode = HttpStatusCode.Created;
                         break;
                 }
@@ -105,6 +104,30 @@ namespace Repositories.Implements
                 throw new NullReferenceException(e.Message, e.InnerException);
             }
             return response;
+        }
+
+        private async Task SendCodeRegister(string idNumber, string requester)
+        {
+            Guid id = Guid.NewGuid();
+            string tokenSecure = id.ToString().Replace("-", "").Substring(0, 4).ToUpper();
+            int expired = 5;
+            var staging = new StagingVerify()
+            {
+                Remarks = null,
+                CreateDate = DateTime.Now,
+                ExpiredToken = DateTime.Now.AddMinutes(expired),
+                Id = id,
+                IdNumber = idNumber,
+                IsUsed = false,
+                Requester = requester,
+                TokenSecure = tokenSecure
+            };
+
+            _context.Add(staging);
+            await _context.SaveChangesAsync();
+
+            string message = $"JANGAN BERIKAN KODE OTP ke siapapun, Kode OTP anda {tokenSecure}, berlaku {expired} menit";
+            await WhatsAppUtility.SendAsync(requester, message);
         }
 
         public async Task<DefaultResponse> AllowLogin(Guid userId, string IdNumber, bool isActive)

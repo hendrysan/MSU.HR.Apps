@@ -13,7 +13,7 @@ namespace Commons.Utilities
     public class WhatsAppUtility
     {
 
-        public static async Task<System.Net.HttpStatusCode> SendAsync(string target, string countryCode, string message)
+        public static async Task<System.Net.HttpStatusCode> SendAsync(string target, string message, string countryCode = "62")
         {
             var model = new WhatsAppModel
             {
