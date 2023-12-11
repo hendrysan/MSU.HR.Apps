@@ -1,4 +1,5 @@
-﻿using Infrastructures;
+﻿using Commons.Utilities;
+using Infrastructures;
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
 using Models.Request;
@@ -7,19 +8,22 @@ using System.Net;
 
 namespace Repositories.Implements
 {
-    public class UserRepository(ConnectionContext context) : IUserRepository
+    public class UserRepository(ConnectionContext context, IMailRepository mailRepository) : IUserRepository
     {
         private readonly ConnectionContext _context = context;
+        private readonly IMailRepository _mailRepository = mailRepository;
 
         private async Task CleanUserAsync(string idNumber)
         {
-            var users = await _context.MasterUsers.Where(i => i.IdNumber == idNumber
-            && i.IsActive == false
-            && i.EmailConfirmed == false
-            && i.PhoneNumberConfirmed == false).ToListAsync();
+            var users = await _context.MasterUsers.Where(i => i.IdNumber == idNumber).ToListAsync();
 
-            _context.RemoveRange(users);
-            await _context.SaveChangesAsync();
+            if (users.Any())
+            {
+                _context.RemoveRange(users);
+                await _context.SaveChangesAsync();
+            }
+
+
         }
 
         public async Task<DefaultResponse> Register(RegisterRequest request)
@@ -50,6 +54,10 @@ namespace Repositories.Implements
                     return response;
                 }
 
+#pragma warning disable CS8604 // Possible null reference argument.
+                string passwordHash = await SecureUtility.AesEncryptAsync(value: request.Password);
+#pragma warning restore CS8604 // Possible null reference argument.
+
                 switch (request.RegisterVerify)
                 {
                     case RegisterVerify.Email:
@@ -59,13 +67,17 @@ namespace Repositories.Implements
                             FullName = request.FullName,
                             Email = request.UserInput,
                             IdNumber = request.IdNumber,
-                            IsActive = false
+                            PasswordHash = passwordHash,
+                            IsActive = false,
+                            CreatedAt = DateTime.Now,
+                            UpdatedAt = DateTime.Now
                         };
 
                         _context.Add(entityEmail);
 
                         await _context.SaveChangesAsync();
-
+                        response.StatusCode = HttpStatusCode.Created;
+                        await _mailRepository.SendEmailRegister(idNumber: request.IdNumber, requester: request.UserInput);
                         break;
                     case RegisterVerify.PhoneNumber:
                         var entityPhone = new MasterUser()
@@ -74,12 +86,15 @@ namespace Repositories.Implements
                             FullName = request.FullName,
                             Email = request.UserInput,
                             IdNumber = request.IdNumber,
-                            IsActive = false
+                            PasswordHash = passwordHash,
+                            IsActive = false,
+                            CreatedAt = DateTime.Now,
+                            UpdatedAt = DateTime.Now
                         };
 
                         _context.Add(entityPhone);
                         await _context.SaveChangesAsync();
-
+                        response.StatusCode = HttpStatusCode.Created;
                         break;
                 }
             }

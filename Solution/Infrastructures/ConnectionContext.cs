@@ -18,6 +18,12 @@ namespace Infrastructures
         {
             var con = _configuration.GetConnectionString("PostgreSQLConnection");
             options.UseNpgsql(con);
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        { 
+        
         }
 
     }

@@ -5,6 +5,7 @@ using Models.Entities;
 using Repositories.Interfaces;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Web;
 
 namespace Repositories.Implements
 {
@@ -23,14 +24,15 @@ namespace Repositories.Implements
                 string url = string.Empty;
                 Guid id = Guid.NewGuid();
 
-#if debug
-url = "https://localhost:5100";
-#endif
+                url = "https://localhost:5100";
 
-                string tokenSecure = await SecureUtility.AesEncryptAsync(id.ToString());
+                recipients.Add(requester);
+                string tokenSecure = HttpUtility.UrlEncode(await SecureUtility.AesEncryptAsync(id.ToString()));
+
+                string absoluteUrl = $"{url}/Auth/Verify/{tokenSecure}";
 
                 string subject = "Please confirm your account email";
-                string body = this.bodyEmailRegister.Replace("@[UrlRequest]", $"{url}/Auth/Verify/{tokenSecure}");
+                string body = this.bodyEmailRegister.Replace("@[UrlRequest]", absoluteUrl);
 
                 await MailUtility.SendAsync(recipients, subject, body);
 
@@ -38,8 +40,8 @@ url = "https://localhost:5100";
                 var staging = new StagingVerify()
                 {
                     Remarks = remarks,
-                    CreateDate = DateTime.Now,
-                    ExpiredToken = DateTime.Now.AddDays(1),
+                    CreateDate = DateTime.UtcNow,
+                    ExpiredToken = DateTime.UtcNow.AddDays(1),
                     Id = id,
                     IdNumber = idNumber,
                     IsUsed = false,

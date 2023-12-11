@@ -10,11 +10,13 @@ namespace UnitTest.InterfaceTest
     public class IUserUnitTest
     {
         private readonly IUserRepository _service;
+        private readonly IMailRepository _mailRepository;
 
-        public IUserUnitTest(IUserRepository service)
-        {
-            _service = service;
-        }
+        //public IUserUnitTest(IUserRepository service, IMailRepository mailRepository)
+        //{
+        //    _service = service;
+        //    _mailRepository = mailRepository;
+        //}
 
         private readonly ConnectionContext? _context;
         private readonly int timeSleep = 1000;
@@ -27,8 +29,11 @@ namespace UnitTest.InterfaceTest
 
             var dbOption = new DbContextOptionsBuilder<ConnectionContext>().Options;
 
+
+
             _context = new ConnectionContext(dbOption, configuration);
-            _service = new UserRepository(_context);
+            _mailRepository = new MailRepository(_context);
+            _service = new UserRepository(_context, _mailRepository);
         }
 
         [Fact]
@@ -38,7 +43,7 @@ namespace UnitTest.InterfaceTest
             {
                 RegisterVerify = RegisterVerify.Email,
                 IdNumber = "123",
-                UserInput = "test@gmail.com",
+                UserInput = "hendry.priyatno@gmail.com",
                 Password = "123456",
                 FullName = "test"
             };
