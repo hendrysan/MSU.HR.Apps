@@ -22,8 +22,30 @@ namespace Repositories.Implements
                 _context.RemoveRange(users);
                 await _context.SaveChangesAsync();
             }
+        }
 
+        private async Task SendCodeRegister(string idNumber, string requester)
+        {
+            Guid id = Guid.NewGuid();
+            string tokenSecure = id.ToString().Replace("-", "").Substring(0, 4).ToUpper();
+            int expired = 5;
+            var staging = new StagingVerify()
+            {
+                Remarks = null,
+                CreateDate = DateTime.Now,
+                ExpiredToken = DateTime.Now.AddMinutes(expired),
+                Id = id,
+                IdNumber = idNumber,
+                IsUsed = false,
+                Requester = requester,
+                TokenSecure = tokenSecure
+            };
 
+            _context.Add(staging);
+            await _context.SaveChangesAsync();
+
+            string message = $"JANGAN BERIKAN KODE OTP ke siapapun, Kode OTP anda {tokenSecure}, berlaku {expired} menit";
+            await WhatsAppUtility.SendAsync(requester, message);
         }
 
         public async Task<DefaultResponse> Register(RegisterRequest request)
@@ -55,8 +77,6 @@ namespace Repositories.Implements
                 string passwordHash = await SecureUtility.AesEncryptAsync(value: request.Password);
                 string requester = request.UserInput;
 
-
-
                 switch (request.RegisterVerify)
                 {
                     case RegisterVerify.Email:
@@ -76,6 +96,8 @@ namespace Repositories.Implements
                         await _context.SaveChangesAsync();
                         await _mailRepository.SendEmailRegister(idNumber: request.IdNumber, requester: requester);
                         response.StatusCode = HttpStatusCode.Created;
+                        entityEmail.PasswordHash = string.Empty;
+                        response.Data = entityEmail;
                         break;
                     case RegisterVerify.PhoneNumber:
                         var entityPhone = new MasterUser()
@@ -94,6 +116,8 @@ namespace Repositories.Implements
                         await _context.SaveChangesAsync();
                         await SendCodeRegister(idNumber: request.IdNumber, requester: requester);
                         response.StatusCode = HttpStatusCode.Created;
+                        entityPhone.PasswordHash = string.Empty;
+                        response.Data = entityPhone;
                         break;
                 }
             }
@@ -104,30 +128,6 @@ namespace Repositories.Implements
                 throw new NullReferenceException(e.Message, e.InnerException);
             }
             return response;
-        }
-
-        private async Task SendCodeRegister(string idNumber, string requester)
-        {
-            Guid id = Guid.NewGuid();
-            string tokenSecure = id.ToString().Replace("-", "").Substring(0, 4).ToUpper();
-            int expired = 5;
-            var staging = new StagingVerify()
-            {
-                Remarks = null,
-                CreateDate = DateTime.Now,
-                ExpiredToken = DateTime.Now.AddMinutes(expired),
-                Id = id,
-                IdNumber = idNumber,
-                IsUsed = false,
-                Requester = requester,
-                TokenSecure = tokenSecure
-            };
-
-            _context.Add(staging);
-            await _context.SaveChangesAsync();
-
-            string message = $"JANGAN BERIKAN KODE OTP ke siapapun, Kode OTP anda {tokenSecure}, berlaku {expired} menit";
-            await WhatsAppUtility.SendAsync(requester, message);
         }
 
         public async Task<DefaultResponse> AllowLogin(Guid userId, string IdNumber, bool isActive)
@@ -151,6 +151,7 @@ namespace Repositories.Implements
 
                     _context.Update(user);
                     await _context.SaveChangesAsync();
+                    response.Data = user;
                 }
             }
             catch (Exception e)
@@ -246,6 +247,57 @@ namespace Repositories.Implements
             return response;
         }
 
+        public async Task<DefaultResponse> EmailVerify(string tokenSecure, string requester)
+        {
+            DefaultResponse response = new()
+            {
+                Data = tokenSecure
+            };
+
+            try
+            {
+                var staging = await _context.StagingVerifies.Where(i => i.Requester == requester && i.TokenSecure == tokenSecure && !i.IsUsed)
+                    .FirstOrDefaultAsync();
+
+                if (staging == null)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Message = "Token not found";
+                    return response;
+                }
+
+                if (staging.ExpiredToken < DateTime.Now)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Message = "Token is expired";
+                    return response;
+                }
+
+                staging.IsUsed = true;
+                _context.Update(staging);
+                await _context.SaveChangesAsync();
+
+                var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.Email == staging.Requester && i.IsActive);
+                if (user != null)
+                {
+                    user.Email = requester;
+                    user.EmailConfirmed = true;
+                    _context.Update(user);
+                    await _context.SaveChangesAsync();
+                    response.Data = user;
+                    response.Message = "Email Success Confirmed";
+                }
+            }
+            catch (Exception e)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Message = e.Message;
+                throw new NullReferenceException(e.Message, e.InnerException);
+            }
+
+            return response;
+        }
+
         public async Task<DefaultResponse> PhoneNumberVerify(string tokenSecure, string idNumber)
         {
             DefaultResponse response = new()
@@ -255,7 +307,7 @@ namespace Repositories.Implements
 
             try
             {
-                var staging = await _context.StagingVerifies.FirstOrDefaultAsync(i => i.TokenSecure == tokenSecure);
+                var staging = await _context.StagingVerifies.FirstOrDefaultAsync(i => i.TokenSecure == tokenSecure && i.IdNumber == idNumber && !i.IsUsed);
                 if (staging == null)
                 {
                     response.StatusCode = HttpStatusCode.BadRequest;
@@ -263,14 +315,7 @@ namespace Repositories.Implements
                     return response;
                 }
 
-                if (staging.IsUsed)
-                {
-                    response.StatusCode = HttpStatusCode.BadRequest;
-                    response.Message = "Token is used";
-                    return response;
-                }
-
-                if (staging.ExpiredToken <= DateTime.Now)
+                if (staging.ExpiredToken < DateTime.Now)
                 {
                     response.StatusCode = HttpStatusCode.BadRequest;
                     response.Message = "Token is expired";
@@ -288,57 +333,7 @@ namespace Repositories.Implements
                     _context.Update(user);
                     await _context.SaveChangesAsync();
                     response.Data = user;
-
-                    response.Message = "Email Confirmed";
-                }
-            }
-            catch (Exception e)
-            {
-                response.StatusCode = HttpStatusCode.InternalServerError;
-                response.Message = e.Message;
-                throw new NullReferenceException(e.Message, e.InnerException);
-            }
-
-            return response;
-        }
-
-        public async Task<DefaultResponse> EmailVerify(string tokenSecure, string idNumber)
-        {
-            DefaultResponse response = new()
-            {
-                Data = tokenSecure
-            };
-
-            try
-            {
-                var staging = await _context.StagingVerifies.FirstOrDefaultAsync(i => i.TokenSecure == tokenSecure && !i.IsUsed);
-                if (staging == null)
-                {
-                    response.StatusCode = HttpStatusCode.BadRequest;
-                    response.Message = "Token not found";
-                }
-                else
-                {
-                    if (staging.ExpiredToken <= DateTime.Now)
-                    {
-                        response.StatusCode = HttpStatusCode.BadRequest;
-                        response.Message = "Token is expired";
-                    }
-                    else
-                    {
-                        staging.IsUsed = true;
-                        _context.Update(staging);
-                        await _context.SaveChangesAsync();
-
-                        var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.Email == staging.Requester && i.IsActive);
-                        if (user != null)
-                        {
-                            user.EmailConfirmed = true;
-                            _context.Update(user);
-                            await _context.SaveChangesAsync();
-                            response.Data = user;
-                        }
-                    }
+                    response.Message = "Phone Number Success Confirmed";
                 }
             }
             catch (Exception e)
