@@ -279,7 +279,7 @@ namespace Repositories.Implements
                     user.IsActive = true;
                     user.Email = requester;
                     user.EmailConfirmed = true;
-                    //_context.Update(user);
+                    _context.Update(user);
                     await _context.SaveChangesAsync();
 
                     response.StatusCode = HttpStatusCode.OK;
