@@ -138,16 +138,16 @@ namespace Repositories.Implements
                 {
                     response.StatusCode = HttpStatusCode.BadRequest;
                     response.Message = "User not found";
+                    return response;
                 }
-                else
-                {
-                    user.IsActive = isActive;
 
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
-                    response.Data = user;
-                    response.StatusCode = HttpStatusCode.OK;
-                }
+                user.IsActive = isActive;
+
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+                response.Data = user;
+                response.StatusCode = HttpStatusCode.OK;
+
             }
             catch (Exception e)
             {
