@@ -7,7 +7,7 @@ namespace Repositories.Interfaces
         Task<DefaultResponse> Login(LoginRequest request);
         Task<DefaultResponse> Register(RegisterRequest request);
         Task<DefaultResponse> EmailVerify(string tokenSecure, string requester);
-        Task<DefaultResponse> PhoneNumberVerify(string tokenSecure, string idNumber);
+        Task<DefaultResponse> PhoneNumberVerify(string tokenSecure, string requester);
         Task<DefaultResponse> AllowLogin(Guid userId, string IdNumber, bool isActive);
 
     }

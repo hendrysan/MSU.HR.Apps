@@ -50,7 +50,25 @@ namespace UnitTest.InterfaceTest
 
             var result = await _service.Register(request);
             Assert.True(result.StatusCode == System.Net.HttpStatusCode.Created);
-            
+
+        }
+
+        [Fact]
+        public async Task VerifyEmail()
+        {
+            string tokenSecure = @"s6ueGkK3gK1HJlIzM6LgRJN%2b1I6w0tnq6h6THLoN6GkGpUqq3XpVEWJAi2XffaFR";
+            string requester = "hendry.priyatno@gmail.com";
+            var result = await _service.EmailVerify(tokenSecure, requester);
+            Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async Task VerifyPhoneNumber()
+        {
+            string tokenSecure = "A7AF";
+            string requester = "6281281101180";
+            var result = await _service.PhoneNumberVerify(tokenSecure, requester);
+            Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
         }
 
         [Fact]
@@ -69,5 +87,49 @@ namespace UnitTest.InterfaceTest
             Assert.True(result.StatusCode == System.Net.HttpStatusCode.Created);
         }
 
+        [Fact]
+        public async Task LoginWithIdNumber()
+        {
+            await Task.Delay(timeSleep * 10);
+            var data = new LoginRequest
+            {
+                LoginMethod = LoginMethod.IdNumber,
+                Password = "123456",
+                UserInput = "123"
+            };
+
+            var result = await _service.Login(data);
+            Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async Task LoginWithEmail()
+        {
+            await Task.Delay(timeSleep * 10);
+            var data = new LoginRequest
+            {
+                LoginMethod = LoginMethod.Email,
+                Password = "123456",
+                UserInput = "hendry.priyatno@gmail.com"
+            };
+
+            var result = await _service.Login(data);
+            Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async Task LoginWithPhoneNumber()
+        {
+            await Task.Delay(timeSleep * 10);
+            var data = new LoginRequest
+            {
+                LoginMethod = LoginMethod.PhoneNumber,
+                Password = "123456",
+                UserInput = "6281281101180"
+            };
+
+            var result = await _service.Login(data);
+            Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
+        }
     }
 }

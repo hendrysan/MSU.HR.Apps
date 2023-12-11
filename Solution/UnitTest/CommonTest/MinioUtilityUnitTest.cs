@@ -19,13 +19,6 @@ namespace UnitTest.CommonTest
             var status = await MinioUtility.SendAsync(objectName, ms, contentType);
             Assert.True(status);
 
-            //using (MemoryStream ms = new MemoryStream())
-            //{
-            //    FileStream fs = File.Open(filePath, FileMode.Open);
-            //    fs.CopyTo(ms);
-            //    var status = await MinioUtility.SendAsync(objectName, ms.ToArray(), contentType);
-            //    Assert.True(status);
-            //}
         }
     }
 }

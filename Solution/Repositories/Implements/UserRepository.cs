@@ -5,6 +5,7 @@ using Models.Entities;
 using Models.Request;
 using Repositories.Interfaces;
 using System.Net;
+using System.Web;
 
 namespace Repositories.Implements
 {
@@ -64,15 +65,8 @@ namespace Repositories.Implements
                     return response;
                 }
 
-                await CleanUserAsync(request.IdNumber);
-                var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == request.IdNumber && i.IsActive);
-
-                if (user != null)
-                {
-                    response.StatusCode = HttpStatusCode.BadRequest;
-                    response.Message = "Id Number has been registered";
-                    return response;
-                }
+                //await CleanUserAsync(request.IdNumber);
+                var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == request.IdNumber);
 
                 string passwordHash = await SecureUtility.AesEncryptAsync(value: request.Password);
                 string requester = request.UserInput;
@@ -208,7 +202,7 @@ namespace Repositories.Implements
                         }
                         break;
                     case LoginMethod.IdNumber:
-                        masterUsers = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == request.UserInput && i.IsActive);
+                        masterUsers = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == request.UserInput);
                         if (masterUsers == null)
                         {
                             response.StatusCode = HttpStatusCode.BadRequest;
@@ -256,7 +250,8 @@ namespace Repositories.Implements
 
             try
             {
-                var staging = await _context.StagingVerifies.Where(i => i.Requester == requester && i.TokenSecure == tokenSecure && !i.IsUsed)
+
+                var staging = await _context.StagingVerifies.Where(i => i.TokenSecure == tokenSecure && i.Requester == requester)
                     .FirstOrDefaultAsync();
 
                 if (staging == null)
@@ -266,7 +261,7 @@ namespace Repositories.Implements
                     return response;
                 }
 
-                if (staging.ExpiredToken < DateTime.Now)
+                if (staging.ExpiredToken <= DateTime.Now)
                 {
                     response.StatusCode = HttpStatusCode.BadRequest;
                     response.Message = "Token is expired";
@@ -277,13 +272,16 @@ namespace Repositories.Implements
                 _context.Update(staging);
                 await _context.SaveChangesAsync();
 
-                var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.Email == staging.Requester && i.IsActive);
+                var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == staging.IdNumber);
                 if (user != null)
                 {
+                    user.IsActive = true;
                     user.Email = requester;
                     user.EmailConfirmed = true;
-                    _context.Update(user);
+                    //_context.Update(user);
                     await _context.SaveChangesAsync();
+
+                    response.StatusCode = HttpStatusCode.OK;
                     response.Data = user;
                     response.Message = "Email Success Confirmed";
                 }
@@ -298,7 +296,7 @@ namespace Repositories.Implements
             return response;
         }
 
-        public async Task<DefaultResponse> PhoneNumberVerify(string tokenSecure, string idNumber)
+        public async Task<DefaultResponse> PhoneNumberVerify(string tokenSecure, string requester)
         {
             DefaultResponse response = new()
             {
@@ -307,7 +305,7 @@ namespace Repositories.Implements
 
             try
             {
-                var staging = await _context.StagingVerifies.FirstOrDefaultAsync(i => i.TokenSecure == tokenSecure && i.IdNumber == idNumber && !i.IsUsed);
+                var staging = await _context.StagingVerifies.FirstOrDefaultAsync(i => i.TokenSecure == tokenSecure && i.Requester == requester);
                 if (staging == null)
                 {
                     response.StatusCode = HttpStatusCode.BadRequest;
@@ -315,7 +313,7 @@ namespace Repositories.Implements
                     return response;
                 }
 
-                if (staging.ExpiredToken < DateTime.Now)
+                if (staging.ExpiredToken <= DateTime.Now)
                 {
                     response.StatusCode = HttpStatusCode.BadRequest;
                     response.Message = "Token is expired";
@@ -326,12 +324,16 @@ namespace Repositories.Implements
                 _context.Update(staging);
                 await _context.SaveChangesAsync();
 
-                var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.PhoneNumber == staging.Requester && i.IsActive);
+                var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == staging.IdNumber);
                 if (user != null)
                 {
-                    user.EmailConfirmed = true;
+                    user.IsActive = true;
+                    user.PhoneNumber = requester;
+                    user.PhoneNumberConfirmed = true;
                     _context.Update(user);
                     await _context.SaveChangesAsync();
+
+                    response.StatusCode = HttpStatusCode.OK;
                     response.Data = user;
                     response.Message = "Phone Number Success Confirmed";
                 }
