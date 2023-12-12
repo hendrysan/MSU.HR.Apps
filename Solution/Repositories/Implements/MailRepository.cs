@@ -24,12 +24,13 @@ namespace Repositories.Implements
                 string url = string.Empty;
                 Guid id = Guid.NewGuid();
 
-                url = "https://localhost:5100";
+                url = "https://localhost:7031";
 
                 recipients.Add(requester);
+
                 string tokenSecure = HttpUtility.UrlEncode(await SecureUtility.AesEncryptAsync(id.ToString()));
 
-                string absoluteUrl = $"{url}/Auth/Verify?secure={tokenSecure}&requester={requester}";
+                string absoluteUrl = $"{url}/Auth/EmailVerify?secure={tokenSecure}&requester={requester}";
 
                 string subject = "Please confirm your account email";
                 string body = this.bodyEmailRegister.Replace("@[UrlRequest]", absoluteUrl);

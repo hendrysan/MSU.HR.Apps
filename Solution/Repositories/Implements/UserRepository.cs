@@ -66,7 +66,7 @@ namespace Repositories.Implements
                 }
 
                 //await CleanUserAsync(request.IdNumber);
-                var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == request.IdNumber);
+                //var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == request.IdNumber);
 
                 string passwordHash = await SecureUtility.AesEncryptAsync(value: request.Password);
                 string requester = request.UserInput;
@@ -146,6 +146,7 @@ namespace Repositories.Implements
                 _context.Update(user);
                 await _context.SaveChangesAsync();
                 response.Data = user;
+                response.Message = "Status updated";
                 response.StatusCode = HttpStatusCode.OK;
 
             }
@@ -165,15 +166,19 @@ namespace Repositories.Implements
 
             try
             {
+                string passwordHash = await SecureUtility.AesEncryptAsync(request.Password);
                 MasterUser? masterUsers = default;
                 switch (request.LoginMethod)
                 {
                     case LoginMethod.Email:
-                        masterUsers = await _context.MasterUsers.FirstOrDefaultAsync(i => i.Email == request.UserInput);
+                        masterUsers = await _context.MasterUsers
+                            .Where(i => i.Email == request.UserInput && i.PasswordHash == passwordHash)
+                            .OrderByDescending(i => i.UpdatedAt)
+                            .FirstOrDefaultAsync();
                         if (masterUsers == null)
                         {
                             response.StatusCode = HttpStatusCode.BadRequest;
-                            response.Message = "Email not register";
+                            response.Message = "Email or Password invalid";
                             return response;
                         }
 
@@ -186,7 +191,10 @@ namespace Repositories.Implements
                         }
                         break;
                     case LoginMethod.PhoneNumber:
-                        masterUsers = await _context.MasterUsers.FirstOrDefaultAsync(i => i.PhoneNumber == request.UserInput);
+                        masterUsers = await _context.MasterUsers
+                            .Where(i => i.PhoneNumber == request.UserInput && i.PasswordHash == passwordHash)
+                            .OrderByDescending(i => i.UpdatedAt)
+                            .FirstOrDefaultAsync();
                         if (masterUsers == null)
                         {
                             response.StatusCode = HttpStatusCode.BadRequest;
@@ -203,7 +211,10 @@ namespace Repositories.Implements
                         }
                         break;
                     case LoginMethod.IdNumber:
-                        masterUsers = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == request.UserInput);
+                        masterUsers = await _context.MasterUsers
+                            .Where(i => i.IdNumber == request.UserInput && i.PasswordHash == passwordHash)
+                            .OrderByDescending(i => i.UpdatedAt)
+                            .FirstOrDefaultAsync();
                         if (masterUsers == null)
                         {
                             response.StatusCode = HttpStatusCode.BadRequest;
@@ -230,6 +241,7 @@ namespace Repositories.Implements
                 if (masterUsers != null)
                 {
                     response.StatusCode = HttpStatusCode.OK;
+                    masterUsers.PasswordHash = string.Empty;
                     response.Data = masterUsers;
                 }
             }
@@ -251,7 +263,6 @@ namespace Repositories.Implements
 
             try
             {
-
                 var staging = await _context.StagingVerifies.Where(i => i.TokenSecure == tokenSecure && i.Requester == requester)
                     .FirstOrDefaultAsync();
 
@@ -282,6 +293,7 @@ namespace Repositories.Implements
                     _context.Update(user);
                     await _context.SaveChangesAsync();
 
+                    user.PasswordHash = string.Empty;
                     response.StatusCode = HttpStatusCode.OK;
                     response.Data = user;
                     response.Message = "Email Success Confirmed";
@@ -334,6 +346,7 @@ namespace Repositories.Implements
                     _context.Update(user);
                     await _context.SaveChangesAsync();
 
+                    user.PasswordHash = string.Empty;
                     response.StatusCode = HttpStatusCode.OK;
                     response.Data = user;
                     response.Message = "Phone Number Success Confirmed";

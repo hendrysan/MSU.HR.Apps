@@ -5,8 +5,8 @@ using WebClient.Models;
 
 namespace WebClient.Controllers
 {
-    [Authorize]
-    public class HomeController : Controller
+    //[Authorize]
+    public class HomeController : _BaseController
     {
         private readonly ILogger<HomeController> _logger;
 
@@ -15,6 +15,18 @@ namespace WebClient.Controllers
             _logger = logger;
         }
 
+        [Route("404")]
+        public IActionResult PageNotFound()
+        {
+            string originalPath = "unknown";
+            if (HttpContext.Items.ContainsKey("originalPath"))
+            {
+                originalPath = HttpContext.Items["originalPath"] as string;
+            }
+            return View();
+        }
+
+        [Authorize]
         public IActionResult Index()
         {
             return View();

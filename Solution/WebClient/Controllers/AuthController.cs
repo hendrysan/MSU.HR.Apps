@@ -1,12 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Repositories.Interfaces;
+using System.Web;
 using WebClient.ViewModels.Auth;
 
 namespace WebClient.Controllers
 {
     public class AuthController : _BaseController
     {
-        public AuthController()
+        private readonly IUserRepository _userRepository;
+        public AuthController(IUserRepository userRepository)
         {
+            _userRepository = userRepository;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EmailVerify(string secure, string requester)
+        {
+            secure = HttpUtility.UrlEncode(secure);
+            var data = await _userRepository.EmailVerify(secure, requester);
+
+            return View(data);
 
         }
 
