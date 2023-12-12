@@ -18,7 +18,7 @@ namespace WebClient.Controllers
         [Route("404")]
         public IActionResult PageNotFound()
         {
-            string originalPath = "unknown";
+            string? originalPath = "unknown";
             if (HttpContext.Items.ContainsKey("originalPath"))
             {
                 originalPath = HttpContext.Items["originalPath"] as string;

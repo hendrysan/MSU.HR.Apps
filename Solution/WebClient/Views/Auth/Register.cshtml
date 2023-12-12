@@ -1,5 +1,162 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using WebClient.ViewModels.Auth
+@model RegisterFormRequest
 @{
+    Layout = "_LayoutLogin";
+}
+
+@section Styles {
+    <style>
+        .field-validation-error {
+            color: red;
+        }
+
+        .field-validation-valid {
+            display: none;
+        }
+
+        input.input-validation-error {
+            border: 1px solid red;
+        }
+
+        .validation-summary-errors {
+            color: red;
+            font-size: 1.1em;
+        }
+
+        .validation-summary-valid {
+            display: none;
+        }
+
+        .display-none {
+            display: none;
+        }
+    </style>
+}
+
+<div>
+    <div>
+        <a class="logo" href="#">
+            <img class="img-fluid for-light" src="https://www.mitrasolutech.com/mitrasolutech.com/payroll/image/logo.png" alt="looginpage">
+        </a>
+    </div>
+    <div class="login-main">
+        <form class="theme-form" method="post" asp-controller="Auth" asp-action="Register" needs-validation >
+            <h4>Register your account</h4>
+            <p>Enter your Id Number & password to login</p>
+
+            @* @Html.ValidationSummary(true, "", new { @class = "validation-summary-errors" }) *@
+            @Html.AntiForgeryToken()
+            @* <div asp-validation-summary="All"></div> *@
+
+            <div class="form-group">
+                <label class="col-form-label">ID Number</label>
+                @Html.TextBoxFor(m => m.IdNumber, new { @class = "form-control", @type = "text", @placeholder = "123456789", @autofocus = "autofocus" })
+            </div>
+            <span asp-validation-for="IdNumber" class="text-danger"></span>
+
+
+            <div class="form-group">
+                <label class="col-form-label">Full Name</label>
+                @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", @type = "text", @placeholder = "123456789", @autofocus = "autofocus" })
+            </div>
+            <span asp-validation-for="FullName" class="text-danger"></span>
+
+            <div class="form-group">
+                <label class="col-form-label">Confirmation Method</label>
+                <div class="form-input position-relative">
+                    @Html.DropDownListFor(m => m.RegisterMethod, Model.DropdownMethod, new { @class = "form-select", @id = "RegisterMethod" })
+                </div>
+            </div>
+
+            <div class="form-group" id="divEmail">
+                <label class="col-form-label">Email</label>
+
+                <div class="input-group has-validation">
+                    <span class="input-group-text" id="validationTooltipUsernamePrepend">@@</span>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @type = "email", @placeholder = "name@email.com", @id = "Email" })
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group display-none" id="divPhoneNumber">
+                <label class="col-form-label">Phone Number (WA)</label>
+                <div class="input-group has-validation">
+                    <span class="input-group-text">+code</span>
+                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @type = "number", @placeholder = "62812000000", @id = "PhoneNumber" })
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-form-label">Password</label>
+                <div class="form-input position-relative">
+                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @type = "password", @id = "passInput" })
+                    <div class="show-hide">
+                        <span class="show" id="showPass"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-form-label">Re-Password</label>
+                <div class="form-input position-relative">
+                    @Html.TextBoxFor(m => m.Repassword, new { @class = "form-control", @type = "password", @id = "repassword" })
+                    @* <div class="show-hide">
+                    <span class="show" id="showPass"></span>
+                    </div> *@
+                </div>
+            </div>
+            <span asp-validation-for="Password" class="text-danger"></span>
+            <div class="form-group mb-0">
+
+                <div class="text-end mt-3">
+                    <input class="btn btn-primary btn-block w-100" type="submit" value="Submit" />
+                </div>
+            </div>
+
+            <p class="mt-4 mb-0 text-small">Don't remember password?<a class="ms-2" href="@Url.Action("ForgotPassword","Auth")">Forgot Password</a></p>
+
+            or <a class="ms-2" href="@Url.Action("Login","Auth")">Back to login</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            $('#RegisterMethod').change(function () {
+                var value = this.value;
+                $('#PhoneNumber').val();
+                $('#Email').val();
+
+
+                if (value == 1) {
+                    $('#divEmail').removeClass('display-none');
+                    $('#divPhoneNumber').addClass('display-none');
+
+                } else {
+                    $('#divPhoneNumber').removeClass('display-none');
+                    $('#divEmail').addClass('display-none');
+
+                }
+
+            });
+
+
+            $('#showPass').on('click', function () {
+                var passInput = $("#passInput");
+                var repassword = $("#repassword");
+
+                if (passInput.attr('type') === 'password') {
+                    passInput.attr('type', 'text');
+                    repassword.attr('type', 'text');
+                } else {
+                    passInput.attr('type', 'password');
+                    repassword.attr('type', 'password');
+                }
+            })
+        })
+
+    </script>
 }

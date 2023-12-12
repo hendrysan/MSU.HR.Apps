@@ -68,8 +68,8 @@ namespace Repositories.Implements
                 //await CleanUserAsync(request.IdNumber);
                 var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == request.IdNumber);
 
-                string passwordHash = await SecureUtility.AesEncryptAsync(value: request.Password ?? "");
-                string requester = request.UserInput ?? "";
+                string passwordHash = await SecureUtility.AesEncryptAsync(value: request.Password ?? string.Empty);
+                string requester = request.UserInput ?? string.Empty;
 
                 switch (request.RegisterVerify)
                 {
@@ -128,6 +128,7 @@ namespace Repositories.Implements
                 }
 
                 response.StatusCode = HttpStatusCode.Created;
+                response.Message = "Register successfuly, please check your email or whatsapp";
                 user.PasswordHash = string.Empty;
                 response.Data = user;
             }
@@ -182,7 +183,7 @@ namespace Repositories.Implements
 
             try
             {
-                string passwordHash = await SecureUtility.AesEncryptAsync(request.Password ?? "");
+                string passwordHash = await SecureUtility.AesEncryptAsync(request.Password ?? string.Empty);
                 var masterUsers = await _context.MasterUsers
                             .Where(i =>
                             (i.Email == request.UserInput || i.PhoneNumber == request.UserInput || i.IdNumber == request.UserInput)

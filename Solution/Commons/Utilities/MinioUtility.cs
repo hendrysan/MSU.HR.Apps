@@ -14,9 +14,9 @@ namespace Commons.Utilities
 
         private static Task<IMinioClient> BuildMinioClient(IConfigurationRoot config)
         {
-            string endpoint = config["Minio:EndPoint"] ?? "";
-            var accessKey = config["Minio:AccessKey"] ?? "";
-            var secretKey = config["Minio:SecretKey"] ?? "";
+            string endpoint = config["Minio:EndPoint"] ?? string.Empty;
+            var accessKey = config["Minio:AccessKey"] ?? string.Empty;
+            var secretKey = config["Minio:SecretKey"] ?? string.Empty;
 
             IMinioClient minio = new MinioClient()
                                     .WithEndpoint(endpoint)
@@ -32,7 +32,7 @@ namespace Commons.Utilities
             try
             {
                 IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile(File).Build();
-                var bucketName = config["Minio:BucketName"] ?? "";//"test";
+                var bucketName = config["Minio:BucketName"] ?? string.Empty;//"test";
                 var minio = await BuildMinioClient(config);
                 // Make a bucket on the server, if not already present.
                 var beArgs = new BucketExistsArgs()
@@ -67,7 +67,7 @@ namespace Commons.Utilities
             try
             {
                 var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-                var bucketName = config["Minio:BucketName"] ?? "";//"test";
+                var bucketName = config["Minio:BucketName"] ?? string.Empty;//"test";
                 var minio = await BuildMinioClient(config);
                 // Make a bucket on the server, if not already present.
                 var beArgs = new BucketExistsArgs()
@@ -99,8 +99,8 @@ namespace Commons.Utilities
             try
             {
                 var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-                var bucketName = config["Minio:BucketName"] ?? "";//"test";
-                string endpoint = config["Minio:EndPoint"] ?? "";
+                var bucketName = config["Minio:BucketName"] ?? string.Empty;//"test";
+                string endpoint = config["Minio:EndPoint"] ?? string.Empty;
                 return $"http://{endpoint}/{bucketName}/{objectName}";
             }
             catch (MinioException ex)

@@ -60,12 +60,11 @@
             </div>
             <span asp-validation-for="Password" class="text-danger"></span>
             <div class="form-group mb-0">
-                <a class="link" href="#">Forgot password?</a>
                 <div class="text-end mt-3">
                     <input class="btn btn-primary btn-block w-100" type="submit" value="Login" />
                 </div>
             </div>
-            <p class="mt-4 mb-0 text-small">Don't have account?<a class="ms-2" href="@Url.Action(action: "Registration", controller:"Auth")">Create Account</a></p>
+            <p class="mt-4 mb-0 text-small">Don't have account?<a class="ms-2" href="@Url.Action(action: "Register", controller:"Auth")">Register Account</a></p>
             <p class="mt-4 mb-0 text-small">Don't remember password?<a class="ms-2" href="@Url.Action("ForgotPassword","Auth")">Forgot Password</a></p>
         </form>
     </div>
