@@ -1,5 +1,5 @@
 ﻿@using WebClient.ViewModels.Auth
-@model LoginRequest;
+@model LoginFormRequest;
 @{
     Layout = "_LayoutLogin";
 }
@@ -46,9 +46,9 @@
 
             <div class="form-group">
                 <label class="col-form-label">ID Identity</label>
-                @Html.TextBoxFor(m => m.CodeNIK, new { @class = "form-control", @type = "text", @placeholder = "123456789", @autofocus = "autofocus" })
+                @Html.TextBoxFor(m => m.UserInput, new { @class = "form-control", @type = "text", @placeholder = "123456789", @autofocus = "autofocus" })
             </div>
-            <span asp-validation-for="CodeNIK" class="text-danger"></span>
+            <span asp-validation-for="UserInput" class="text-danger"></span>
             <div class="form-group">
                 <label class="col-form-label">Password</label>
                 <div class="form-input position-relative">

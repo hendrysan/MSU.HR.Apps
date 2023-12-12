@@ -77,7 +77,7 @@ namespace UnitTest.InterfaceTest
         {
             var request = new RegisterRequest
             {
-                RegisterVerify = RegisterVerify.PhoneNumber,
+                //RegisterVerify = RegisterVerify.PhoneNumber,
                 IdNumber = "123",
                 UserInput = "6281281101180",
                 Password = "123456",
@@ -94,7 +94,7 @@ namespace UnitTest.InterfaceTest
             await Task.Delay(timeSleep * 10);
             var data = new LoginRequest
             {
-                LoginMethod = LoginMethod.IdNumber,
+                //LoginMethod = LoginMethod.IdNumber,
                 Password = "123456",
                 UserInput = "123"
             };
@@ -109,7 +109,7 @@ namespace UnitTest.InterfaceTest
             await Task.Delay(timeSleep * 10);
             var data = new LoginRequest
             {
-                LoginMethod = LoginMethod.Email,
+                //LoginMethod = LoginMethod.Email,
                 Password = "123456",
                 UserInput = "hendry.priyatno@gmail.com"
             };
@@ -124,7 +124,7 @@ namespace UnitTest.InterfaceTest
             await Task.Delay(timeSleep * 10);
             var data = new LoginRequest
             {
-                LoginMethod = LoginMethod.PhoneNumber,
+                //LoginMethod = LoginMethod.PhoneNumber,
                 Password = "123456",
                 UserInput = "6281281101180"
             };

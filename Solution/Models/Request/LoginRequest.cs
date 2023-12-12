@@ -2,7 +2,6 @@
 {
     public class LoginRequest
     {
-        public LoginMethod LoginMethod { get; set; }
         public string? UserInput { get; set; }
         public string? Password { get; set; }
     }

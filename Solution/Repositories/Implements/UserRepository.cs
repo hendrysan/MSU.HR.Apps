@@ -68,8 +68,8 @@ namespace Repositories.Implements
                 //await CleanUserAsync(request.IdNumber);
                 //var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == request.IdNumber);
 
-                string passwordHash = await SecureUtility.AesEncryptAsync(value: request.Password);
-                string requester = request.UserInput;
+                string passwordHash = await SecureUtility.AesEncryptAsync(value: request.Password ?? "");
+                string requester = request.UserInput ?? "";
 
                 switch (request.RegisterVerify)
                 {
@@ -166,76 +166,27 @@ namespace Repositories.Implements
 
             try
             {
-                string passwordHash = await SecureUtility.AesEncryptAsync(request.Password);
-                MasterUser? masterUsers = default;
-                switch (request.LoginMethod)
+                string passwordHash = await SecureUtility.AesEncryptAsync(request.Password ?? "");
+                var masterUsers = await _context.MasterUsers
+                            .Where(i =>
+                            (i.Email == request.UserInput || i.PhoneNumber == request.UserInput || i.IdNumber == request.UserInput)
+                            && i.PasswordHash == passwordHash)
+                            .OrderByDescending(i => i.UpdatedAt)
+                            .FirstOrDefaultAsync();
+
+                if (masterUsers == null)
                 {
-                    case LoginMethod.Email:
-                        masterUsers = await _context.MasterUsers
-                            .Where(i => i.Email == request.UserInput && i.PasswordHash == passwordHash)
-                            .OrderByDescending(i => i.UpdatedAt)
-                            .FirstOrDefaultAsync();
-                        if (masterUsers == null)
-                        {
-                            response.StatusCode = HttpStatusCode.BadRequest;
-                            response.Message = "Email or Password invalid";
-                            return response;
-                        }
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Message = "User or Password invalid";
+                    return response;
+                }
 
-                        if (!masterUsers.IsActive)
-                        {
-                            response.StatusCode = HttpStatusCode.BadRequest;
-                            response.Message = "Email not active, call administrator";
-                            masterUsers = null;
-                            return response;
-                        }
-                        break;
-                    case LoginMethod.PhoneNumber:
-                        masterUsers = await _context.MasterUsers
-                            .Where(i => i.PhoneNumber == request.UserInput && i.PasswordHash == passwordHash)
-                            .OrderByDescending(i => i.UpdatedAt)
-                            .FirstOrDefaultAsync();
-                        if (masterUsers == null)
-                        {
-                            response.StatusCode = HttpStatusCode.BadRequest;
-                            response.Message = "Phone Number not register";
-                            return response;
-                        }
-
-                        if (!masterUsers.IsActive)
-                        {
-                            response.StatusCode = HttpStatusCode.BadRequest;
-                            response.Message = "Phone Number not active, call administrator";
-                            masterUsers = null;
-                            return response;
-                        }
-                        break;
-                    case LoginMethod.IdNumber:
-                        masterUsers = await _context.MasterUsers
-                            .Where(i => i.IdNumber == request.UserInput && i.PasswordHash == passwordHash)
-                            .OrderByDescending(i => i.UpdatedAt)
-                            .FirstOrDefaultAsync();
-                        if (masterUsers == null)
-                        {
-                            response.StatusCode = HttpStatusCode.BadRequest;
-                            response.Message = "Id Number not register";
-                            masterUsers = null;
-                            return response;
-                        }
-
-                        if (!masterUsers.IsActive)
-                        {
-                            response.StatusCode = HttpStatusCode.BadRequest;
-                            response.Message = "Id Number not active, call administrator";
-                            masterUsers = null;
-                            return response;
-                        }
-                        break;
-                    default:
-                        response.StatusCode = HttpStatusCode.BadRequest;
-                        response.Message = "Login Method not found";
-                        masterUsers = null;
-                        break;
+                if (!masterUsers.IsActive)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Message = "Account not active, call administrator";
+                    masterUsers = null;
+                    return response;
                 }
 
                 if (masterUsers != null)
