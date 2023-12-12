@@ -77,7 +77,7 @@ namespace UnitTest.InterfaceTest
         {
             var request = new RegisterRequest
             {
-                //RegisterVerify = RegisterVerify.PhoneNumber,
+                RegisterVerify = RegisterVerify.PhoneNumber,
                 IdNumber = "123",
                 UserInput = "6281281101180",
                 Password = "123456",

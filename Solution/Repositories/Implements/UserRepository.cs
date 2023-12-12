@@ -66,7 +66,7 @@ namespace Repositories.Implements
                 }
 
                 //await CleanUserAsync(request.IdNumber);
-                //var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == request.IdNumber);
+                var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == request.IdNumber);
 
                 string passwordHash = await SecureUtility.AesEncryptAsync(value: request.Password ?? "");
                 string requester = request.UserInput ?? "";
@@ -74,46 +74,62 @@ namespace Repositories.Implements
                 switch (request.RegisterVerify)
                 {
                     case RegisterVerify.Email:
-                        var entityEmail = new MasterUser()
+                        if (user == null)
                         {
-                            Id = Guid.NewGuid(),
-                            FullName = request.FullName,
-                            Email = requester,
-                            IdNumber = request.IdNumber,
-                            PasswordHash = passwordHash,
-                            IsActive = false,
-                            CreatedAt = DateTime.Now,
-                            UpdatedAt = DateTime.Now
-                        };
+                            user = new MasterUser()
+                            {
+                                Id = Guid.NewGuid(),
+                                FullName = request.FullName,
+                                Email = requester,
+                                IdNumber = request.IdNumber,
+                                PasswordHash = passwordHash,
+                                IsActive = false,
+                                CreatedAt = DateTime.Now,
+                                UpdatedAt = DateTime.Now
+                            };
+                            _context.Add(user);
+                        }
+                        else
+                        {
+                            user.Email = requester;
+                            _context.Update(user);
+                        }
 
-                        _context.Add(entityEmail);
                         await _context.SaveChangesAsync();
+
                         await _mailRepository.SendEmailRegister(idNumber: request.IdNumber, requester: requester);
-                        response.StatusCode = HttpStatusCode.Created;
-                        entityEmail.PasswordHash = string.Empty;
-                        response.Data = entityEmail;
                         break;
                     case RegisterVerify.PhoneNumber:
-                        var entityPhone = new MasterUser()
+                        if (user == null)
                         {
-                            Id = Guid.NewGuid(),
-                            FullName = request.FullName,
-                            PhoneNumber = requester,
-                            IdNumber = request.IdNumber,
-                            PasswordHash = passwordHash,
-                            IsActive = false,
-                            CreatedAt = DateTime.Now,
-                            UpdatedAt = DateTime.Now
-                        };
+                            user = new MasterUser()
+                            {
+                                Id = Guid.NewGuid(),
+                                FullName = request.FullName,
+                                Email = requester,
+                                IdNumber = request.IdNumber,
+                                PasswordHash = passwordHash,
+                                IsActive = false,
+                                CreatedAt = DateTime.Now,
+                                UpdatedAt = DateTime.Now
+                            };
+                            _context.Add(user);
+                        }
+                        else
+                        {
+                            user.PhoneNumber = requester;
+                            _context.Update(user);
+                        }
 
-                        _context.Add(entityPhone);
                         await _context.SaveChangesAsync();
+
                         await SendCodeRegister(idNumber: request.IdNumber, requester: requester);
-                        response.StatusCode = HttpStatusCode.Created;
-                        entityPhone.PasswordHash = string.Empty;
-                        response.Data = entityPhone;
                         break;
                 }
+
+                response.StatusCode = HttpStatusCode.Created;
+                user.PasswordHash = string.Empty;
+                response.Data = user;
             }
             catch (Exception e)
             {

@@ -89,7 +89,7 @@ namespace WebClient.Controllers
 
         public IActionResult Register()
         {
-            var formModel = Register
+
             return View();
         }
 
