@@ -1,4 +1,11 @@
-﻿<!-- Page Header Start-->
+﻿@using WebClient.Extensions
+@{
+
+    string username = User.Identity.Name;
+    // Perform other actions based on the user's identity
+}
+
+<!-- Page Header Start-->
 <div class="page-header">
     <div class="header-wrapper row m-0">
         <form class="form-inline search-full col" action="#" method="get">
@@ -16,8 +23,9 @@
             <div class="logo-wrapper">
                 <a href="#">
                     <img class="img-fluid for-light" src="https://www.mitrasolutech.com/mitrasolutech.com/payroll/image/logo.png">
-                    HRIS
+                    @* <h4>HRIS</h4> *@
                 </a>
+                
             </div>
             <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="align-center"></i></div>
         </div>
@@ -48,12 +56,12 @@
                         <img class="b-r-10" src="~/assets/images/dashboard/profile.png" alt="">
                         <div class="media-body">
                             <span>
-                                @* @AuthRazorExtension.GetUserFullName(this) *@
-                                Dummy UserName
+                                Welcome, @User.Identity.Name
                             </span>
                             <p class="mb-0">
-                                @* @AuthRazorExtension.GetUserRoleName(this)  *@
+                                @* @AuthRazorExtension.GetUserRoleName(this) *@
                                 Dummy Role
+
                                 <i class="middle fa fa-angle-down"></i>
                             </p>
                         </div>

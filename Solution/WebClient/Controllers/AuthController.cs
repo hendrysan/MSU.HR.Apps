@@ -1,16 +1,13 @@
-﻿using Discord;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models.Entities;
-using Newtonsoft.Json.Linq;
 using Repositories.Interfaces;
 using System.Security.Claims;
 using System.Web;
 using WebClient.ViewModels.Auth;
 using WebClient.ViewModels.Others;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace WebClient.Controllers
 {
@@ -29,8 +26,53 @@ namespace WebClient.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> OtpVerify(string requester, string idNumber)
+        {
+
+            var model = new OtpVerifyFormRequest()
+            {
+                IdNumber = idNumber,
+                Requester = requester
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> OtpVerify(OtpVerifyFormRequest formRequest)
+        {
+            if (!ModelState.IsValid || formRequest == null)
+            {
+                ModelState.AddModelError("ModelState", "Invalid login attempt");
+                return View(formRequest);
+            }
+
+            var response = await _userRepository.PhoneNumberVerify(formRequest.OtpSecure, formRequest.Requester);
+
+            if (response == null)
+            {
+                ModelState.AddModelError("ModelState", "Response not found");
+                return View(formRequest);
+            }
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                ModelState.AddModelError("ModelState", response.Message);
+                return View(formRequest);
+            }
+
+            SetAlert("Verify Successfuly, Please try login", AlertType.Success);
+
+            return RedirectToAction("Login");
+
+        }
+
+        [HttpGet]
         public IActionResult Login(string returnUrl = "")
         {
+            SetAlert("test show alert", AlertType.Success);
+            GetAlert();
             ViewData["returnUrl"] = returnUrl;
             var model = new LoginFormRequest
             {
@@ -93,7 +135,6 @@ namespace WebClient.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-
             var listMetode = new List<SelectListItem>()
             {
                  new SelectListItem{ Text = "Email", Value = "1", Selected=true},
@@ -141,11 +182,12 @@ namespace WebClient.Controllers
                 return View(formRequest);
             }
 
-
             SetAlert(response.Message, AlertType.Success);
 
-            return RedirectToAction("Login");
-
+            if (request.RegisterVerify == Models.Request.RegisterVerify.PhoneNumber)
+                return RedirectToAction("OtpVerify?requester=" + formRequest.PhoneNumber + "&idNumber=" + formRequest.IdNumber);
+            else
+                return RedirectToAction("Login");
 
         }
 

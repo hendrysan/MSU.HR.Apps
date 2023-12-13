@@ -66,9 +66,11 @@ namespace Repositories.Implements
                 }
 
                 //await CleanUserAsync(request.IdNumber);
-                var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == request.IdNumber);
-
                 string passwordHash = await SecureUtility.AesEncryptAsync(value: request.Password ?? string.Empty);
+
+                var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == request.IdNumber && i.PasswordHash == passwordHash);
+
+
                 string requester = request.UserInput ?? string.Empty;
 
                 switch (request.RegisterVerify)

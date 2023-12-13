@@ -36,6 +36,10 @@
         </a>
     </div>
     <div class="login-main">
+        <div class="row">
+            @Html.Partial("_Alert")
+        </div>
+        
         <form class="theme-form" method="post" asp-controller="Auth" asp-action="Login" needs-validation asp-route-returnurl="@ViewData["returnUrl"]">
             <h4>Sign in to account</h4>
             <p>Enter your Identity & password to login</p>

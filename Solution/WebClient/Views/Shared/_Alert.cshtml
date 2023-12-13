@@ -7,7 +7,8 @@
 
 @if (model != null)
 {
-    <div class="col-md-6 offset-md-3 mt-5">
+    @* <div class="col-md-6 offset-md-3 mt-5"> *@
+    <div>
         <div class="alert border-@(model.Type.ToString().ToLower()) alert-dismissible fade show p-0" role="alert">
             <div class="alert-arrow bg-@(model.Type.ToString().ToLower())">
                 @if (model.Type == AlertType.Success)
