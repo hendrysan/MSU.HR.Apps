@@ -1,4 +1,6 @@
-﻿namespace Repositories.Interfaces
+﻿using Models.Responses;
+
+namespace Repositories.Interfaces
 {
     public interface IMailRepository
     {

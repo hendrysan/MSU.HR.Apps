@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Models.Request;
+using Models.Requests;
 using Repositories.Interfaces;
 
 namespace WebApi.Controllers
@@ -24,6 +24,8 @@ namespace WebApi.Controllers
                     UserInput = request.UserInput,
                     FullName = request.FullName,
                     Password = request.Password,
+                    IdNumber = request.IdNumber,
+                    RegisterVerify = request.RegisterVerify,
                 });
 
 

@@ -11,7 +11,7 @@ using WebClient.ViewModels.Others;
 
 namespace WebClient.Controllers
 {
-    public class AuthController(IUserRepository userRepository, ITokenRepository tokenRepository) : _BaseController
+    public class AuthController(IUserRepository userRepository, ITokenRepository tokenRepository) : BaseController
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly ITokenRepository _tokenRepository = tokenRepository;
@@ -20,20 +20,33 @@ namespace WebClient.Controllers
         public async Task<IActionResult> EmailVerify(string secure, string requester)
         {
             secure = HttpUtility.UrlEncode(secure);
-            var data = await _userRepository.EmailVerify(secure, requester);
+            var response = await _userRepository.EmailVerify(secure, requester);
 
-            return View(data);
+            SetAlert(response.Message, response.StatusCode == System.Net.HttpStatusCode.OK ? AlertType.Success : AlertType.Error);
+
+            return RedirectToAction("Login");
+
         }
 
         [HttpGet]
-        public async Task<IActionResult> OtpVerify(string requester, string idNumber)
+        public async Task<IActionResult> OtpVerify(string phoneNumber, string idNumber)
         {
+            GetAlert();
+
+            var response = await _userRepository.CheckStagingVerify(phoneNumber, idNumber);
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                return NotFound();
+            }
 
             var model = new OtpVerifyFormRequest()
             {
                 IdNumber = idNumber,
-                Requester = requester
+                Requester = phoneNumber
             };
+
+            //model.CountDown = response.Data.
 
             return View(model);
         }
@@ -44,21 +57,21 @@ namespace WebClient.Controllers
         {
             if (!ModelState.IsValid || formRequest == null)
             {
-                ModelState.AddModelError("ModelState", "Invalid login attempt");
+                SetAlert("Invalid login attempt", AlertType.Error);
                 return View(formRequest);
             }
 
-            var response = await _userRepository.PhoneNumberVerify(formRequest.OtpSecure, formRequest.Requester);
+            var response = await _userRepository.PhoneNumberVerify(formRequest.OtpSecure, formRequest.Requester, formRequest.IdNumber);
 
             if (response == null)
             {
-                ModelState.AddModelError("ModelState", "Response not found");
+                SetAlert("Response not found", AlertType.Error);
                 return View(formRequest);
             }
 
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
-                ModelState.AddModelError("ModelState", response.Message);
+                SetAlert(response.Message, AlertType.Error);
                 return View(formRequest);
             }
 
@@ -71,7 +84,7 @@ namespace WebClient.Controllers
         [HttpGet]
         public IActionResult Login(string returnUrl = "")
         {
-            SetAlert("test show alert", AlertType.Success);
+
             GetAlert();
             ViewData["returnUrl"] = returnUrl;
             var model = new LoginFormRequest
@@ -88,11 +101,11 @@ namespace WebClient.Controllers
         {
             if (!ModelState.IsValid || formRequest == null)
             {
-                ModelState.AddModelError("ModelState", "Invalid login attempt");
+                SetAlert("Invalid login attempt", AlertType.Error);
                 return View(formRequest);
             }
 
-            var request = new Models.Request.LoginRequest
+            var request = new Models.Requests.LoginRequest
             {
                 Password = formRequest.Password,
                 UserInput = formRequest.UserInput,
@@ -102,19 +115,25 @@ namespace WebClient.Controllers
 
             if (response == null)
             {
-                ModelState.AddModelError("ModelState", "Login invalid");
+                SetAlert("Login invalid", AlertType.Error);
                 return View(formRequest);
             }
 
             if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
             {
-                ModelState.AddModelError("ModelState", response.Message ?? "Message Error Not Found");
+                SetAlert(response.Message ?? "Message Error Not Found", AlertType.Error);
                 return View(formRequest);
             }
 
-            MasterUser? masterUser = response.Data as MasterUser;
+            if (response.MasterUser == null)
+            {
+                SetAlert(response.Message ?? "Data User Error Not Found", AlertType.Error);
+                return View(formRequest);
+            }
 
-            var claims = _tokenRepository.CreateClaims(masterUser);
+            //MasterUser? masterUser = response.Data as MasterUser;
+
+            var claims = _tokenRepository.CreateClaims(response.MasterUser);
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             var principal = new ClaimsPrincipal(identity);
@@ -135,10 +154,11 @@ namespace WebClient.Controllers
         [HttpGet]
         public IActionResult Register()
         {
+            GetAlert();
             var listMetode = new List<SelectListItem>()
             {
-                 new SelectListItem{ Text = "Email", Value = "1", Selected=true},
-                 new SelectListItem{ Text = "Whats App (WA)", Value = "2"},
+                 new() { Text = "Email", Value = "1", Selected=true},
+                 new() { Text = "Whats App (WA)", Value = "2"},
             };
 
             var model = new RegisterFormRequest()
@@ -155,41 +175,84 @@ namespace WebClient.Controllers
         {
             if (!ModelState.IsValid || formRequest == null)
             {
-                ModelState.AddModelError("ModelState", "Invalid login attempt");
+                SetAlert("Invalid login attempt", AlertType.Error);
                 return View(formRequest);
             }
 
-            var request = new Models.Request.RegisterRequest()
+            if (formRequest.IdNumber == null)
             {
-                IdNumber = formRequest.IdNumber,
-                Password = formRequest.Password,
-                FullName = formRequest.FullName,
-                RegisterVerify = formRequest.RegisterMethod == 1 ? Models.Request.RegisterVerify.Email : Models.Request.RegisterVerify.PhoneNumber,
-                UserInput = formRequest.RegisterMethod == 1 ? formRequest.Email : formRequest.PhoneNumber
-            };
+                SetAlert("Id Number is Required", AlertType.Error);
+                return View(formRequest);
+            }
+
+            if (formRequest.Password == null)
+            {
+                SetAlert("Password is Required", AlertType.Error);
+                return View(formRequest);
+            }
+
+            if (formRequest.FullName == null)
+            {
+                SetAlert("Password is Required", AlertType.Error);
+                return View(formRequest);
+            }
+
+            Models.Requests.RegisterRequest? request;
+            if (formRequest.RegisterMethod == 1)
+            {
+                if (formRequest.Email == null)
+                {
+                    SetAlert("Email is Required", AlertType.Error);
+                    return View(formRequest);
+                }
+
+                request = new Models.Requests.RegisterRequest()
+                {
+                    IdNumber = formRequest.IdNumber,
+                    Password = formRequest.Password,
+                    FullName = formRequest.FullName,
+                    RegisterVerify = formRequest.RegisterMethod == 1 ? Models.Requests.RegisterVerify.Email : Models.Requests.RegisterVerify.PhoneNumber,
+                    UserInput = formRequest.Email
+                };
+            }
+            else
+            {
+                if (formRequest.PhoneNumber == null)
+                {
+                    SetAlert("PhoneNumber is Required", AlertType.Error);
+                    return View(formRequest);
+                }
+
+                request = new Models.Requests.RegisterRequest()
+                {
+                    IdNumber = formRequest.IdNumber,
+                    Password = formRequest.Password,
+                    FullName = formRequest.FullName,
+                    RegisterVerify = formRequest.RegisterMethod == 1 ? Models.Requests.RegisterVerify.Email : Models.Requests.RegisterVerify.PhoneNumber,
+                    UserInput = formRequest.PhoneNumber
+                };
+            }
 
             var response = await _userRepository.Register(request);
 
             if (response == null)
             {
-                ModelState.AddModelError("ModelState", "Response not found");
+                SetAlert("Response not found", AlertType.Error);
                 return View(formRequest);
             }
 
             if (response.StatusCode != System.Net.HttpStatusCode.Created)
             {
-                ModelState.AddModelError("ModelState", response.Message);
+                SetAlert(response.Message, AlertType.Error);
                 return View(formRequest);
             }
 
             SetAlert(response.Message, AlertType.Success);
 
-            if (request.RegisterVerify == Models.Request.RegisterVerify.PhoneNumber)
-                return RedirectToAction("OtpVerify?requester=" + formRequest.PhoneNumber + "&idNumber=" + formRequest.IdNumber);
+            if (request.RegisterVerify == Models.Requests.RegisterVerify.PhoneNumber)
+                return RedirectToAction("OtpVerify", new { @phoneNumber = formRequest.PhoneNumber, @idNumber = formRequest.IdNumber });
             else
                 return RedirectToAction("Login");
-
         }
-
     }
 }

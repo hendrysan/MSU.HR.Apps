@@ -2,10 +2,10 @@
 using Infrastructures;
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
-using Models.Request;
+using Models.Requests;
+using Models.Responses;
 using Repositories.Interfaces;
 using System.Net;
-using System.Web;
 
 namespace Repositories.Implements
 {
@@ -14,27 +14,27 @@ namespace Repositories.Implements
         private readonly ConnectionContext _context = context;
         private readonly IMailRepository _mailRepository = mailRepository;
 
-        private async Task CleanUserAsync(string idNumber)
-        {
-            var users = await _context.MasterUsers.Where(i => i.IdNumber == idNumber).ToListAsync();
+        //private async Task CleanUserAsync(string idNumber)
+        //{
+        //    var users = await _context.MasterUsers.Where(i => i.IdNumber == idNumber && !i.IsActive).ToListAsync();
 
-            if (users.Any())
-            {
-                _context.RemoveRange(users);
-                await _context.SaveChangesAsync();
-            }
-        }
+        //    if (users.Any())
+        //    {
+        //        _context.RemoveRange(users);
+        //        await _context.SaveChangesAsync();
+        //    }
+        //}
 
         private async Task SendCodeRegister(string idNumber, string requester)
         {
             Guid id = Guid.NewGuid();
-            string tokenSecure = id.ToString().Replace("-", "").Substring(0, 4).ToUpper();
+            string tokenSecure = id.ToString().Replace("-", "")[..4].ToUpper();
             int expired = 5;
             var staging = new StagingVerify()
             {
                 Remarks = null,
                 CreateDate = DateTime.Now,
-                ExpiredToken = DateTime.Now.AddMinutes(expired),
+                ExpiredToken = DateTime.Now.AddMinutes(expired).ToLocalTime(),
                 Id = id,
                 IdNumber = idNumber,
                 IsUsed = false,
@@ -46,15 +46,12 @@ namespace Repositories.Implements
             await _context.SaveChangesAsync();
 
             string message = $"JANGAN BERIKAN KODE OTP ke siapapun, Kode OTP anda {tokenSecure}, berlaku {expired} menit";
-            await WhatsAppUtility.SendAsync(requester, message);
+            //await WhatsAppUtility.SendAsync(requester, message);
         }
 
         public async Task<DefaultResponse> Register(RegisterRequest request)
         {
-            DefaultResponse response = new()
-            {
-                Data = request
-            };
+            DefaultResponse response = new();
 
             try
             {
@@ -108,7 +105,7 @@ namespace Repositories.Implements
                             {
                                 Id = Guid.NewGuid(),
                                 FullName = request.FullName,
-                                Email = requester,
+                                PhoneNumber = requester,
                                 IdNumber = request.IdNumber,
                                 PasswordHash = passwordHash,
                                 IsActive = false,
@@ -131,8 +128,8 @@ namespace Repositories.Implements
 
                 response.StatusCode = HttpStatusCode.Created;
                 response.Message = "Register successfuly, please check your email or whatsapp";
-                user.PasswordHash = string.Empty;
-                response.Data = user;
+                //user.PasswordHash = string.Empty;
+                //response.Data = user;
             }
             catch (Exception e)
             {
@@ -145,10 +142,7 @@ namespace Repositories.Implements
 
         public async Task<DefaultResponse> AllowLogin(Guid userId, string IdNumber, bool isActive)
         {
-            DefaultResponse response = new()
-            {
-                Data = null
-            };
+            DefaultResponse response = new();
 
             try
             {
@@ -164,7 +158,7 @@ namespace Repositories.Implements
 
                 _context.Update(user);
                 await _context.SaveChangesAsync();
-                response.Data = user;
+                //response.Data = user;
                 response.Message = "Status updated";
                 response.StatusCode = HttpStatusCode.OK;
 
@@ -178,10 +172,9 @@ namespace Repositories.Implements
             return response;
         }
 
-        public async Task<DefaultResponse> Login(LoginRequest request)
+        public async Task<LoginResponse> Login(LoginRequest request)
         {
-            DefaultResponse response = new();
-            response.Data = response;
+            LoginResponse response = new();
 
             try
             {
@@ -208,12 +201,11 @@ namespace Repositories.Implements
                     return response;
                 }
 
-                if (masterUsers != null)
-                {
-                    response.StatusCode = HttpStatusCode.OK;
-                    masterUsers.PasswordHash = string.Empty;
-                    response.Data = masterUsers;
-                }
+
+                response.StatusCode = HttpStatusCode.OK;
+                masterUsers.PasswordHash = string.Empty;
+                response.MasterUser = masterUsers;
+
             }
             catch (Exception e)
             {
@@ -226,10 +218,7 @@ namespace Repositories.Implements
 
         public async Task<DefaultResponse> EmailVerify(string tokenSecure, string requester)
         {
-            DefaultResponse response = new()
-            {
-                Data = tokenSecure
-            };
+            DefaultResponse response = new();
 
             try
             {
@@ -265,7 +254,7 @@ namespace Repositories.Implements
 
                     user.PasswordHash = string.Empty;
                     response.StatusCode = HttpStatusCode.OK;
-                    response.Data = user;
+                    //response.Data = user;
                     response.Message = "Email Success Confirmed";
                 }
             }
@@ -279,16 +268,14 @@ namespace Repositories.Implements
             return response;
         }
 
-        public async Task<DefaultResponse> PhoneNumberVerify(string tokenSecure, string requester)
+        public async Task<DefaultResponse> PhoneNumberVerify(string tokenSecure, string requester, string idNumber)
         {
-            DefaultResponse response = new()
-            {
-                Data = tokenSecure
-            };
+            DefaultResponse response = new();
+
 
             try
             {
-                var staging = await _context.StagingVerifies.FirstOrDefaultAsync(i => i.TokenSecure == tokenSecure && i.Requester == requester);
+                var staging = await _context.StagingVerifies.FirstOrDefaultAsync(i => i.TokenSecure == tokenSecure && i.Requester == requester && i.IdNumber == idNumber);
                 if (staging == null)
                 {
                     response.StatusCode = HttpStatusCode.BadRequest;
@@ -307,7 +294,7 @@ namespace Repositories.Implements
                 _context.Update(staging);
                 await _context.SaveChangesAsync();
 
-                var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == staging.IdNumber);
+                var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == staging.IdNumber && i.PhoneNumber == requester);
                 if (user != null)
                 {
                     user.IsActive = true;
@@ -318,7 +305,7 @@ namespace Repositories.Implements
 
                     user.PasswordHash = string.Empty;
                     response.StatusCode = HttpStatusCode.OK;
-                    response.Data = user;
+                    //response.Data = user;
                     response.Message = "Phone Number Success Confirmed";
                 }
             }
@@ -332,6 +319,47 @@ namespace Repositories.Implements
             return response;
         }
 
+        public async Task<DefaultResponse> CheckStagingVerify(string requester, string idNumber)
+        {
+            DefaultResponse response = new();
 
+            try
+            {
+                var data = await _context.StagingVerifies.Where(i =>
+                i.IdNumber == idNumber
+                && i.Requester == requester
+                && i.ExpiredToken >= DateTime.Now
+                && !i.IsUsed)
+                    .FirstOrDefaultAsync();
+
+                if (data == null)
+                {
+                    response.StatusCode = HttpStatusCode.NotFound;
+                    response.Message = "Data not found";
+                    return response;
+                }
+
+                var timeExpired = data.ExpiredToken.ToLocalTime();//.ToString("hh:mm:ss");
+
+                var now = DateTime.Now;
+
+                //TimeSpan timeExpired = TimeSpan.Parse(data.ExpiredToken.ToString("mm:ss"));
+
+                TimeSpan duration = data.ExpiredToken - DateTime.Now;
+
+
+                response.StatusCode = HttpStatusCode.OK;
+                //response.Data = data.ExpiredToken - DateTime.Now;
+
+            }
+            catch (Exception e)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Message = e.Message;
+                throw new NullReferenceException(e.Message, e.InnerException);
+            }
+
+            return response;
+        }
     }
 }

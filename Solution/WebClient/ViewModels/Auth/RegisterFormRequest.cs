@@ -6,7 +6,7 @@ namespace WebClient.ViewModels.Auth
     public class RegisterFormRequest
     {
         [Required(ErrorMessage = "Method is required")]
-        public int RegisterMethod { get; set; }
+        public int RegisterMethod { get; set; } = 1;
 
         [Required(ErrorMessage = "IdNumber is required")]
         public string? IdNumber { get; set; }

@@ -1,21 +1,20 @@
 ﻿using Infrastructures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Models.Request;
+using Models.Requests;
 using Repositories.Implements;
 using Repositories.Interfaces;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace UnitTest.InterfaceTest
 {
     public class IUserUnitTest
     {
-        private readonly IUserRepository _service;
-        private readonly IMailRepository _mailRepository;
+        private readonly IUserRepository service;
+        private readonly IMailRepository mailRepository;
 
         //public IUserUnitTest(IUserRepository service, IMailRepository mailRepository)
         //{
-        //    _service = service;
+        //    service = service;
         //    _mailRepository = mailRepository;
         //}
 
@@ -33,8 +32,8 @@ namespace UnitTest.InterfaceTest
 
 
             _context = new ConnectionContext(dbOption, configuration);
-            _mailRepository = new MailRepository(_context);
-            _service = new UserRepository(_context, _mailRepository);
+            mailRepository = new MailRepository(configuration, _context);
+            service = new UserRepository(_context, mailRepository);
         }
 
         [Fact]
@@ -49,7 +48,7 @@ namespace UnitTest.InterfaceTest
                 FullName = "test"
             };
 
-            var result = await _service.Register(request);
+            var result = await service.Register(request);
             Assert.True(result.StatusCode == System.Net.HttpStatusCode.Created);
 
         }
@@ -59,7 +58,7 @@ namespace UnitTest.InterfaceTest
         {
             string tokenSecure = @"s6ueGkK3gK1HJlIzM6LgRJN%2b1I6w0tnq6h6THLoN6GkGpUqq3XpVEWJAi2XffaFR";
             string requester = "hendry.priyatno@gmail.com";
-            var result = await _service.EmailVerify(tokenSecure, requester);
+            var result = await service.EmailVerify(tokenSecure, requester);
             Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
         }
 
@@ -68,7 +67,8 @@ namespace UnitTest.InterfaceTest
         {
             string tokenSecure = "A7AF";
             string requester = "6281281101180";
-            var result = await _service.PhoneNumberVerify(tokenSecure, requester);
+            string idNumber = "4267506";
+            var result = await service.PhoneNumberVerify(tokenSecure, requester, idNumber);
             Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
         }
 
@@ -84,7 +84,7 @@ namespace UnitTest.InterfaceTest
                 FullName = "test"
             };
 
-            var result = await _service.Register(request);
+            var result = await service.Register(request);
             Assert.True(result.StatusCode == System.Net.HttpStatusCode.Created);
         }
 
@@ -99,7 +99,7 @@ namespace UnitTest.InterfaceTest
                 UserInput = "123"
             };
 
-            var result = await _service.Login(data);
+            var result = await service.Login(data);
             Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
         }
 
@@ -114,7 +114,7 @@ namespace UnitTest.InterfaceTest
                 UserInput = "hendry.priyatno@gmail.com"
             };
 
-            var result = await _service.Login(data);
+            var result = await service.Login(data);
             Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
         }
 
@@ -129,7 +129,7 @@ namespace UnitTest.InterfaceTest
                 UserInput = "6281281101180"
             };
 
-            var result = await _service.Login(data);
+            var result = await service.Login(data);
             Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
         }
 
@@ -137,8 +137,18 @@ namespace UnitTest.InterfaceTest
         public async Task AllowLogin()
         {
             Guid userId = Guid.Parse("27263d2c-e82c-4f55-a070-f9cf6ba546b2");
-            var result = await _service.AllowLogin(userId, "123", true);
+            var result = await service.AllowLogin(userId, "123", true);
 
+            Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async Task CountDown()
+        {
+            string requester = "6281281101180";
+            string idNumber = "4267506";
+
+            var result = await service.CheckStagingVerify(requester, idNumber);
             Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
         }
     }

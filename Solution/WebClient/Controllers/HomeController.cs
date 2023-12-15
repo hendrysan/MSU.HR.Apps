@@ -6,7 +6,7 @@ using WebClient.ViewModels.Others;
 namespace WebClient.Controllers
 {
     //[Authorize]
-    public class HomeController : _BaseController
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 

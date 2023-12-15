@@ -5,12 +5,12 @@ using WebClient.ViewModels.Others;
 
 namespace WebClient.Controllers
 {
-    public abstract class _BaseController : Controller
+    public abstract class BaseController : Controller
     {
         public static string ServiceName = "WebClient";
-        public _BaseController()
+        public BaseController()
         {
-
+            
         }
 
         public async void GetAlert()

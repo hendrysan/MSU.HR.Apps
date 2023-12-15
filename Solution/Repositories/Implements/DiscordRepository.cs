@@ -1,6 +1,4 @@
-﻿using Discord;
-using Discord.WebSocket;
-using Repositories.Interfaces;
+﻿using Repositories.Interfaces;
 
 namespace Repositories.Implements
 {

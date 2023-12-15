@@ -43,6 +43,7 @@
     </div>
     <div class="login-main">
         <form class="theme-form" method="post" asp-controller="Auth" asp-action="OtpVerify" needs-validation>
+            @await Html.PartialAsync("_Alert")
             <h4>Confirm your account</h4>
             <p>Enter your otp from whats application</p>
 
@@ -50,12 +51,21 @@
             @Html.AntiForgeryToken()
             @* <div asp-validation-summary="All"></div> *@
 
+            @Html.HiddenFor(m => m.IdNumber)
+            @Html.HiddenFor(m => m.Requester)
+
             <div class="form-group">
                 <label class="col-form-label">OTP Token</label>
                 @Html.TextBoxFor(m => m.OtpSecure, new { @class = "form-control", @type = "text", @placeholder = "123456789", @autofocus = "autofocus" })
             </div>
             <span asp-validation-for="OtpSecure" class="text-danger"></span>
 
+            @if (Model.ShowTimer)
+            {
+                <div class="form-group text-center">
+                    <span id="timer">05 + ":" + 00</span>
+                </div>
+            }
 
             <div class="form-group mb-0">
 
@@ -75,7 +85,31 @@
     <script>
         $(document).ready(function () {
 
+            startTimer();
 
+
+            function startTimer() {
+                var presentTime = document.getElementById('timer').innerHTML;
+                var timeArray = presentTime.split(/[:]+/);
+                var m = timeArray[0];
+                var s = checkSecond((timeArray[1] - 1));
+                if (s == 59) { m = m - 1 }
+                if (m < 0) {
+                    return
+                }
+
+                document.getElementById('timer').innerHTML =
+                    m + ":" + s;
+                console.log(m)
+                setTimeout(startTimer, 1000);
+
+            }
+
+            function checkSecond(sec) {
+                if (sec < 10 && sec >= 0) { sec = "0" + sec }; // add zero in front of numbers < 10
+                if (sec < 0) { sec = "59" };
+                return sec;
+            }
         })
 
     </script>

@@ -1,7 +1,7 @@
 ﻿@using WebClient.Extensions
 @{
 
-    string username = User.Identity.Name;
+    // string username = User.Identity.Name;
     // Perform other actions based on the user's identity
 }
 
@@ -56,7 +56,7 @@
                         <img class="b-r-10" src="~/assets/images/dashboard/profile.png" alt="">
                         <div class="media-body">
                             <span>
-                                Welcome, @User.Identity.Name
+                                Welcome, @User.Identity?.Name
                             </span>
                             <p class="mb-0">
                                 @* @AuthRazorExtension.GetUserRoleName(this) *@

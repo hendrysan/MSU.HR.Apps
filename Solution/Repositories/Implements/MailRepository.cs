@@ -1,30 +1,29 @@
 ﻿using Commons.Utilities;
-using Discord.Net;
 using Infrastructures;
+using Microsoft.Extensions.Configuration;
 using Models.Entities;
+using Models.Responses;
 using Repositories.Interfaces;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Web;
 
 namespace Repositories.Implements
 {
-    public class MailRepository(ConnectionContext context) : IMailRepository
+    public class MailRepository(IConfiguration configuration, ConnectionContext context) : IMailRepository
     {
+        private readonly IConfiguration _configuration = configuration;
         private readonly ConnectionContext _context = context;
         public async Task<DefaultResponse> SendEmailRegister(string idNumber, string requester, string? remarks = null)
         {
-            DefaultResponse response = new()
-            {
-                Data = null
-            };
+            DefaultResponse response = new();
+
             try
             {
                 List<string> recipients = [];
-                string url = string.Empty;
+
                 Guid id = Guid.NewGuid();
 
-                url = "https://localhost:7031";
+                var url = _configuration.GetSection("BaseUrlWebClient").Value ?? throw new Exception("Configuration BaseUrlWebClient is null");//"https://localhost:7031";
 
                 recipients.Add(requester);
 

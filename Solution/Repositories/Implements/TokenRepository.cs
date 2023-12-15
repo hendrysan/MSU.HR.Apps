@@ -1,5 +1,4 @@
-﻿using Discord;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Models.Entities;
@@ -21,16 +20,16 @@ namespace Repositories.Implements
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(JwtRegisteredClaimNames.Sub, "TokenForTheApiWithAuth"),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToString(CultureInfo.InvariantCulture)),
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Name, user.FullName ?? string.Empty),
-                    new Claim("IdNumber", user.IdNumber?? string.Empty),
-                    new Claim("Email", user.Email?? string.Empty),
-                    new Claim("Email", user.Email?? string.Empty),
-                    new Claim("PhoneNumber", user.PhoneNumber?? string.Empty),
-                    new Claim("LastLogin", DateTime.Now.ToString())
+                    new(JwtRegisteredClaimNames.Sub, "TokenForTheApiWithAuth"),
+                    new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new(JwtRegisteredClaimNames.Iat, DateTime.Now.ToString(CultureInfo.InvariantCulture)),
+                    new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new(ClaimTypes.Name, user.FullName ?? string.Empty),
+                    new("IdNumber", user.IdNumber?? string.Empty),
+                    new("Email", user.Email?? string.Empty),
+                    new("Email", user.Email?? string.Empty),
+                    new("PhoneNumber", user.PhoneNumber?? string.Empty),
+                    new("LastLogin", DateTime.Now.ToString())
                 };
 
                 return claims;
@@ -67,7 +66,7 @@ namespace Repositories.Implements
 
         private SigningCredentials CreateSigningCredentials()
         {
-            var jwtSecret = _configuration.GetSection("JWT:Secret").Value;
+            var jwtSecret = _configuration.GetSection("JWT:Secret").Value ?? string.Empty;
             return new SigningCredentials(
                 new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(jwtSecret)
@@ -86,7 +85,7 @@ namespace Repositories.Implements
 
         public ClaimsPrincipal? GetPrincipalFromExpiredToken(string? token)
         {
-            var jwtSecret = _configuration.GetSection("JWT:Secret").Value;
+            var jwtSecret = _configuration.GetSection("JWT:Secret").Value ?? string.Empty;
             var encodeSecret = Encoding.UTF8.GetBytes(jwtSecret);
             var tokenValidationParameters = new TokenValidationParameters
             {
