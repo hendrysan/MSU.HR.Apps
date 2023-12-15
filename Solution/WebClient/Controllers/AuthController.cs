@@ -33,7 +33,7 @@ namespace WebClient.Controllers
         {
             GetAlert();
 
-            var response = await _userRepository.CheckStagingVerify(phoneNumber, idNumber);
+            var response = await _userRepository.CheckExpiredToken(phoneNumber, idNumber);
 
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {

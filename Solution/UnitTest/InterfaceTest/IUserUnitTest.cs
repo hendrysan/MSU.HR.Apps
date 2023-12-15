@@ -148,7 +148,8 @@ namespace UnitTest.InterfaceTest
             string requester = "6281281101180";
             string idNumber = "4267506";
 
-            var result = await service.CheckStagingVerify(requester, idNumber);
+            
+            var result = await service.CheckExpiredToken(requester, idNumber);
             Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
         }
     }

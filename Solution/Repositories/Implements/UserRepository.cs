@@ -5,6 +5,7 @@ using Models.Entities;
 using Models.Requests;
 using Models.Responses;
 using Repositories.Interfaces;
+using System;
 using System.Net;
 
 namespace Repositories.Implements
@@ -225,7 +226,10 @@ namespace Repositories.Implements
 
             try
             {
-                var staging = await _context.StagingVerifies.Where(i => i.TokenSecure == tokenSecure && i.Requester == requester)
+                var staging = await _context.StagingVerifies.Where(i =>
+                i.TokenSecure == tokenSecure
+                && i.Requester == requester
+                && !i.IsUsed)
                     .FirstOrDefaultAsync();
 
                 if (staging == null)
@@ -238,7 +242,7 @@ namespace Repositories.Implements
                 if (staging.ExpiredToken <= DateTime.Now)
                 {
                     response.StatusCode = HttpStatusCode.BadRequest;
-                    response.Message = "Token is expired";
+                    response.Message = "Token Email is expired";
                     return response;
                 }
 
@@ -255,7 +259,7 @@ namespace Repositories.Implements
                     _context.Update(user);
                     await _context.SaveChangesAsync();
 
-                    user.PasswordHash = string.Empty;
+                    //user.PasswordHash = string.Empty;
                     response.StatusCode = HttpStatusCode.OK;
                     //response.Data = user;
                     response.Message = "Email Success Confirmed";
@@ -322,7 +326,7 @@ namespace Repositories.Implements
             return response;
         }
 
-        public async Task<DefaultResponse> CheckStagingVerify(string requester, string idNumber)
+        public async Task<DefaultResponse> CheckExpiredToken(string requester, string idNumber)
         {
             DefaultResponse response = new();
 
@@ -337,22 +341,14 @@ namespace Repositories.Implements
 
                 if (data == null)
                 {
-                    response.StatusCode = HttpStatusCode.NotFound;
+                    response.StatusCode = HttpStatusCode.BadRequest;
                     response.Message = "Data not found";
                     return response;
                 }
 
-                var timeExpired = data.ExpiredToken.ToLocalTime();//.ToString("hh:mm:ss");
-
-                var now = DateTime.Now;
-
-                //TimeSpan timeExpired = TimeSpan.Parse(data.ExpiredToken.ToString("mm:ss"));
-
-                TimeSpan duration = data.ExpiredToken - DateTime.Now;
-
-
-                response.StatusCode = HttpStatusCode.OK;
-                //response.Data = data.ExpiredToken - DateTime.Now;
+                TimeSpan duration = new TimeSpan(data.ExpiredToken.Ticks - DateTime.Now.Ticks);
+                string minutes = string.Format("{0}:{1:00}", (int)duration.TotalMinutes, duration.Seconds);
+                response.Message = minutes;
 
             }
             catch (Exception e)
