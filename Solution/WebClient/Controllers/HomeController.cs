@@ -6,22 +6,16 @@ using WebClient.ViewModels.Others;
 namespace WebClient.Controllers
 {
     //[Authorize]
-    public class HomeController : BaseController
+    public class HomeController(ILogger<HomeController> logger) : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+        private readonly ILogger<HomeController> _logger = logger;
 
         [Route("404")]
         public IActionResult PageNotFound()
         {
-            string? originalPath = "unknown";
             if (HttpContext.Items.ContainsKey("originalPath"))
             {
-                originalPath = HttpContext.Items["originalPath"] as string;
+                _ = HttpContext.Items["originalPath"] as string;
             }
             return View();
         }
