@@ -10,11 +10,11 @@ namespace Models.Entities
 
         [Required]
         [StringLength(50, MinimumLength = 3)]
-        public string? IdNumber { get; set; }
+        public required string IdNumber { get; set; }
 
         [Required]
         [StringLength(500, MinimumLength = 3)]
-        public string? FullName { get; set; }
+        public required string FullName { get; set; }
 
         public bool IsActive { get; set; }
 
