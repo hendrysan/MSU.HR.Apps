@@ -37,10 +37,16 @@ namespace Commons.Utilities
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Add("Authorization", token);
 
+
+#if DEBUG
+                return System.Net.HttpStatusCode.OK;
+#else
                 var response = await client.PostAsync($"{baseUrl}/send", data);
                 var responseRead = await response.Content.ReadAsStringAsync();
 
                 return response.StatusCode;
+#endif
+
             }
             catch (Exception ex)
             {
