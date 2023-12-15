@@ -13,5 +13,12 @@
             User,
             Employee
         }
+
+        public enum EnumStatusDocumentAttendance
+        {
+            PENDING,
+            CANCELED,
+            PROCESSED,
+        }
     }
 }

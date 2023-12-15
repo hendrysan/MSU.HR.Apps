@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using static Models.Entities.EnumEntities;
 
 namespace Models.Entities
 {
@@ -21,8 +22,7 @@ namespace Models.Entities
         [StringLength(50, MinimumLength = 3)]
         public required string Extension { get; set; }
         [Required]
-        [StringLength(50, MinimumLength = 3)]
-        public required string Status { get; set; }
+        public required EnumStatusDocumentAttendance Status { get; set; }
         [StringLength(250, MinimumLength = 3)]
         public string? Remarks { get; set; }
         [Required]

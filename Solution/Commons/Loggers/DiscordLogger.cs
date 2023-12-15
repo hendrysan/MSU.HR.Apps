@@ -68,8 +68,7 @@ namespace Commons.Loggers
 
         private static Stream? GetStream(object query)
         {
-            Stream? file = null;
-            file = new MemoryStream();
+            Stream? file = new MemoryStream();
             var writer = new StreamWriter(file);
             writer.Write(JsonSerializer.Serialize(query, _defaultJsonSerializerOptions));
             writer.Flush();
@@ -83,12 +82,14 @@ namespace Commons.Loggers
 
             if (content.Length >= maxLength)
             {
-                content.Substring(0, maxLength - 1);
+                _ = content[..(maxLength - 1)];
             }
 
-            HttpClient client = new HttpClient();
-            var form = new MultipartFormDataContent();
-            form.Add(new StringContent(content), "content");
+            HttpClient client = new();
+            var form = new MultipartFormDataContent
+            {
+                { new StringContent(content), "content" }
+            };
 
 
             if (file != null)
@@ -111,7 +112,7 @@ namespace Commons.Loggers
             string? tokenWebhook = config["Discord:Token"];
 
             var response = await client.PostAsync($"{baseUrl}/{guildId}/{tokenWebhook}", form);
-            var data = await response.Content.ReadAsStringAsync();
+            //var data = await response.Content.ReadAsStringAsync();
 
             return response.StatusCode;
         }
@@ -128,8 +129,8 @@ namespace Commons.Loggers
             var obj = new
             {
                 Type = ex.GetType().FullName,
-                Message = ex.Message,
-                Source = ex.Source,
+                ex.Message,
+                ex.Source,
                 StackTrace = ex.StackTrace != null,
                 InnerException = ex.InnerException != null ? ExceptionInformation(ex.InnerException) : null
             };

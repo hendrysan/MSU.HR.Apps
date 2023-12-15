@@ -44,7 +44,7 @@ namespace Commons.Utilities
                 });
 
 
-                return Convert.ToBase64String(encryptedBytes);
+                return Convert.ToBase64String(inArray: encryptedBytes ?? []);
             }
             catch (Exception ex)
             {
@@ -94,7 +94,7 @@ namespace Commons.Utilities
                     decryptedBytes = ms.ToArray();
                 });
 
-                return Encoding.UTF8.GetString(decryptedBytes);
+                return Encoding.UTF8.GetString(bytes: decryptedBytes ?? []);
             }
             catch (Exception ex)
             {

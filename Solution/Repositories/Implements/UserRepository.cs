@@ -1,4 +1,6 @@
-﻿using Commons.Utilities;
+﻿using Commons.Loggers;
+using Commons.Utilities;
+using Discord.Net;
 using Infrastructures;
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
@@ -12,6 +14,7 @@ namespace Repositories.Implements
 {
     public class UserRepository(ConnectionContext context, IMailRepository mailRepository) : IUserRepository
     {
+        private readonly string repositoryName = "UserRepository";
         private readonly ConnectionContext _context = context;
         private readonly IMailRepository _mailRepository = mailRepository;
 
@@ -28,29 +31,37 @@ namespace Repositories.Implements
 
         private async Task SendCodeRegister(string idNumber, string requester)
         {
-            Guid id = Guid.NewGuid();
-            string tokenSecure = id.ToString().Replace("-", "")[..4].ToUpper();
-            int expired = 7;
-
-            string message = $"JANGAN BERIKAN KODE OTP ke siapapun, Kode OTP anda {tokenSecure}, berlaku {expired} menit";
-
-            var staging = new StagingVerify()
+            var staging = new StagingVerify();
+            try
             {
-                Remarks = message,
-                CreateDate = DateTime.Now,
-                ExpiredToken = DateTime.Now.AddMinutes(expired),
-                Id = id,
-                IdNumber = idNumber,
-                IsUsed = false,
-                Requester = requester,
-                TokenSecure = tokenSecure,
-            };
+                Guid id = Guid.NewGuid();
+                string tokenSecure = id.ToString().Replace("-", "")[..4].ToUpper();
+                int expired = 7;
 
-            _context.Add(staging);
-            await _context.SaveChangesAsync();
+                string message = $"JANGAN BERIKAN KODE OTP ke siapapun, Kode OTP anda {tokenSecure}, berlaku {expired} menit";
 
+                staging = new StagingVerify()
+                {
+                    Remarks = message,
+                    CreateDate = DateTime.Now,
+                    ExpiredToken = DateTime.Now.AddMinutes(expired),
+                    Id = id,
+                    IdNumber = idNumber,
+                    IsUsed = false,
+                    Requester = requester,
+                    TokenSecure = tokenSecure,
+                };
 
-            await WhatsAppUtility.SendAsync(requester, message);
+                _context.Add(staging);
+                await _context.SaveChangesAsync();
+
+                await WhatsAppUtility.SendAsync(requester, message);
+            }
+            catch (Exception ex)
+            {
+                await DiscordLogger.SendAsync(repositoryName, ex, null, staging);
+                throw new NullReferenceException(ex.Message, ex.InnerException);
+            }
         }
 
         public async Task<DefaultResponse> Register(RegisterRequest request)
@@ -147,11 +158,13 @@ namespace Repositories.Implements
                 //user.PasswordHash = string.Empty;
                 //response.Data = user;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 response.StatusCode = HttpStatusCode.InternalServerError;
-                response.Message = e.Message;
-                throw new NullReferenceException(e.Message, e.InnerException);
+                response.Message = ex.Message;
+                await DiscordLogger.SendAsync(repositoryName, ex, null, request);
+                throw new NullReferenceException(ex.Message, ex.InnerException);
+
             }
             return response;
         }
@@ -182,11 +195,12 @@ namespace Repositories.Implements
                 response.StatusCode = HttpStatusCode.OK;
 
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 response.StatusCode = HttpStatusCode.InternalServerError;
-                response.Message = e.Message;
-                throw new NullReferenceException(e.Message, e.InnerException);
+                response.Message = ex.Message;
+                await DiscordLogger.SendAsync(repositoryName, ex);
+                throw new NullReferenceException(ex.Message, ex.InnerException);
             }
             return response;
         }
@@ -198,7 +212,7 @@ namespace Repositories.Implements
             try
             {
                 string passwordHash = await SecureUtility.AesEncryptAsync(request.Password ?? string.Empty);
-                
+
                 var masterUser = await _context.MasterUsers
                             .Where(i =>
                             (i.Email == request.UserInput || i.PhoneNumber == request.UserInput || i.IdNumber == request.UserInput)
@@ -236,11 +250,12 @@ namespace Repositories.Implements
                 response.MasterEmployee = masterEmployee;
 
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 response.StatusCode = HttpStatusCode.InternalServerError;
-                response.Message = e.Message;
-                throw new NullReferenceException(e.Message, e.InnerException);
+                response.Message = ex.Message;
+                await DiscordLogger.SendAsync(repositoryName, ex, null, request);
+                throw new NullReferenceException(ex.Message, ex.InnerException);
             }
             return response;
         }
@@ -292,11 +307,12 @@ namespace Repositories.Implements
                     response.Message = "Email Success Confirmed";
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 response.StatusCode = HttpStatusCode.InternalServerError;
-                response.Message = e.Message;
-                throw new NullReferenceException(e.Message, e.InnerException);
+                response.Message = ex.Message;
+                await DiscordLogger.SendAsync(repositoryName, ex);
+                throw new NullReferenceException(ex.Message, ex.InnerException);
             }
 
             return response;
@@ -356,11 +372,12 @@ namespace Repositories.Implements
                     response.Message = "Phone Number Success Confirmed";
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 response.StatusCode = HttpStatusCode.InternalServerError;
-                response.Message = e.Message;
-                throw new NullReferenceException(e.Message, e.InnerException);
+                response.Message = ex.Message;
+                await DiscordLogger.SendAsync(repositoryName, ex);
+                throw new NullReferenceException(ex.Message, ex.InnerException);
             }
 
             return response;
@@ -383,7 +400,6 @@ namespace Repositories.Implements
                     return response;
                 }
 
-
                 var staging = await _context.StagingVerifies
                     .Where(i => i.IdNumber == idNumber
                     && i.Requester == requester
@@ -398,7 +414,7 @@ namespace Repositories.Implements
                     return response;
                 }
 
-                TimeSpan duration = new TimeSpan(staging.ExpiredToken.Ticks - DateTime.Now.Ticks);
+                TimeSpan duration = new(staging.ExpiredToken.Ticks - DateTime.Now.Ticks);
                 string minutes = string.Format("{0}:{1:00}", (int)duration.TotalMinutes, duration.Seconds);
 
                 response.Minutes = minutes;
@@ -408,11 +424,12 @@ namespace Repositories.Implements
                 response.PhoneNumber = staging.Requester;
 
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 response.StatusCode = HttpStatusCode.InternalServerError;
-                response.Message = e.Message;
-                throw new NullReferenceException(e.Message, e.InnerException);
+                response.Message = ex.Message;
+                await DiscordLogger.SendAsync(repositoryName, ex);
+                throw new NullReferenceException(ex.Message, ex.InnerException);
             }
 
             return response;
