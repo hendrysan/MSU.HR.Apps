@@ -31,7 +31,6 @@ namespace WebClient.Controllers
         [HttpGet]
         public async Task<IActionResult> OtpVerify(string phoneNumber, string idNumber)
         {
-            SetAlert("Please input OTP ", AlertType.Warning);
             GetAlert();
 
             var response = await _userRepository.CheckExpiredToken(phoneNumber, idNumber);
@@ -78,7 +77,7 @@ namespace WebClient.Controllers
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
                 SetAlert(response.Message, AlertType.Danger);
-                return View(formRequest);
+                return RedirectToAction("OtpVerify", new { @phoneNumber = formRequest.Requester, @idNumber = formRequest.IdNumber });
             }
 
             SetAlert("Verify Successfuly, Please try login", AlertType.Success);
@@ -90,7 +89,7 @@ namespace WebClient.Controllers
         [HttpGet]
         public IActionResult Login(string returnUrl = "")
         {
-            SetAlert("test", AlertType.Danger);
+
             GetAlert();
             ViewData["returnUrl"] = returnUrl;
             var model = new LoginFormRequest

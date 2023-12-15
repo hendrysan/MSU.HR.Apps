@@ -30,7 +30,7 @@ namespace Repositories.Implements
         {
             Guid id = Guid.NewGuid();
             string tokenSecure = id.ToString().Replace("-", "")[..4].ToUpper();
-            int expired = 5;
+            int expired = 7;
 
             string message = $"JANGAN BERIKAN KODE OTP ke siapapun, Kode OTP anda {tokenSecure}, berlaku {expired} menit";
 
@@ -38,7 +38,7 @@ namespace Repositories.Implements
             {
                 Remarks = message,
                 CreateDate = DateTime.Now,
-                ExpiredToken = DateTime.Now.AddMinutes(expired).ToLocalTime(),
+                ExpiredToken = DateTime.Now.AddMinutes(expired),
                 Id = id,
                 IdNumber = idNumber,
                 IsUsed = false,
@@ -69,8 +69,20 @@ namespace Repositories.Implements
                 //await CleanUserAsync(request.IdNumber);
                 string passwordHash = await SecureUtility.AesEncryptAsync(value: request.Password ?? string.Empty);
 
-                var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == request.IdNumber && i.PasswordHash == passwordHash);
+                var user = await _context.MasterUsers
+                    .Where(i => i.IdNumber == request.IdNumber && i.PasswordHash == passwordHash)
+                    .FirstOrDefaultAsync();
 
+                var employee = await _context.MasterEmployees
+                    .Where(i => i.IdNumber == request.IdNumber && i.IsActive)
+                    .FirstOrDefaultAsync();
+
+                if (employee == null)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Message = "Id Number not register";
+                    return response;
+                }
 
                 string requester = request.UserInput ?? string.Empty;
 
@@ -150,7 +162,10 @@ namespace Repositories.Implements
 
             try
             {
-                var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.Id == userId && i.IdNumber == IdNumber);
+                var user = await _context.MasterUsers
+                    .Where(i => i.Id == userId && i.IdNumber == IdNumber)
+                    .FirstOrDefaultAsync();
+
                 if (user == null)
                 {
                     response.StatusCode = HttpStatusCode.BadRequest;
@@ -183,32 +198,42 @@ namespace Repositories.Implements
             try
             {
                 string passwordHash = await SecureUtility.AesEncryptAsync(request.Password ?? string.Empty);
-                var masterUsers = await _context.MasterUsers
+                
+                var masterUser = await _context.MasterUsers
                             .Where(i =>
                             (i.Email == request.UserInput || i.PhoneNumber == request.UserInput || i.IdNumber == request.UserInput)
                             && i.PasswordHash == passwordHash)
                             .OrderByDescending(i => i.UpdatedAt)
                             .FirstOrDefaultAsync();
 
-                if (masterUsers == null)
+                if (masterUser == null)
                 {
                     response.StatusCode = HttpStatusCode.BadRequest;
                     response.Message = "User or Password invalid";
                     return response;
                 }
 
-                if (!masterUsers.IsActive)
+                if (!masterUser.IsActive)
                 {
                     response.StatusCode = HttpStatusCode.BadRequest;
-                    response.Message = "Account not active, call administrator";
-                    masterUsers = null;
+                    response.Message = "Account user not active, call administrator";
                     return response;
                 }
 
+                var masterEmployee = await _context.MasterEmployees
+                    .Where(i => i.IdNumber == masterUser.IdNumber && i.IsActive)
+                    .FirstOrDefaultAsync();
+
+                if (masterEmployee == null)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Message = "Employee not active, call administrator";
+                }
 
                 response.StatusCode = HttpStatusCode.OK;
-                masterUsers.PasswordHash = string.Empty;
-                response.MasterUser = masterUsers;
+                masterUser.PasswordHash = string.Empty;
+                response.MasterUser = masterUser;
+                response.MasterEmployee = masterEmployee;
 
             }
             catch (Exception e)
@@ -226,10 +251,11 @@ namespace Repositories.Implements
 
             try
             {
-                var staging = await _context.StagingVerifies.Where(i =>
-                i.TokenSecure == tokenSecure
-                && i.Requester == requester
-                && !i.IsUsed)
+                var staging = await _context.StagingVerifies
+                    .Where(i =>
+                    i.TokenSecure == tokenSecure
+                    && i.Requester == requester
+                    && !i.IsUsed)
                     .FirstOrDefaultAsync();
 
                 if (staging == null)
@@ -250,7 +276,10 @@ namespace Repositories.Implements
                 _context.Update(staging);
                 await _context.SaveChangesAsync();
 
-                var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == staging.IdNumber);
+                var user = await _context.MasterUsers
+                    .Where(i => i.IdNumber == staging.IdNumber)
+                    .FirstOrDefaultAsync();
+
                 if (user != null)
                 {
                     user.IsActive = true;
@@ -259,9 +288,7 @@ namespace Repositories.Implements
                     _context.Update(user);
                     await _context.SaveChangesAsync();
 
-                    //user.PasswordHash = string.Empty;
                     response.StatusCode = HttpStatusCode.OK;
-                    //response.Data = user;
                     response.Message = "Email Success Confirmed";
                 }
             }
@@ -279,14 +306,24 @@ namespace Repositories.Implements
         {
             DefaultResponse response = new();
 
-
             try
             {
-                var staging = await _context.StagingVerifies.FirstOrDefaultAsync(i => i.TokenSecure == tokenSecure && i.Requester == requester && i.IdNumber == idNumber);
+                var staging = await _context.StagingVerifies
+                    .Where(i => i.Requester == requester && i.IdNumber == idNumber)
+                    .OrderByDescending(i => i.CreateDate)
+                    .FirstOrDefaultAsync();
+
                 if (staging == null)
                 {
                     response.StatusCode = HttpStatusCode.BadRequest;
                     response.Message = "Token not found";
+                    return response;
+                }
+
+                if (staging.TokenSecure != tokenSecure)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Message = "Token incorrect";
                     return response;
                 }
 
@@ -301,7 +338,10 @@ namespace Repositories.Implements
                 _context.Update(staging);
                 await _context.SaveChangesAsync();
 
-                var user = await _context.MasterUsers.FirstOrDefaultAsync(i => i.IdNumber == staging.IdNumber && i.PhoneNumber == requester);
+                var user = await _context.MasterUsers
+                    .Where(i => i.IdNumber == staging.IdNumber && i.PhoneNumber == requester)
+                    .FirstOrDefaultAsync();
+
                 if (user != null)
                 {
                     user.IsActive = true;
@@ -332,7 +372,8 @@ namespace Repositories.Implements
 
             try
             {
-                var user = await _context.MasterEmployees.Where(i => i.IdNumber == idNumber)
+                var user = await _context.MasterEmployees
+                    .Where(i => i.IdNumber == idNumber)
                     .FirstOrDefaultAsync();
 
                 if (user == null)
@@ -343,11 +384,11 @@ namespace Repositories.Implements
                 }
 
 
-                var staging = await _context.StagingVerifies.Where(i =>
-                i.IdNumber == idNumber
-                && i.Requester == requester
-                && i.ExpiredToken >= DateTime.Now
-                && !i.IsUsed)
+                var staging = await _context.StagingVerifies
+                    .Where(i => i.IdNumber == idNumber
+                    && i.Requester == requester
+                    && i.ExpiredToken >= DateTime.Now
+                    && !i.IsUsed)
                     .FirstOrDefaultAsync();
 
                 if (staging == null)

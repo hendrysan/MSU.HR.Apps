@@ -16,6 +16,8 @@ namespace Models.Entities
         [StringLength(500, MinimumLength = 3)]
         public string? FullName { get; set; }
 
+        public bool IsActive { get; set; }
+
         //[Required]
         //public DateTime? JoinDate { get; set; }
 
