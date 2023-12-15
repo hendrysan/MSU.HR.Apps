@@ -22,7 +22,7 @@ namespace WebClient.Controllers
             secure = HttpUtility.UrlEncode(secure);
             var response = await _userRepository.EmailVerify(secure, requester);
 
-            SetAlert(response.Message, response.StatusCode == System.Net.HttpStatusCode.OK ? AlertType.Success : AlertType.Error);
+            SetAlert(response.Message, response.StatusCode == System.Net.HttpStatusCode.OK ? AlertType.Success : AlertType.Danger);
 
             return RedirectToAction("Login");
 
@@ -31,20 +31,26 @@ namespace WebClient.Controllers
         [HttpGet]
         public async Task<IActionResult> OtpVerify(string phoneNumber, string idNumber)
         {
+            SetAlert("Please input OTP ", AlertType.Warning);
             GetAlert();
 
             var response = await _userRepository.CheckExpiredToken(phoneNumber, idNumber);
 
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
-                return NotFound();
+                SetAlert(response.Message, AlertType.Danger);
+                return RedirectToAction("Login");
             }
 
             var model = new OtpVerifyFormRequest()
             {
                 IdNumber = idNumber,
-                Requester = phoneNumber
+                Requester = phoneNumber,
+                CountDown = response.Minutes ?? "00:00",
+                ShowTimer = response.StatusCode == System.Net.HttpStatusCode.OK
             };
+
+            
 
             //model.CountDown = response.Data.
 
@@ -57,7 +63,7 @@ namespace WebClient.Controllers
         {
             if (!ModelState.IsValid || formRequest == null)
             {
-                SetAlert("Invalid login attempt", AlertType.Error);
+                SetAlert("Invalid login attempt", AlertType.Danger);
                 return View(formRequest);
             }
 
@@ -65,13 +71,13 @@ namespace WebClient.Controllers
 
             if (response == null)
             {
-                SetAlert("Response not found", AlertType.Error);
+                SetAlert("Response not found", AlertType.Danger);
                 return View(formRequest);
             }
 
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
-                SetAlert(response.Message, AlertType.Error);
+                SetAlert(response.Message, AlertType.Danger);
                 return View(formRequest);
             }
 
@@ -84,7 +90,7 @@ namespace WebClient.Controllers
         [HttpGet]
         public IActionResult Login(string returnUrl = "")
         {
-
+            SetAlert("test", AlertType.Danger);
             GetAlert();
             ViewData["returnUrl"] = returnUrl;
             var model = new LoginFormRequest
@@ -101,7 +107,7 @@ namespace WebClient.Controllers
         {
             if (!ModelState.IsValid || formRequest == null)
             {
-                SetAlert("Invalid login attempt", AlertType.Error);
+                SetAlert("Invalid login attempt", AlertType.Danger);
                 return View(formRequest);
             }
 
@@ -115,19 +121,19 @@ namespace WebClient.Controllers
 
             if (response == null)
             {
-                SetAlert("Login invalid", AlertType.Error);
+                SetAlert("Login invalid", AlertType.Danger);
                 return View(formRequest);
             }
 
             if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
             {
-                SetAlert(response.Message ?? "Message Error Not Found", AlertType.Error);
+                SetAlert(response.Message ?? "Message Error Not Found", AlertType.Danger);
                 return View(formRequest);
             }
 
             if (response.MasterUser == null)
             {
-                SetAlert(response.Message ?? "Data User Error Not Found", AlertType.Error);
+                SetAlert(response.Message ?? "Data User Error Not Found", AlertType.Danger);
                 return View(formRequest);
             }
 
@@ -175,25 +181,25 @@ namespace WebClient.Controllers
         {
             if (!ModelState.IsValid || formRequest == null)
             {
-                SetAlert("Invalid login attempt", AlertType.Error);
+                SetAlert("Invalid login attempt", AlertType.Danger);
                 return View(formRequest);
             }
 
             if (formRequest.IdNumber == null)
             {
-                SetAlert("Id Number is Required", AlertType.Error);
+                SetAlert("Id Number is Required", AlertType.Danger);
                 return View(formRequest);
             }
 
             if (formRequest.Password == null)
             {
-                SetAlert("Password is Required", AlertType.Error);
+                SetAlert("Password is Required", AlertType.Danger);
                 return View(formRequest);
             }
 
             if (formRequest.FullName == null)
             {
-                SetAlert("Password is Required", AlertType.Error);
+                SetAlert("Password is Required", AlertType.Danger);
                 return View(formRequest);
             }
 
@@ -202,7 +208,7 @@ namespace WebClient.Controllers
             {
                 if (formRequest.Email == null)
                 {
-                    SetAlert("Email is Required", AlertType.Error);
+                    SetAlert("Email is Required", AlertType.Danger);
                     return View(formRequest);
                 }
 
@@ -219,7 +225,7 @@ namespace WebClient.Controllers
             {
                 if (formRequest.PhoneNumber == null)
                 {
-                    SetAlert("PhoneNumber is Required", AlertType.Error);
+                    SetAlert("PhoneNumber is Required", AlertType.Danger);
                     return View(formRequest);
                 }
 
@@ -237,13 +243,13 @@ namespace WebClient.Controllers
 
             if (response == null)
             {
-                SetAlert("Response not found", AlertType.Error);
+                SetAlert("Response not found", AlertType.Danger);
                 return View(formRequest);
             }
 
             if (response.StatusCode != System.Net.HttpStatusCode.Created)
             {
-                SetAlert(response.Message, AlertType.Error);
+                SetAlert(response.Message, AlertType.Danger);
                 return View(formRequest);
             }
 

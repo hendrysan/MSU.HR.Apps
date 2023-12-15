@@ -11,7 +11,7 @@
     public enum AlertType
     {
         Success,
-        Error,
+        Danger,
         Warning,
         Info
     }

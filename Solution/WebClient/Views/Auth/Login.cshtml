@@ -37,7 +37,7 @@
     </div>
     <div class="login-main">
 
-        @await Html.PartialAsync("_Alert")
+        @Html.Partial("_Alert")
 
         <form class="theme-form" method="post" asp-controller="Auth" asp-action="Login" needs-validation asp-route-returnurl="@ViewData["returnUrl"]">
             <h4>Sign in to account</h4>

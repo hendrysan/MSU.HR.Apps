@@ -326,29 +326,45 @@ namespace Repositories.Implements
             return response;
         }
 
-        public async Task<DefaultResponse> CheckExpiredToken(string requester, string idNumber)
+        public async Task<CheckExpiredTokenResponse> CheckExpiredToken(string requester, string idNumber)
         {
-            DefaultResponse response = new();
+            CheckExpiredTokenResponse response = new();
 
             try
             {
-                var data = await _context.StagingVerifies.Where(i =>
+                var user = await _context.MasterEmployees.Where(i => i.IdNumber == idNumber)
+                    .FirstOrDefaultAsync();
+
+                if (user == null)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Message = "Id Number not found";
+                    return response;
+                }
+
+
+                var staging = await _context.StagingVerifies.Where(i =>
                 i.IdNumber == idNumber
                 && i.Requester == requester
                 && i.ExpiredToken >= DateTime.Now
                 && !i.IsUsed)
                     .FirstOrDefaultAsync();
 
-                if (data == null)
+                if (staging == null)
                 {
                     response.StatusCode = HttpStatusCode.BadRequest;
                     response.Message = "Data not found";
                     return response;
                 }
 
-                TimeSpan duration = new TimeSpan(data.ExpiredToken.Ticks - DateTime.Now.Ticks);
+                TimeSpan duration = new TimeSpan(staging.ExpiredToken.Ticks - DateTime.Now.Ticks);
                 string minutes = string.Format("{0}:{1:00}", (int)duration.TotalMinutes, duration.Seconds);
-                response.Message = minutes;
+
+                response.Minutes = minutes;
+                response.Ticks = duration;
+                response.FullName = user.FullName;
+                response.IdNumber = user.IdNumber;
+                response.PhoneNumber = staging.Requester;
 
             }
             catch (Exception e)

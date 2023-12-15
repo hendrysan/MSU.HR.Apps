@@ -47,13 +47,21 @@
             <h4>Confirm your account</h4>
             <p>Enter your otp from whats application</p>
 
-            @* @Html.ValidationSummary(true, "", new { @class = "validation-summary-errors" }) *@
             @Html.AntiForgeryToken()
-            @* <div asp-validation-summary="All"></div> *@
 
             @Html.HiddenFor(m => m.IdNumber)
             @Html.HiddenFor(m => m.Requester)
 
+            <table class="table no-border">
+                <tr>
+                    <td>Id Number</td>
+                    <td>@Model.IdNumber</td>
+                </tr>
+                <tr>
+                    <td>Phone Number</td>
+                    <td>@Model.Requester</td>
+                </tr>
+            </table>
             <div class="form-group">
                 <label class="col-form-label">OTP Token</label>
                 @Html.TextBoxFor(m => m.OtpSecure, new { @class = "form-control", @type = "text", @placeholder = "123456789", @autofocus = "autofocus" })
@@ -63,16 +71,17 @@
             @if (Model.ShowTimer)
             {
                 <div class="form-group text-center">
-                    <span id="timer">05 + ":" + 00</span>
+                    <span id="timer">@Model.CountDown</span>
                 </div>
+
+                <div class="form-group mb-0">
+                    <div class="text-end mt-3">
+                        <input class="btn btn-primary btn-block w-100" type="submit" value="Submit" />
+                    </div>
+                </div>
+
             }
 
-            <div class="form-group mb-0">
-
-                <div class="text-end mt-3">
-                    <input class="btn btn-primary btn-block w-100" type="submit" value="Submit" />
-                </div>
-            </div>
 
             <p class="mt-4 mb-0 text-small">Don't remember password?<a class="ms-2" href="@Url.Action("ForgotPassword","Auth")">Forgot Password</a></p>
 
@@ -101,6 +110,12 @@
                 document.getElementById('timer').innerHTML =
                     m + ":" + s;
                 console.log(m)
+
+                if (m == "0" && s == "00") {
+                    alert("Token is expired");
+                    location.assign('/');
+                }
+
                 setTimeout(startTimer, 1000);
 
             }

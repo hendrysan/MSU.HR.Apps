@@ -15,7 +15,7 @@
                 {
                     <i class="icofont icofont-verification-check"></i>
                 }
-                else if (model.Type == AlertType.Error)
+                else if (model.Type == AlertType.Danger)
                 {
                     <i class="icofont icofont-error"></i>
                 }
@@ -29,9 +29,9 @@
                     <i class="icofont icofont-info"></i>
                 }
             </div>
-            <p>
+            <div>
                 <strong class="txt-dark">@(model.StrongMessage)</strong> @(model.Message)
-            </p>
+            </div>
             <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     </div>

@@ -6,6 +6,6 @@
         public string IdNumber { get; set; } = string.Empty;
         public string OtpSecure { get; set; } = string.Empty;
         public bool ShowTimer { get; set; } = false;
-        public TimeSpan CountDown { get; set; }
+        public required string CountDown { get; set; }
     }
 }

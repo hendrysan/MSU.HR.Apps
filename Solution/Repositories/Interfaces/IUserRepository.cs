@@ -10,7 +10,7 @@ namespace Repositories.Interfaces
         Task<DefaultResponse> EmailVerify(string tokenSecure, string requester);
         Task<DefaultResponse> PhoneNumberVerify(string tokenSecure, string requester, string idNumber);
         Task<DefaultResponse> AllowLogin(Guid userId, string IdNumber, bool isActive);
-        Task<DefaultResponse> CheckExpiredToken(string requester, string idNumber);
+        Task<CheckExpiredTokenResponse> CheckExpiredToken(string requester, string idNumber);
 
     }
 }
