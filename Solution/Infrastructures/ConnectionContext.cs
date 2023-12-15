@@ -20,6 +20,8 @@ namespace Infrastructures
         public DbSet<MasterRole> MasterRoles { get; set; }
         public DbSet<MasterEmployee> MasterEmployees { get; set; }
         public DbSet<StagingVerify> StagingVerifies { get; set; }
+        public DbSet<StagingDocumentAttendance> StagingDocumentAttendances { get; set; }
+        public DbSet<StagingDocumentAttendanceDetail> StagingDocumentAttendanceDetails { get; set; }
 
         
 

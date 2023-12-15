@@ -2,7 +2,7 @@
 
 namespace Models.Entities
 {
-    public class DocumentAttendance
+    public class StagingDocumentAttendance
     {
         [Key]
         [Required]
@@ -12,6 +12,7 @@ namespace Models.Entities
         public required string DocumentName { get; set; }
         public required string Path { get; set; }
         [Required]
+        [StringLength(150, MinimumLength = 3)]
         public required string Size { get; set; }
         [Required]
         [StringLength(150, MinimumLength = 3)]
@@ -20,7 +21,9 @@ namespace Models.Entities
         [StringLength(50, MinimumLength = 3)]
         public required string Extension { get; set; }
         [Required]
+        [StringLength(50, MinimumLength = 3)]
         public required string Status { get; set; }
+        [StringLength(250, MinimumLength = 3)]
         public string? Remarks { get; set; }
         [Required]
         public Guid CreatedByUser { get; set; }
@@ -29,6 +32,6 @@ namespace Models.Entities
         [Required]
         public required DateTime DocumentDate { get; set; }
 
-        public List<DocumentAttendanceDetail>? Details { get; set; }
+        public List<StagingDocumentAttendanceDetail>? Details { get; set; }
     }
 }
