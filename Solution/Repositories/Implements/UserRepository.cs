@@ -30,23 +30,26 @@ namespace Repositories.Implements
             Guid id = Guid.NewGuid();
             string tokenSecure = id.ToString().Replace("-", "")[..4].ToUpper();
             int expired = 5;
+
+            string message = $"JANGAN BERIKAN KODE OTP ke siapapun, Kode OTP anda {tokenSecure}, berlaku {expired} menit";
+
             var staging = new StagingVerify()
             {
-                Remarks = null,
+                Remarks = message,
                 CreateDate = DateTime.Now,
                 ExpiredToken = DateTime.Now.AddMinutes(expired).ToLocalTime(),
                 Id = id,
                 IdNumber = idNumber,
                 IsUsed = false,
                 Requester = requester,
-                TokenSecure = tokenSecure
+                TokenSecure = tokenSecure,
             };
 
             _context.Add(staging);
             await _context.SaveChangesAsync();
 
-            string message = $"JANGAN BERIKAN KODE OTP ke siapapun, Kode OTP anda {tokenSecure}, berlaku {expired} menit";
-            //await WhatsAppUtility.SendAsync(requester, message);
+
+            await WhatsAppUtility.SendAsync(requester, message);
         }
 
         public async Task<DefaultResponse> Register(RegisterRequest request)

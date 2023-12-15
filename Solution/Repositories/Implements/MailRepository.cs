@@ -38,7 +38,7 @@ namespace Repositories.Implements
 
                 var staging = new StagingVerify()
                 {
-                    Remarks = remarks,
+                    Remarks = remarks ?? absoluteUrl,
                     CreateDate = DateTime.UtcNow,
                     ExpiredToken = DateTime.UtcNow.AddDays(1),
                     Id = id,
