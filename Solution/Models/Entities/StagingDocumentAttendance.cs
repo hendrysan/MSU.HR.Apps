@@ -31,6 +31,8 @@ namespace Models.Entities
         public DateTime CreatedAt { get; set; }
         [Required]
         public required DateTime DocumentDate { get; set; }
+        [Required]
+        public required long TotalRow { get; set; }
 
         public List<StagingDocumentAttendanceDetail>? Details { get; set; }
     }

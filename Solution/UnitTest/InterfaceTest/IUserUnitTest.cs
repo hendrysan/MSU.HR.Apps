@@ -42,10 +42,10 @@ namespace UnitTest.InterfaceTest
             var request = new RegisterRequest
             {
                 RegisterVerify = RegisterVerify.Email,
-                IdNumber = "123",
+                IdNumber = "164195",
                 UserInput = "hendry.priyatno@gmail.com",
                 Password = "123456",
-                FullName = "test"
+                FullName = "Employee1"
             };
 
             var result = await service.Register(request);

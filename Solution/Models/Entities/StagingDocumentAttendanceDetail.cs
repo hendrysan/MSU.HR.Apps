@@ -10,7 +10,7 @@ namespace Models.Entities
 
         [Required]
         public Guid StagingDocumentAttendanceId { get; set; }
-        [StringLength(10, MinimumLength = 3)]
+        [StringLength(10, MinimumLength = 1)]
         public required string Separator { get; set; }
         [StringLength(150, MinimumLength = 3)]
         public string? Column0 { get; set; }

@@ -31,7 +31,8 @@ namespace Repositories.Implements
                     {
                         var data = documentAttendanceDetails.Skip(index).Take(maxData).ToList();
                         _context.StagingDocumentAttendanceDetails.AddRange(data);
-                        var task = await _context.SaveChangesAsync();
+                        
+                        await _context.SaveChangesAsync();
 
                         count += maxData;
                         index += maxData;
@@ -133,12 +134,17 @@ namespace Repositories.Implements
             DefaultResponse response = new();
             try
             {
-                string path = string.Empty;//Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", file.FileName);
+                
                 Guid BatchId = Guid.NewGuid();
 
-                string fileName = $"{BatchId}_{file.FileName}";
+                string fileName = $"{DateTime.Now:yyyyMMddHHmmss}_{file.FileName}";
 
-                await MinioUtility.SendAsync(fileName, file.OpenReadStream(), file.ContentType);
+                string path = $"attendance/fingerprint/{fileName}";//Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", file.FileName);
+
+                await MinioUtility.SendAsync(path, file.OpenReadStream(), file.ContentType);
+
+                var collections = await GetDocumentAttendanceDetails(file.OpenReadStream(), BatchId);
+
                 StagingDocumentAttendance staging = new()
                 {
                     Id = BatchId,
@@ -151,13 +157,14 @@ namespace Repositories.Implements
                     Remarks = remarks,
                     CreatedByUser = user.Id,
                     CreatedAt = DateTime.Now,
-                    DocumentDate = documentDate
+                    DocumentDate = documentDate,
+                    TotalRow = collections.Count
                 };
 
                 _context.StagingDocumentAttendances.Add(staging);
                 await _context.SaveChangesAsync();
 
-                var collections = await GetDocumentAttendanceDetails(file.OpenReadStream(), BatchId);
+                
                 var taskDetails = await BulkInsertDocumentAttendanceDetail(collections);
 
                 response.Message = $"Upload document successfuly, total record {taskDetails}";

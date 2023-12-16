@@ -14,6 +14,7 @@ namespace Repositories
             services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IMailRepository, MailRepository>();
+            services.AddScoped<IAttendanceRepository, AttendanceRepository>();
             return services;
         }
     }
