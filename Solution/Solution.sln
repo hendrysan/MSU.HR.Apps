@@ -18,6 +18,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{7D2A160F-E042-4B42-BCDA-34A4BD5126C1}"
 	ProjectSection(SolutionItems) = preProject
 		cli.md = cli.md
+		minio.txt = minio.txt
 		sonar.txt = sonar.txt
 	EndProjectSection
 EndProject
