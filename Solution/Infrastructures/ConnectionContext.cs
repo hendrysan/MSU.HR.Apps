@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using Models.Entities;
 
 namespace Infrastructures
@@ -14,7 +13,7 @@ namespace Infrastructures
             this._configuration = configuration;
         }
 
-        
+
         public DbSet<MasterUser> MasterUsers { get; set; }
         public DbSet<GrantAccess> GrantAccesses { get; set; }
         public DbSet<MasterRole> MasterRoles { get; set; }
@@ -22,12 +21,13 @@ namespace Infrastructures
         public DbSet<StagingVerify> StagingVerifies { get; set; }
         public DbSet<StagingDocumentAttendance> StagingDocumentAttendances { get; set; }
         public DbSet<StagingDocumentAttendanceDetail> StagingDocumentAttendanceDetails { get; set; }
+        public DbSet<MasterAttendance> MasterAttendances { get; set; }
 
-        
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            
+
             var con = _configuration.GetConnectionString("PostgreSQLConnection");
             options.UseNpgsql(con);
 
