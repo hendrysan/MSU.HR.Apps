@@ -9,6 +9,7 @@ using Models.Responses;
 using Repositories.Interfaces;
 using System.Globalization;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 namespace Repositories.Implements
@@ -139,19 +140,28 @@ namespace Repositories.Implements
             try
             {
 
-                Guid BatchId = Guid.NewGuid();
+                Guid batchId = Guid.NewGuid();
+
+
+                var collections = await GetDocumentAttendanceDetails(file.OpenReadStream(), batchId);
+
+                var dates = collections.Select(i => i.Column1).Distinct().ToList();
+
+                if (dates.Count > 2)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Message = "More date on column 1";
+                    return response;
+                }
 
                 string fileName = $"{DateTime.Now:yyyyMMddHHmmss}_{file.FileName}";
-
                 string path = $"attendance/fingerprint/{fileName}";//Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", file.FileName);
-
                 await MinioUtility.SendAsync(path, file.OpenReadStream(), file.ContentType);
 
-                var collections = await GetDocumentAttendanceDetails(file.OpenReadStream(), BatchId);
 
                 StagingDocumentAttendance staging = new()
                 {
-                    Id = BatchId,
+                    Id = batchId,
                     DocumentName = file.FileName,
                     Path = path,
                     Size = file.Length.ToString(),
@@ -167,8 +177,6 @@ namespace Repositories.Implements
 
                 _context.StagingDocumentAttendances.Add(staging);
                 await _context.SaveChangesAsync();
-
-
                 var taskDetails = await BulkInsertDocumentAttendanceDetail(collections);
 
                 response.Message = $"Upload document successfuly, total record {taskDetails}";
@@ -202,69 +210,48 @@ namespace Repositories.Implements
                     return response;
                 }
 
-                //var idNumbers = staging.Details?.Select(i => new
-                //{
-                //    IdNumber = Convert.ToInt32(Regex.Match(i.Column5 ?? string.Empty, @"\d+").Value)
-                //}).Distinct().ToList();
-
-                List<Present>? presents = staging.Details?.Select(i => new Present()
+                var presents = staging.Details?.Select(i => new Present()
                 {
                     IdNumber = Convert.ToInt32(Regex.Match(i.Column5 ?? string.Empty, @"\d+").Value).ToString(),
                     DateTimeWork = DateTime.ParseExact($"{i.Column1} {i.Column2}", "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture)
                 }).Distinct().ToList();
 
-
-                List<DateTime> dateAttendance = staging.Details.Select(i => DateTime.ParseExact(i.Column1 ?? string.Empty, "dd/MM/yyyy", CultureInfo.InvariantCulture))
-                    .Distinct().ToList();
+                if (presents == null)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Message = "Invalid convertion data, please call administrator";
+                    return response;
+                }
 
                 List<MasterAttendance> entities = [];
                 MasterAttendance? master = default;
 
-                foreach (var present in presents ?? [])
+                foreach (var id in presents.Select(i => i.IdNumber).Distinct().ToList())
                 {
-                    bool isExists = entities
-                        .Where(i => i.IdNumber == present.IdNumber
-                        && i.PresentIn == present.DateTimeWork
-                    ).Any();
+                    var workIn = presents.Where(i => i.IdNumber == id).Select(i => i.DateTimeWork).Min();
+                    var workOut = presents.Where(i => i.IdNumber == id).Select(i => i.DateTimeWork).Max();
+                    long ticks = 0;
 
+                    if (workIn != null && workOut != null)
+                        ticks = workOut.Value.Ticks - workIn.Value.Ticks;
 
-                    if (!isExists)
+                    master = new MasterAttendance()
                     {
-                        master = new MasterAttendance()
-                        {
-                            Id = Guid.NewGuid(),
-                            IdNumber = present.IdNumber ?? string.Empty,
-                            SourceData = "Staging",
-                            SourceId = documentId.ToString(),
-                            CreatedAt = DateTime.Now
-                        };
+                        Id = Guid.NewGuid(),
+                        IdNumber = id ?? string.Empty,
+                        SourceData = "Staging",
+                        SourceId = documentId.ToString(),
+                        CreatedAt = DateTime.Now,
+                        TotalWorkHours = Convert.ToDouble(TimeSpan.FromTicks(ticks).TotalHours),
+                        PresentIn = workIn.HasValue ? workIn.Value : null,
+                        PresentOut = workOut.HasValue ? workOut.Value : null
+                    };
 
-                        master.PresentIn = present.DateTimeWork;
-                        Present? checkDataOut = presents
-                            .Where(i => i.IdNumber == present.IdNumber && i.DateTimeWork > master.PresentIn.Value.AddHours(4))
-                            .OrderBy(i => i.DateTimeWork)
-                            .FirstOrDefault();
-                        if (checkDataOut != null)
-                        {
-                            master.PresentOut = checkDataOut.DateTimeWork;
-                            long ticks = master.PresentOut.Value.Ticks - master.PresentIn.Value.Ticks;
-                            master.TotalWorkHours = Convert.ToDouble(TimeSpan.FromTicks(ticks).TotalHours);
-                        }
-                        else
-                        {
-                            var doubleInsert = entities.Where(i => i.IdNumber == master.IdNumber && i.PresentOut == master.PresentIn).FirstOrDefault();
-                            continue;
-                        }
-
-                        //if (!entities.Where(i => i.IdNumber == master.IdNumber && i.PresentIn == master.PresentOut).Any())
-                        entities.Add(master);
-
-                    }
+                    entities.Add(master);
                 }
 
                 if (entities.Count > 0)
                 {
-                    //var duplicates = entities.Where(i => i.PresentIn == i.PresentOut).ToList();
                     _context.MasterAttendances.AddRange(entities);
                     await _context.SaveChangesAsync();
                 }
