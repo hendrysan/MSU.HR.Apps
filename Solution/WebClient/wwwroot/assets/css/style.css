@@ -36553,6 +36553,7 @@ table.table-bordered thead tr th p {
 
 .select2-container {
   width: 100% !important;
+  height: 50px;
 }
 .select2-container.select2 .selection {
   display: block !important;

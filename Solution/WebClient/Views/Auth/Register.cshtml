@@ -31,6 +31,8 @@
             display: none;
         }
     </style>
+    
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/css/vendors/select2.css")">
 }
 
 <div>
@@ -65,7 +67,7 @@
             <div class="form-group">
                 <label class="col-form-label">Confirmation Method</label>
                 <div class="form-input position-relative">
-                    @Html.DropDownListFor(m => m.RegisterMethod, Model.DropdownMethod, new { @class = "form-select", @id = "RegisterMethod" })
+                    @Html.DropDownListFor(m => m.RegisterMethod, Model.DropdownMethod, new { @class = "form-select js-example-basic-single", @id = "RegisterMethod" })
                 </div>
             </div>
 
@@ -123,8 +125,13 @@
 </div>
 
 @section Scripts {
+
+    <script src="@Url.Content("~/assets/js/select2/select2.full.min.js")"></script>
+    
     <script>
         $(document).ready(function () {
+
+            $('.js-example-basic-single').select2();
 
             $('#RegisterMethod').change(function () {
                 var value = this.value;
