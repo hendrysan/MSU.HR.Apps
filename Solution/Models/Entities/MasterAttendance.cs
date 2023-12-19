@@ -11,13 +11,13 @@ namespace Models.Entities
         public required string IdNumber { get; set; }
         public DateTime? PresentIn { get; set; }
         public DateTime? PresentOut { get; set; }
-        public decimal TotalWorkHours { get; set; } = 0;
-        public decimal OverTime1 { get; set; } = 0;
-        public decimal OverTime2 { get; set; } = 0;
-        public decimal TotalOverTime { get; set; } = 0;
+        public double TotalWorkHours { get; set; } = 0;
+        public double OverTime1 { get; set; } = 0;
+        public double OverTime2 { get; set; } = 0;
+        public double TotalOverTime { get; set; } = 0;
         public DateTime? BreakIn { get; set; }
         public DateTime? BreakOut { get; set; }
-        public decimal TotalBreak { get; set; } = 0;
+        public double TotalBreak { get; set; } = 0;
 
         [Required]
         [StringLength(150, MinimumLength = 3)]

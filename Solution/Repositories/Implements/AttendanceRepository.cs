@@ -1,11 +1,15 @@
 ﻿using Commons.Loggers;
 using Commons.Utilities;
+using Discord;
 using Infrastructures;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Models.Entities;
 using Models.Responses;
 using Repositories.Interfaces;
+using System.Globalization;
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace Repositories.Implements
 {
@@ -31,7 +35,7 @@ namespace Repositories.Implements
                     {
                         var data = documentAttendanceDetails.Skip(index).Take(maxData).ToList();
                         _context.StagingDocumentAttendanceDetails.AddRange(data);
-                        
+
                         await _context.SaveChangesAsync();
 
                         count += maxData;
@@ -134,7 +138,7 @@ namespace Repositories.Implements
             DefaultResponse response = new();
             try
             {
-                
+
                 Guid BatchId = Guid.NewGuid();
 
                 string fileName = $"{DateTime.Now:yyyyMMddHHmmss}_{file.FileName}";
@@ -164,7 +168,7 @@ namespace Repositories.Implements
                 _context.StagingDocumentAttendances.Add(staging);
                 await _context.SaveChangesAsync();
 
-                
+
                 var taskDetails = await BulkInsertDocumentAttendanceDetail(collections);
 
                 response.Message = $"Upload document successfuly, total record {taskDetails}";
@@ -180,5 +184,109 @@ namespace Repositories.Implements
 
             return response;
         }
+
+        public async Task<DefaultResponse> ProocessDocumentAsync(MasterUser user, Guid documentId)
+        {
+            DefaultResponse response = new();
+            try
+            {
+                var staging = await _context.StagingDocumentAttendances
+                    .Where(i => i.Id == documentId)
+                    .Include(i => i.Details)
+                    .FirstOrDefaultAsync();
+
+                if (staging == null)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Message = "Data not found";
+                    return response;
+                }
+
+                //var idNumbers = staging.Details?.Select(i => new
+                //{
+                //    IdNumber = Convert.ToInt32(Regex.Match(i.Column5 ?? string.Empty, @"\d+").Value)
+                //}).Distinct().ToList();
+
+                List<Present>? presents = staging.Details?.Select(i => new Present()
+                {
+                    IdNumber = Convert.ToInt32(Regex.Match(i.Column5 ?? string.Empty, @"\d+").Value).ToString(),
+                    DateTimeWork = DateTime.ParseExact($"{i.Column1} {i.Column2}", "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture)
+                }).Distinct().ToList();
+
+
+                List<DateTime> dateAttendance = staging.Details.Select(i => DateTime.ParseExact(i.Column1 ?? string.Empty, "dd/MM/yyyy", CultureInfo.InvariantCulture))
+                    .Distinct().ToList();
+
+                List<MasterAttendance> entities = [];
+                MasterAttendance? master = default;
+
+                foreach (var present in presents ?? [])
+                {
+                    bool isExists = entities
+                        .Where(i => i.IdNumber == present.IdNumber
+                        && i.PresentIn == present.DateTimeWork
+                    ).Any();
+
+
+                    if (!isExists)
+                    {
+                        master = new MasterAttendance()
+                        {
+                            Id = Guid.NewGuid(),
+                            IdNumber = present.IdNumber ?? string.Empty,
+                            SourceData = "Staging",
+                            SourceId = documentId.ToString(),
+                            CreatedAt = DateTime.Now
+                        };
+
+                        master.PresentIn = present.DateTimeWork;
+                        Present? checkDataOut = presents
+                            .Where(i => i.IdNumber == present.IdNumber && i.DateTimeWork > master.PresentIn.Value.AddHours(4))
+                            .OrderBy(i => i.DateTimeWork)
+                            .FirstOrDefault();
+                        if (checkDataOut != null)
+                        {
+                            master.PresentOut = checkDataOut.DateTimeWork;
+                            long ticks = master.PresentOut.Value.Ticks - master.PresentIn.Value.Ticks;
+                            master.TotalWorkHours = Convert.ToDouble(TimeSpan.FromTicks(ticks).TotalHours);
+                        }
+                        else
+                        {
+                            var doubleInsert = entities.Where(i => i.IdNumber == master.IdNumber && i.PresentOut == master.PresentIn).FirstOrDefault();
+                            continue;
+                        }
+
+                        //if (!entities.Where(i => i.IdNumber == master.IdNumber && i.PresentIn == master.PresentOut).Any())
+                        entities.Add(master);
+
+                    }
+                }
+
+                if (entities.Count > 0)
+                {
+                    //var duplicates = entities.Where(i => i.PresentIn == i.PresentOut).ToList();
+                    _context.MasterAttendances.AddRange(entities);
+                    await _context.SaveChangesAsync();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Message = ex.Message;
+                await DiscordLogger.SendAsync(repositoryName, ex);
+                throw new NullReferenceException(ex.Message, ex.InnerException);
+            }
+
+            return response;
+        }
+
+        private class Present
+        {
+            public string? IdNumber { get; set; }
+            public DateTime? DateTimeWork { get; set; }
+        }
     }
+
+
 }

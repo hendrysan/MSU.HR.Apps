@@ -22,6 +22,7 @@ namespace Infrastructures
         public DbSet<StagingDocumentAttendance> StagingDocumentAttendances { get; set; }
         public DbSet<StagingDocumentAttendanceDetail> StagingDocumentAttendanceDetails { get; set; }
         public DbSet<MasterAttendance> MasterAttendances { get; set; }
+        public DbSet<MasterShift> MasterShifts { get; set; }
 
 
 

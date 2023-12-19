@@ -47,9 +47,7 @@
             <h4>Register your account</h4>
             <p>Enter your Id Number & password to login</p>
 
-            @* @Html.ValidationSummary(true, "", new { @class = "validation-summary-errors" }) *@
             @Html.AntiForgeryToken()
-            @* <div asp-validation-summary="All"></div> *@
 
             <div class="form-group">
                 <label class="col-form-label">ID Number</label>
@@ -67,7 +65,7 @@
             <div class="form-group">
                 <label class="col-form-label">Confirmation Method</label>
                 <div class="form-input position-relative">
-                    @Html.DropDownListFor(m => m.RegisterMethod, Model.DropdownMethod, new { @class = "form-select js-example-basic-single", @id = "RegisterMethod" })
+                    @Html.DropDownListFor(m => m.RegisterMethod, Model.DropdownMethod, new { @class = "form-select", @id = "RegisterMethod" })
                 </div>
             </div>
 
@@ -131,7 +129,7 @@
     <script>
         $(document).ready(function () {
 
-            $('.js-example-basic-single').select2();
+            $('.form-select').select2();
 
             $('#RegisterMethod').change(function () {
                 var value = this.value;

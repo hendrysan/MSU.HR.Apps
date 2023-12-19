@@ -58,5 +58,15 @@ namespace UnitTest.InterfaceTest
                 var result = await attendanceRepository.UploadAsync(user ?? new Models.Entities.MasterUser(), file, DateTime.Now, "Unit Test");
             }
         }
+
+        [Fact]
+        public async Task ProccessDocumentFingerPrint()
+        {
+            Guid id = Guid.Parse("83481496-76f7-4783-8056-2e47935f3dfa");
+            var user = await _context.MasterUsers.FirstOrDefaultAsync();
+
+            var result = await attendanceRepository.ProocessDocumentAsync(user, id);
+
+        }
     }
 }
