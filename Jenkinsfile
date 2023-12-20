@@ -1,9 +1,5 @@
 pipeline {
-	agent {
-		node {
-			label: 'devops-agent'
-		}
-	}
+	agent any
 
 	stages {
 		stage('Build Apps'){
