@@ -1,21 +1,13 @@
 version: "3.6"
 services:
-    hriswebclient:
-        container_name: hriswebclient
-        ports:
-            - "5101:8080"
-        build:
-            dockerfile: ./Dockerfile-WebClient
-        restart: always
-
-    hriswebapi:
-        container_name: hriswebapi
-        ports:
-            - "5102:8080"
-        build:
-            dockerfile: ./Dockerfile-WebApi
-        restart: always
-
+  hriswebclient:
+    build:
+      dockerfile: ./Dockerfile-WebClient
+    ports:
+      - "5101:8080"
+    container_name: hriswebclient
+    restart: always
+    
 volumes:
   db-data:
   app-data:
