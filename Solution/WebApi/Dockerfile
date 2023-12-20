@@ -9,19 +9,19 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["WebApi/WebApi.csproj", "WebApi/"]
-COPY ["Models/Models.csproj", "Models/"]
-COPY ["Repositories/Repositories.csproj", "Repositories/"]
-COPY ["Commons/Commons.csproj", "Commons/"]
-COPY ["Infrastructures/Infrastructures.csproj", "Infrastructures/"]
-RUN dotnet restore "./WebApi/./WebApi.csproj"
+COPY ["Solution/WebApi/WebApi.csproj", "WebApi/"]
+COPY ["Solution/Models/Models.csproj", "Models/"]
+COPY ["Solution/Repositories/Repositories.csproj", "Repositories/"]
+COPY ["Solution/Commons/Commons.csproj", "Commons/"]
+COPY ["Solution/Infrastructures/Infrastructures.csproj", "Infrastructures/"]
+RUN dotnet restore "Solution/WebApi/WebApi.csproj"
 COPY . .
-WORKDIR "/src/WebApi"
-RUN dotnet build "./WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/Solution/WebApi"
+RUN dotnet build "./WebApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./WebApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

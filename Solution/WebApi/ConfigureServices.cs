@@ -126,10 +126,7 @@ namespace WebApi
                 options.ValidationInterval = TimeSpan.Zero;
             });
 
-            services.AddHttpContextAccessor();
-
-            services.AddScoped<IUserRepository, UserRepository>();
-
+            
             return services;
         }
     }
