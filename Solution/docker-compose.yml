@@ -15,3 +15,7 @@ services:
         build:
             dockerfile: ./Dockerfile-WebApi
         restart: on-failure
+
+volumes:
+  db-data:
+  app-data:
