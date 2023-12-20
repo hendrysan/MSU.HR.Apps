@@ -10,7 +10,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["./WebClient.csproj", "WebClient/"]
-COPY ["../Solution/Commons/Commons.csproj", "Commons/"]
+COPY ["Solution/Commons/Commons.csproj", "Commons/"]
 COPY ["../Infrastructures/Infrastructures.csproj", "Infrastructures/"]
 COPY ["../Models/Models.csproj", "Models/"]
 COPY ["../Repositories/Repositories.csproj", "Repositories/"]
