@@ -9,15 +9,19 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["WebClient/WebClient.csproj", "WebClient/"]
-RUN dotnet restore "./WebClient/./WebClient.csproj"
+COPY ["Solution/WebClient/WebClient.csproj", "WebClient/"]
+COPY ["Solution/Commons/Commons.csproj", "Commons/"]
+COPY ["Solution/Infrastructures/Infrastructures.csproj", "Infrastructures/"]
+COPY ["Solution/Models/Models.csproj", "Models/"]
+COPY ["Solution/Repositories/Repositories.csproj", "Repositories/"]
+RUN dotnet restore "Solution/WebClient/WebClient.csproj"
 COPY . .
-WORKDIR "/src/WebClient"
-RUN dotnet build "./WebClient.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/Solution/WebClient"
+RUN dotnet build "./WebClient.csproj" -c Release -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./WebClient.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "WebClient.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
