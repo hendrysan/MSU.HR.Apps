@@ -7,3 +7,11 @@ services:
     ports:
       - 5101:8080
     container_name: hriswebclint
+
+  hriswebapi:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-WebApi
+    ports:
+      - 5102:8080
+    container_name: hriswebapi
