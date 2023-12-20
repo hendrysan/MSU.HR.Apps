@@ -4,8 +4,8 @@ pipeline {
 	stages {
 		stage('Build All Projects'){
 			steps {
-				sh '''cd Solution
-				 dotnet build
+				sh '''
+				 dotnet build Solution/
 				'''
 			}
 		}
