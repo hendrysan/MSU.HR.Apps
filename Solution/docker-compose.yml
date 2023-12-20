@@ -3,18 +3,18 @@ services:
     hriswebclient:
         container_name: hriswebclient
         ports:
-            - 5101:8080
+            - "5101:8080"
         build:
             dockerfile: ./Dockerfile-WebClient
-        restart: on-failure
+        restart: always
 
     hriswebapi:
         container_name: hriswebapi
         ports:
-            - 5102:8080
+            - "5102:8080"
         build:
             dockerfile: ./Dockerfile-WebApi
-        restart: on-failure
+        restart: always
 
 volumes:
   db-data:
