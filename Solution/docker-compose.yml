@@ -8,6 +8,7 @@ services:
     build:
         dockerfile: ./Solution/Dockerfile-WebClient
     restart: on-failure
+
   hriswebapi:
     container_name: hriswebapi
     ports:
