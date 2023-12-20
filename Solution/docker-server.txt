@@ -1,0 +1,13 @@
+
+
+
+  docker build -t hriswebclient -f Dockerfile-WebClient .
+  docker run -it -p 5101:8080 --name ct-hriswebclient hriswebclient
+  
+  
+  
+  docker build -t hriswebapi -f Dockerfile-WebApi .
+  docker run -it -p 5102:8080 --name ct-hriswebapi hriswebapi
+
+
+

@@ -4,8 +4,14 @@ services:
   hriswebclient:
     container_name: hriswebclient
     ports:
-        - 6101:80
-        - 5101:443
+        - 5101:8080
     build:
-        dockerfile: ./Solution/WebClient/Dockerfile
+        dockerfile: ./Solution/Dockerfile-WebClient
+    restart: on-failure
+  hriswebapi:
+    container_name: hriswebapi
+    ports:
+        - 5102:8080
+    build:
+        dockerfile: ./Solution/Dockerfile-WebApi
     restart: on-failure
