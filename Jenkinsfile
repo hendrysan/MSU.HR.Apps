@@ -2,9 +2,9 @@ pipeline {
 	agent any
 
 	stages {
-		stage('Build Apps WebClient'){
+		stage('Build All Projects'){
 			steps {
-				sh '''cd Solution/WebClient
+				sh '''cd Solution
 				 dotnet build
 				'''
 			}
