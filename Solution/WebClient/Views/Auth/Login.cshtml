@@ -41,7 +41,7 @@
 
         <form class="theme-form" method="post" asp-controller="Auth" asp-action="Login" needs-validation asp-route-returnurl="@ViewData["returnUrl"]">
             <h4>Sign in to account</h4>
-            <p>Enter your Identity & password to login test update</p>
+            <p>Enter your Identity & password to login</p>
 
             @* @Html.ValidationSummary(true, "", new { @class = "validation-summary-errors" }) *@
             @Html.AntiForgeryToken()
