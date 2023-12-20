@@ -22,7 +22,7 @@ pipeline {
 
 		stage('Deploy Apps'){
 			steps {
-				echo "ini step deploy apps"
+				sh 'docker-compose -f "docker-compose.yml" up --build -d'
 			}
 		}
 
