@@ -24,7 +24,8 @@ pipeline {
 
 		stage('Deploy Apps'){
 			steps {
-				sh '''cd Solution
+				sh '''
+				docker-compose -f "Solution/docker-compose.yml" up --build -d
 				'''
 			}
 		}
