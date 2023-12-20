@@ -2,9 +2,11 @@ pipeline {
 	agent any
 
 	stages {
-		stage('Build Apps'){
+		stage('Build Apps WebClient'){
 			steps {
-				echo "ini step build apps"
+				sh '''cd Solution/WebClient
+				 dotnet build
+				'''
 			}
 		}
 
