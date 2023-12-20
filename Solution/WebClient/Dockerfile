@@ -9,7 +9,7 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["./WebClient/WebClient.csproj", "Solution/WebClient/"]
+COPY ["./WebClient.csproj", "Solution/WebClient/"]
 COPY ["Solution/Commons/Commons.csproj", "Solution/Commons/"]
 COPY ["Solution/Infrastructures/Infrastructures.csproj", "Infrastructures/"]
 COPY ["Solution/Models/Models.csproj", "Models/"]
