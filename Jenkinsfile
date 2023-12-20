@@ -5,7 +5,7 @@ pipeline {
 		stage('Build All Projects'){
 			steps {
 				sh '''
-				 dotnet build Solution/
+				 dotnet build Solution/Solution.sln
 				'''
 			}
 		}
