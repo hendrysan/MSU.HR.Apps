@@ -1,8 +1,11 @@
 version: '3.4'
 
 services:
-  webclient:
-    image: ${DOCKER_REGISTRY-}webclient
+  hriswebclient:
+    container_name: hriswebclient
+    ports:
+        - 6101:80
+        - 5101:443
     build:
-      context: .
-      dockerfile: WebClient/Dockerfile
+        dockerfile: ./Solution/WebClient/Dockerfile
+    restart: on-failure
