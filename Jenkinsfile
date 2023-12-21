@@ -5,7 +5,7 @@ pipeline {
 		stage('Build Solution Apps'){
 			steps {
 				sh '''
-				dotnet build Solution.sln
+				dotnet build Solution/Solution.sln
 				'''
 			}
 		}
