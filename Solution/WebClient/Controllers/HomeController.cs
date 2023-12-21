@@ -20,6 +20,11 @@ namespace WebClient.Controllers
             return View();
         }
 
+        public IActionResult NavigatorPartial()
+        {
+            return PartialView();
+        }
+
         [Authorize]
         public IActionResult Index()
         {

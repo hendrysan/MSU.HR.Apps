@@ -73,4 +73,10 @@
     <ProjectReference Include="..\Repositories\Repositories.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <SonarQubeSetting Include="sonar.exclusions">
+      <Value>**/wwwroot/**/*.*</Value>
+    </SonarQubeSetting>
+  </ItemGroup>
+
 </Project>

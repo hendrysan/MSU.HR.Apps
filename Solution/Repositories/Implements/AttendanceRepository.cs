@@ -212,7 +212,7 @@ namespace Repositories.Implements
 
                 var presents = staging.Details?.Select(i => new Present()
                 {
-                    IdNumber = Convert.ToInt32(Regex.Match(i.Column5 ?? string.Empty, @"\d+").Value).ToString(),
+                    IdNumber = Convert.ToInt32(Regex.Match(i.Column5 ?? string.Empty, @"\d+", RegexOptions.None, TimeSpan.FromMilliseconds(100)).Value).ToString(),
                     DateTimeWork = DateTime.ParseExact($"{i.Column1} {i.Column2}", "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture)
                 }).Distinct().ToList();
 

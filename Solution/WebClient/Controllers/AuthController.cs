@@ -31,7 +31,7 @@ namespace WebClient.Controllers
         [HttpGet]
         public async Task<IActionResult> OtpVerify(string phoneNumber, string idNumber)
         {
-            GetAlert();
+            await GetAlert();
 
             var response = await _userRepository.CheckExpiredToken(phoneNumber, idNumber);
 
@@ -49,7 +49,7 @@ namespace WebClient.Controllers
                 ShowTimer = response.StatusCode == System.Net.HttpStatusCode.OK
             };
 
-            
+
 
             //model.CountDown = response.Data.
 
@@ -87,10 +87,10 @@ namespace WebClient.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login(string returnUrl = "")
+        public async Task<IActionResult> Login(string returnUrl = "")
         {
 
-            GetAlert();
+            await GetAlert();
             ViewData["returnUrl"] = returnUrl;
             var model = new LoginFormRequest
             {
@@ -157,9 +157,9 @@ namespace WebClient.Controllers
         }
 
         [HttpGet]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
-            GetAlert();
+            await GetAlert();
             var listMetode = new List<SelectListItem>()
             {
                  new() { Text = "Email", Value = "1", Selected=true},

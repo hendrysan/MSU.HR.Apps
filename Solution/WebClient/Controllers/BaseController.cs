@@ -10,19 +10,21 @@ namespace WebClient.Controllers
         public static string ServiceName = "WebClient";
         public BaseController()
         {
-            
+
         }
 
-        public async void GetAlert()
+        public async Task GetAlert()
         {
             try
             {
+
                 var alert = HttpContext.Session.GetString("Alert");
                 if (!string.IsNullOrEmpty(alert))
                 {
                     ViewBag.Alert = JsonSerializer.Deserialize<AlertModel>(alert);
                     HttpContext.Session.SetString("Alert", "");
                 }
+
             }
             catch (Exception ex)
             {

@@ -34,14 +34,14 @@ namespace Repositories.Implements
                 string template = "template/TemplatePayslip.xlsx";
                 string urlTemplate = await MinioUtility.GetAsync(template);
 
-                WebClient wc = new WebClient();
+                using WebClient wc = new WebClient();
                 var fileDownload = wc.DownloadData(urlTemplate);
                 using MemoryStream stream = new MemoryStream(fileDownload);
                 stream.Seek(0, SeekOrigin.Begin);
                 using XLWorkbook workbook = new XLWorkbook(stream);
                 IXLWorksheet ws = workbook.Worksheet(1);
                 ws.Cell("A1").Value = "Nama Perusahaan";
-                
+
                 workbook.SaveAs(output);
 
 
