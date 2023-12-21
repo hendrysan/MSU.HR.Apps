@@ -3,16 +3,16 @@ pipeline {
 
 	stages {
 		
-		stage('Scanning Sonar'){
-			steps {
-				sh '''
-				cd Solution
-				chmod +x ./script-sonarscanner.sh
-				sudo ./script-sonarscanner.sh
-				cd ..
-				'''
-			}
-		}
+		//stage('Scanning Sonar'){
+		//	steps {
+		//		sh '''
+		//		cd Solution
+		//		chmod +x ./script-sonarscanner.sh
+		//		sudo ./script-sonarscanner.sh
+		//		cd ..
+		//		'''
+		//	}
+		//}
 
 		stage('Compose Runner'){
 			steps {
