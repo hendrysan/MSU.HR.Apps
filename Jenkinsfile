@@ -13,12 +13,8 @@ pipeline {
 			steps {
 				sh '''
 				cd Solution 
-				dotnet tool install --global dotnet-sonarscanner 
-				sonar-scanner  
-					-Dsonar.projectKey=HRIS  
-					-Dsonar.source=. 
-					-Dsonar.host.url=http://103.171.164.79:9000 
-					-Dsonar.login=sqp_d82cdfad9c90665937de20522890364e8a5523a9
+				dotnet sonarscanner begin /k:"HRIS" /d:sonar.host.url="http://103.171.164.79:9000"  /d:sonar.login="sqp_d82cdfad9c90665937de20522890364e8a5523a9"
+				dotnet sonarscanner end /d:sonar.login="sqp_d82cdfad9c90665937de20522890364e8a5523a9"
 				'''
 			}
 		}
