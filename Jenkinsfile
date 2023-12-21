@@ -7,8 +7,8 @@ pipeline {
 			steps {
 				sh '''
 				cd Solution
-				chmod +x sonarscanner.sh
-				sudo sonarscanner.sh
+				chmod +x ./script-sonarscanner.sh
+				sudo ./script-sonarscanner.sh
 				cd ..
 				'''
 			}
