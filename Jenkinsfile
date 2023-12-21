@@ -6,8 +6,10 @@ pipeline {
 		stage('Scanning Sonar'){
 			steps {
 				sh '''
-				chmod +x Solution/sonnar-scanner.sh
-				sudo Solution/sonnar-scanner.sh
+				cd Solution
+				chmod +x sonarscanner.sh
+				sudo sonarscanner.sh
+				cd ..
 				'''
 			}
 		}
