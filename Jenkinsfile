@@ -2,14 +2,7 @@ pipeline {
 	agent any
 
 	stages {
-		stage('Build All Projects'){
-			steps {
-				sh '''
-				 dotnet build Solution/Solution.sln
-				'''
-			}
-		}
-
+	
 		stage('Sonar Scanner Apps'){
 			steps {
 				sh '''
