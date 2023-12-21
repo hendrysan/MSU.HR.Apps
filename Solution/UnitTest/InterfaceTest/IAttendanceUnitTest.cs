@@ -56,6 +56,8 @@ namespace UnitTest.InterfaceTest
                 IFormFile formFile = file;
 
                 var result = await attendanceRepository.UploadAsync(user ?? new Models.Entities.MasterUser(), file, DateTime.Now, "Unit Test");
+
+                Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
             }
         }
 
@@ -66,6 +68,8 @@ namespace UnitTest.InterfaceTest
             var user = await _context.MasterUsers.FirstOrDefaultAsync();
 
             var result = await attendanceRepository.ProocessDocumentAsync(user, id);
+
+            Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
 
         }
     }

@@ -95,7 +95,7 @@ namespace WebClient.Controllers
             var model = new LoginFormRequest
             {
                 UserInput = "hendry.priyatno@gmail.com",
-                Password = "123456"
+                
             };
             return View(model);
         }

@@ -11,10 +11,6 @@ namespace Commons.Loggers
     {
         private static readonly int maxLength = 2000;
 
-        public DiscordLogger()
-        {
-        }
-
         public static async Task<System.Net.HttpStatusCode> SendAsync(string serviceName, string message, object? query = null)
         {
             string content = string.Empty;
@@ -101,19 +97,18 @@ namespace Commons.Loggers
                 fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
 
                 form.Add(fileContent, "Document", fileName: "body.txt");
-            };
+            }
 
 
             var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
             var config = builder.Build();
 
-            string? baseUrl = config["Discord:Url"];// "";
+            string? baseUrl = config["Discord:Url"];
             var guildId = config["Discord:GuildId"];
             string? tokenWebhook = config["Discord:Token"];
 
             var response = await client.PostAsync($"{baseUrl}/{guildId}/{tokenWebhook}", form);
-            //var data = await response.Content.ReadAsStringAsync();
-
+            
             return response.StatusCode;
         }
 

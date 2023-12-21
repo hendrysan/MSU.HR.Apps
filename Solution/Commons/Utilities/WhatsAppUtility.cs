@@ -10,7 +10,7 @@ using static System.Net.WebRequestMethods;
 
 namespace Commons.Utilities
 {
-    public class WhatsAppUtility
+    public static class WhatsAppUtility
     {
 
         public static async Task<System.Net.HttpStatusCode> SendAsync(string target, string message, string countryCode = "62")

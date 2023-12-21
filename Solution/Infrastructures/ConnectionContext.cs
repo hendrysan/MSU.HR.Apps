@@ -26,17 +26,17 @@ namespace Infrastructures
 
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
             var con = _configuration.GetConnectionString("PostgreSQLConnection");
-            options.UseNpgsql(con);
+            optionsBuilder.UseNpgsql(con);
 
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            throw new NotSupportedException();
         }
 
     }

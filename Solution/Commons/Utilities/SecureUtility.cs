@@ -28,10 +28,10 @@ namespace Commons.Utilities
                     AES.BlockSize = 128;
 
 #pragma warning disable SYSLIB0041 // Type or member is obsolete
-                    Rfc2898DeriveBytes key = new(password: passwordBytes, salt: saltBytes, iterations: 1000);
+                    Rfc2898DeriveBytes rfc = new(password: passwordBytes, salt: saltBytes, iterations: 1000);
 #pragma warning restore SYSLIB0041 // Type or member is obsolete
-                    AES.Key = key.GetBytes(AES.KeySize / 8);
-                    AES.IV = key.GetBytes(AES.BlockSize / 8);
+                    AES.Key = rfc.GetBytes(AES.KeySize / 8);
+                    AES.IV = rfc.GetBytes(AES.BlockSize / 8);
 
                     AES.Mode = CipherMode.CBC;
 
@@ -77,10 +77,10 @@ namespace Commons.Utilities
                     AES.BlockSize = 128;
 
 #pragma warning disable SYSLIB0041 // Type or member is obsolete
-                    using (Rfc2898DeriveBytes key = new(passwordBytes, saltBytes, 1000))
+                    using (Rfc2898DeriveBytes rfc = new(passwordBytes, saltBytes, 1000))
                     {
-                        AES.Key = key.GetBytes(AES.KeySize / 8);
-                        AES.IV = key.GetBytes(AES.BlockSize / 8);
+                        AES.Key = rfc.GetBytes(AES.KeySize / 8);
+                        AES.IV = rfc.GetBytes(AES.BlockSize / 8);
                     }
 #pragma warning restore SYSLIB0041 // Type or member is obsolete
 

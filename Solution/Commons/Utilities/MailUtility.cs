@@ -4,7 +4,7 @@ using System.Net;
 
 namespace Commons.Utilities
 {
-    public class MailUtility
+    public static class MailUtility
     {
         public static async Task<bool> SendAsync(List<string> recipients, string subject, string body)
         {

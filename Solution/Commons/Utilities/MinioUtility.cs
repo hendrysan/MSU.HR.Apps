@@ -2,13 +2,10 @@
 using Minio;
 using Minio.DataModel.Args;
 using Minio.Exceptions;
-using System.Net.Http.Headers;
-using System.Net.Mime;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Commons.Utilities
 {
-    public class MinioUtility
+    public static class MinioUtility
     {
         private const string File = "appsettings.json";
 
@@ -32,7 +29,7 @@ namespace Commons.Utilities
             try
             {
                 IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile(File).Build();
-                var bucketName = config["Minio:BucketName"] ?? string.Empty;//"test";
+                var bucketName = config["Minio:BucketName"] ?? string.Empty;
                 var minio = await BuildMinioClient(config);
                 // Make a bucket on the server, if not already present.
                 var beArgs = new BucketExistsArgs()
