@@ -12,7 +12,8 @@ pipeline {
 		stage('Scanning Sonar'){
 			steps {
 				sh '''
-				cd Solution
+				cd Solution 
+				dotnet tool install --global dotnet-sonarscanner 
 				sonar-scanner  
 					-Dsonar.projectKey=HRIS  
 					-Dsonar.source=. 
