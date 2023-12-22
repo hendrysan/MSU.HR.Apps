@@ -1,0 +1,37 @@
+﻿@using WebClient.ViewModels.Others
+@model AlertModel
+
+@if (Model != null)
+{
+    @* <div class="col-md-6 offset-md-3 mt-5"> *@
+
+    <div class="alert border-@(Model.Type.ToString().ToLower()) alert-dismissible fade show p-0" role="alert"
+         style=" position: fixed;
+    top: 5px;
+    left:2%;
+    width: 96%;">
+        <div class="alert-arrow bg-@(Model.Type.ToString().ToLower())">
+            @if (Model.Type == AlertType.Success)
+            {
+                <i class="icofont icofont-verification-check"></i>
+            }
+            else if (Model.Type == AlertType.Danger)
+            {
+                <i class="icofont icofont-error"></i>
+            }
+            else if (Model.Type == AlertType.Warning)
+            {
+                <i class="icofont icofont-warning"></i>
+            }
+            else if (Model.Type == AlertType.Info)
+            {
+                <i class="icofont icofont-info"></i>
+            }
+        </div>
+        <div>
+            <strong class="txt-dark">@(Model.StrongMessage)</strong> @(Model.Message)
+        </div>
+        <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+}

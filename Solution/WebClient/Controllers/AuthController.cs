@@ -90,7 +90,8 @@ namespace WebClient.Controllers
         public async Task<IActionResult> Login(string returnUrl = "")
         {
 
-            await GetAlert();
+            SetAlert("Response not found", AlertType.Danger);
+            
             ViewData["returnUrl"] = returnUrl;
             var model = new LoginFormRequest
             {

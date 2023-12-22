@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -20,11 +21,6 @@ namespace WebClient.Controllers
             return View();
         }
 
-        public IActionResult NavigatorPartial()
-        {
-            return PartialView();
-        }
-
         [Authorize]
         public IActionResult Index()
         {
@@ -35,6 +31,8 @@ namespace WebClient.Controllers
         {
             return View();
         }
+
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -1,4 +1,6 @@
-﻿<!-- Page Sidebar Start-->
+﻿@using WebClient.ViewModels.Others
+@model NavigationModel
+<!-- Page Sidebar Start-->
 <div class="sidebar-wrapper" sidebar-layout="stroke-svg">
     <div>
         <div class="logo-wrapper">
@@ -26,7 +28,7 @@
                     </li>
                     <li class="sidebar-main-title">
                         <div>
-                            <h6>Master</h6>
+                            <h6>Master @Model.Title</h6>
                         </div>
                     </li>
                     <li class="sidebar-list">
@@ -36,7 +38,7 @@
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="@Url.Action("List","Employee")">List</a></li>
-                            
+
                         </ul>
                     </li>
                     <li class="sidebar-main-title">
@@ -65,7 +67,7 @@
                         <ul class="sidebar-submenu">
                             @* <li><a href="@Url.Action("List","Attendance")">List Attendance</a></li> *@
                             <li><a href="@Url.Action("Upload","Attendance")">Upload</a></li>
-                            
+
 
                         </ul>
                     </li>

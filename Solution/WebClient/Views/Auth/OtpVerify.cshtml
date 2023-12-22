@@ -43,7 +43,7 @@
     </div>
     <div class="login-main">
         <form class="theme-form" method="post" asp-controller="Auth" asp-action="OtpVerify" needs-validation>
-            @await Html.PartialAsync("_Alert")
+            @await Component.InvokeAsync("Alert")
             <h4>Confirm your account</h4>
             <p>Enter your otp from whats application</p>
 

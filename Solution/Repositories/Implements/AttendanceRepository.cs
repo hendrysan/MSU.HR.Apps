@@ -199,7 +199,7 @@ namespace Repositories.Implements
             try
             {
                 var staging = await _context.StagingDocumentAttendances
-                    .Where(i => i.Id == documentId)
+                    //.Where(i => i.Id == documentId)
                     .Include(i => i.Details)
                     .FirstOrDefaultAsync();
 
@@ -226,6 +226,13 @@ namespace Repositories.Implements
                 List<MasterAttendance> entities = [];
                 MasterAttendance? master = default;
 
+                var existingMaster = await _context.MasterAttendances.ToListAsync();
+                _context.MasterAttendances.RemoveRange(existingMaster);
+                await _context.SaveChangesAsync();
+
+                int breakHours = 1;
+                int maxWorkHours = 8;
+
                 foreach (var id in presents.Select(i => i.IdNumber).Distinct().ToList())
                 {
                     var workIn = presents.Where(i => i.IdNumber == id).Select(i => i.DateTimeWork).Min();
@@ -246,6 +253,13 @@ namespace Repositories.Implements
                         PresentIn = workIn.HasValue ? workIn.Value : null,
                         PresentOut = workOut.HasValue ? workOut.Value : null
                     };
+
+                    double countOverTime = master.TotalWorkHours - maxWorkHours - breakHours;
+
+                    //master.OverTime1 =  > 0
+
+
+
 
                     entities.Add(master);
                 }

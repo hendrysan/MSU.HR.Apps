@@ -50,7 +50,8 @@
 
         <!-- Page Body Start-->
         <div class="page-body-wrapper">
-            @await Html.PartialAsync("_TemplateNavigation")
+            @* @await Html.RenderPartialAsync("_TemplateNavigation") *@
+            @await Component.InvokeAsync("Navigation")
             <div class="page-body">
                 <div class="container-fluid">
                     <div class="page-title">

@@ -18,6 +18,8 @@ namespace Models.Entities
         public DateTime? BreakIn { get; set; }
         public DateTime? BreakOut { get; set; }
         public double TotalBreak { get; set; } = 0;
+        [StringLength(50)]
+        public string TypeDay { get; set; } = string.Empty;
 
         [Required]
         [StringLength(150, MinimumLength = 3)]

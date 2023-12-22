@@ -23,6 +23,7 @@ namespace Infrastructures
         public DbSet<StagingDocumentAttendanceDetail> StagingDocumentAttendanceDetails { get; set; }
         public DbSet<MasterAttendance> MasterAttendances { get; set; }
         public DbSet<MasterShift> MasterShifts { get; set; }
+        public DbSet<MasterWorkDay> MasterWorkDays { get; set; }
 
 
 
@@ -34,10 +35,10 @@ namespace Infrastructures
 
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            throw new NotSupportedException();
-        }
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    //throw new NotSupportedException();
+        //}
 
     }
 }

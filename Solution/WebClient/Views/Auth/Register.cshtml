@@ -43,7 +43,8 @@
     </div>
     <div class="login-main">
         <form class="theme-form" method="post" asp-controller="Auth" asp-action="Register" needs-validation >
-            @await Html.PartialAsync("_Alert")
+            @* @await Html.PartialAsync("_Alert") *@
+            @await Component.InvokeAsync("Alert")
             <h4>Register your account</h4>
             <p>Enter your Id Number & password to login</p>
 

@@ -16,6 +16,7 @@ namespace Repositories
             services.AddScoped<IMailRepository, MailRepository>();
             services.AddScoped<IAttendanceRepository, AttendanceRepository>();
             services.AddScoped<IPayrollRepository, PayrollRepository>();
+            services.AddScoped<IWorkDayRepository, WorkDayRepository>();
             return services;
         }
     }

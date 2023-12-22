@@ -34,7 +34,7 @@ namespace UnitTest.InterfaceTest
         [Fact]
         public async Task GeneratePayslip()
         {
-            var masterUser = await _context.MasterUsers.FirstOrDefaultAsync();
+            var masterUser = await _context.MasterUsers.FirstOrDefaultAsync() ?? new();
             var result = await payrollRepository.GeneratePayslip(masterUser, 202312, Guid.NewGuid());
 
             Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
