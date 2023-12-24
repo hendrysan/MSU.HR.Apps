@@ -73,11 +73,11 @@ namespace Models.Entities
         [StringLength(10)]
         public string Day28 { get; set; } = string.Empty;
         [StringLength(10)]
-        public string Day29 { get; set; } = string.Empty;
+        public string Day29 { get; set; } = "D";
         [StringLength(10)]
-        public string Day30 { get; set; } = string.Empty;
+        public string Day30 { get; set; } = "D";
         [StringLength(10)]
-        public string Day31 { get; set; } = string.Empty;
+        public string Day31 { get; set; } = "D";
 
         public Guid? BatchId { get; set; }
 

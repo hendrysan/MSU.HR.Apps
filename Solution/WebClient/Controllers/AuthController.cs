@@ -87,16 +87,16 @@ namespace WebClient.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Login(string returnUrl = "")
+        public IActionResult Login(string returnUrl = "")
         {
 
             SetAlert("Response not found", AlertType.Danger);
-            
+
             ViewData["returnUrl"] = returnUrl;
             var model = new LoginFormRequest
             {
                 UserInput = "hendry.priyatno@gmail.com",
-                
+
             };
             return View(model);
         }

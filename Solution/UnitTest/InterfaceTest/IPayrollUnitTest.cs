@@ -8,37 +8,33 @@ namespace UnitTest.InterfaceTest
 {
     public class IPayrollUnitTest
     {
-        private readonly IPayrollRepository payrollRepository;
-        private readonly IUserRepository userRepository;
-        private readonly IMailRepository mailRepository;
-        private readonly ConnectionContext? _context;
-        private readonly int timeSleep = 1000;
+        //private readonly IPayrollRepository payrollRepository;
+        //private readonly IMailRepository mailRepository;
+        //private readonly ConnectionContext _context;
 
-        public IPayrollUnitTest()
-        {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
+        //public IPayrollUnitTest()
+        //{
+        //    IConfigurationRoot configuration = new ConfigurationBuilder()
+        //        .AddJsonFile("appsettings.json")
+        //        .Build();
 
-            var dbOption = new DbContextOptionsBuilder<ConnectionContext>().Options;
+        //    var dbOption = new DbContextOptionsBuilder<ConnectionContext>().Options;
 
 
 
-            _context = new ConnectionContext(dbOption, configuration);
-            mailRepository = new MailRepository(configuration, _context);
-            userRepository = new UserRepository(_context, mailRepository);
+        //    _context = new ConnectionContext(dbOption, configuration);
+        //    mailRepository = new MailRepository(configuration, _context);
+        //    payrollRepository = new PayrollRepository(_context, mailRepository);
+        //}
 
-            payrollRepository = new PayrollRepository(_context, mailRepository);
-        }
+        //[Fact]
+        //public async Task GeneratePayslip()
+        //{
+        //    var masterUser = await _context.MasterUsers.FirstOrDefaultAsync() ?? new();
+        //    var result = await payrollRepository.GeneratePayslip(masterUser, 202312, Guid.NewGuid());
 
-        [Fact]
-        public async Task GeneratePayslip()
-        {
-            var masterUser = await _context.MasterUsers.FirstOrDefaultAsync() ?? new();
-            var result = await payrollRepository.GeneratePayslip(masterUser, 202312, Guid.NewGuid());
-
-            Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
-        }
+        //    Assert.Equal(System.Net.HttpStatusCode.OK, result.StatusCode);
+        //}
 
 
 

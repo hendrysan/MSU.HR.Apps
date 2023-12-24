@@ -1,6 +1,5 @@
 ﻿using Commons.Loggers;
 using Commons.Utilities;
-using Discord;
 using Infrastructures;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -9,16 +8,15 @@ using Models.Responses;
 using Repositories.Interfaces;
 using System.Globalization;
 using System.Net;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 namespace Repositories.Implements
 {
-    public class AttendanceRepository(ConnectionContext context) : IAttendanceRepository
+    public class AttendanceRepository(ConnectionContext context, IWorkDayRepository workDayRepository) : IAttendanceRepository
     {
         private readonly string repositoryName = "AttendanceRepository";
         private readonly ConnectionContext _context = context;
-
+        private readonly IWorkDayRepository _workDayRepository = workDayRepository;
 
         private async Task<int> BulkInsertDocumentAttendanceDetail(List<StagingDocumentAttendanceDetail> documentAttendanceDetails)
         {
@@ -199,7 +197,7 @@ namespace Repositories.Implements
             try
             {
                 var staging = await _context.StagingDocumentAttendances
-                    //.Where(i => i.Id == documentId)
+                    .Where(i => i.Id == documentId)
                     .Include(i => i.Details)
                     .FirstOrDefaultAsync();
 
@@ -226,9 +224,22 @@ namespace Repositories.Implements
                 List<MasterAttendance> entities = [];
                 MasterAttendance? master = default;
 
+                List<DateTime> dates = presents.Select(i => i.DateTimeWork.Date).Distinct().ToList();
+
+                var workDays = _workDayRepository.SearchAsync(dates: dates).Result.DetailWorkDays;
+
+                if (workDays?.Count == 0)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Message = $"WorkDay not found on date = {string.Join(", ", dates)}";
+                    return response;
+                }
+
+#if DEBUG
                 var existingMaster = await _context.MasterAttendances.ToListAsync();
                 _context.MasterAttendances.RemoveRange(existingMaster);
                 await _context.SaveChangesAsync();
+#endif
 
                 int breakHours = 1;
                 int maxWorkHours = 8;
@@ -239,8 +250,9 @@ namespace Repositories.Implements
                     var workOut = presents.Where(i => i.IdNumber == id).Select(i => i.DateTimeWork).Max();
                     long ticks = 0;
 
-                    if (workIn != null && workOut != null)
-                        ticks = workOut.Value.Ticks - workIn.Value.Ticks;
+                    ticks = workOut.Ticks - workIn.Ticks;
+
+                    var getHoliday = workDays?.Where(i => i.Day?.Date == workIn.Date).FirstOrDefault();
 
                     master = new MasterAttendance()
                     {
@@ -250,16 +262,12 @@ namespace Repositories.Implements
                         SourceId = documentId.ToString(),
                         CreatedAt = DateTime.Now,
                         TotalWorkHours = Convert.ToDouble(TimeSpan.FromTicks(ticks).TotalHours),
-                        PresentIn = workIn.HasValue ? workIn.Value : null,
-                        PresentOut = workOut.HasValue ? workOut.Value : null
+                        PresentIn = workIn,
+                        PresentOut = workOut == workIn ? null : workOut,
+                        IsHoliday = !string.IsNullOrEmpty(getHoliday?.Value),
                     };
 
                     double countOverTime = master.TotalWorkHours - maxWorkHours - breakHours;
-
-                    //master.OverTime1 =  > 0
-
-
-
 
                     entities.Add(master);
                 }
@@ -284,8 +292,8 @@ namespace Repositories.Implements
 
         private class Present
         {
-            public string? IdNumber { get; set; }
-            public DateTime? DateTimeWork { get; set; }
+            public required string IdNumber { get; set; }
+            public DateTime DateTimeWork { get; set; }
         }
     }
 
