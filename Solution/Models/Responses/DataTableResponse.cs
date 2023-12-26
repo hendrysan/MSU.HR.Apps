@@ -1,6 +1,6 @@
 ﻿namespace Models.Responses
 {
-    public class DataTableResponse
+    public class DataTableResponse: DefaultResponse
     {
         public string? Draw { get; set; }
         public int? RecordsTotal { get; set; }

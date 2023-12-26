@@ -245,10 +245,18 @@ namespace Repositories.Implements
                     response.Message = "Employee not active, call administrator";
                 }
 
+                var grants = await _context.GrantAccesses.Where(i => i.Role == masterUser.Role).ToListAsync();
+                if (grants == null)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Message = "Grant access user not found, call administrator";
+                }
+
                 response.StatusCode = HttpStatusCode.OK;
                 masterUser.PasswordHash = string.Empty;
                 response.MasterUser = masterUser;
                 response.MasterEmployee = masterEmployee;
+                response.Grants = grants;
 
             }
             catch (Exception ex)

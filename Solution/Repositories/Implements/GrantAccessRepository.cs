@@ -2,6 +2,7 @@
 using Infrastructures;
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
+using Models.Requests;
 using Models.Responses;
 using Repositories.Interfaces;
 using System.Net;
@@ -9,10 +10,68 @@ using static Models.Entities.EnumEntities;
 
 namespace Repositories.Implements
 {
-    public class GrandAccessRepository(ConnectionContext context) : IGrandAccessRepository
+    public class GrantAccessRepository(ConnectionContext context) : IGrantAccessRepository
     {
         private readonly string repositoryName = "GrandAccessRepository";
         private readonly ConnectionContext _context = context;
+
+        public async Task<DataTableResponse> DataTableAsync(DataTableRequest request)
+        {
+            DataTableResponse response = new();
+            try
+            {
+                int totalRecord = 0;
+                int filterRecord = 0;
+                var data = _context.Set<GrantAccess>()
+                                   .Include(i => i.Role)
+                                   .AsQueryable();
+
+                totalRecord = data.Count();
+
+                if (!string.IsNullOrEmpty(request.SearchValue))
+                {
+                    //data = data.Where(x =>
+                    //x.Code.ToLower().Contains(request.searchValue.ToLower()) ||
+                    //x.Name.ToLower().Contains(request.searchValue.ToLower())
+                    //);
+
+                    //data = data.Where(x => x.Department != null && x.Department.Name.ToLower().Contains(request.searchValue.ToLower()));
+                    //data = data.Where(x => x.Section != null && x.Section.Name.ToLower().Contains(request.searchValue.ToLower()));
+                }
+
+                filterRecord = data.Count();
+
+                if (!string.IsNullOrEmpty(request.SortColumn) && !string.IsNullOrEmpty(request.SortColumnDirection))
+                {
+                    switch (request.SortColumn)
+                    {
+                        case nameof(GrantAccess.Module):
+                            data = request.SortColumnDirection == "desc" ? data.OrderByDescending(x => x.Module) : data.OrderBy(x => x.Module);
+                            break;
+
+                        default:
+                            data = request.SortColumnDirection == "desc" ? data.OrderByDescending(x => x.Source) : data.OrderBy(x => x.Source);
+                            break;
+                    }
+                }
+
+                var list = data.Skip(request.Skip).Take(request.PageSize).AsEnumerable();
+
+                response.Draw = request.Draw;
+                response.RecordsTotal = totalRecord;
+                response.RecordsFiltered = filterRecord;
+                response.Data = list;
+            }
+            catch (Exception ex)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Message = ex.Message;
+                await DiscordLogger.SendAsync(repositoryName, ex.Message, request);
+                throw new NullReferenceException(ex.Message, ex.InnerException);
+            }
+            return response;
+        }
+
         public async Task<DefaultResponse> InititalAdminAsync()
         {
             DefaultResponse response = new();
@@ -31,7 +90,7 @@ namespace Repositories.Implements
                     await _context.SaveChangesAsync();
                 }
 
-                masterRole = await _context.MasterRoles.FindAsync(roleAdmin);
+                masterRole = await _context.MasterRoles.FirstOrDefaultAsync(i => i.Id == roleAdmin) ?? new();
 
                 List<string> moduls = Enum.GetNames(typeof(EnumModule)).ToList();
 
@@ -78,7 +137,9 @@ namespace Repositories.Implements
             GrandAccessListResponse response = new();
             try
             {
-                var access = await _context.GrantAccesses.Where(i => i.Role.Code == roleCode && i.Source == source)
+                var role = await _context.MasterRoles.FirstOrDefaultAsync(i => i.Code == roleCode);
+
+                var access = await _context.GrantAccesses.Where(i => i.Role == role && i.Source == source)
                     .ToListAsync();
 
                 if (access.Count > 0)

@@ -1,0 +1,104 @@
+﻿@{
+    ViewData["Title"] = "Grant Access Page";
+    Layout = "_LayoutMain";
+}
+
+
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/css/vendors/datatables.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/css/style.css")">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+
+}
+
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h4>@ViewData["Title"]</h4>
+                </div>
+                <div class="ml-auto">
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="display" id="datatable-index" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Source</th>
+                            <th>Role</th>
+                            <th>Module</th>
+                            <th>IsView</th>
+                            <th>IsCreate</th>
+                            <th>IsEdit</th>
+                            <th>IsDelete</th>
+                            <th>IsExport</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <script src="@Url.Content("~/assets/js/datatable/datatables/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/assets/js/moment.min.js")"></script>
+
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script>
+        (function ($) {
+
+            $(document).ready(function () {
+
+                const table = $("#datatable-index").DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copyHtml5',
+                        'excelHtml5',
+                        'csvHtml5',
+                        'pdfHtml5'
+                    ],
+                    ajax: {
+                        url: "@Url.Action("PostDataTableGrantAccess", "GrantAccess")",
+                        type: "POST",
+                    },
+                    processing: true,
+                    serverSide: true,
+                    filter: false,
+                    ordering: false,
+                    columns: [
+                        { data: "source", name: "Source" },
+                        { data: "role.code", name: "Role" },
+                        { data: "module", name: "Module" },
+                        { data: "isView", name: "IsView" },
+                        { data: "isCreate", name: "IsCreate" },
+                        { data: "isEdit", name: "IsEdit" },
+                        { data: "isDelete", name: "IsDelete" },
+                        { data: "isExport", name: "IsExport" },
+                        {
+                            mRender: function (data, type, row) {
+                                console.log(row);
+                                var linkDetails = '@Html.ActionLink("Details", "Detail", "Employee", new { id = -1 })';
+                                linkDetails = linkDetails.replace("-1", row.id);
+                                return linkDetails;
+                            }
+                        }
+                    ],
+                });
+            });
+
+        })(jQuery);
+    </script>
+}
+

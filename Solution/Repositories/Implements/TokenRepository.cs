@@ -25,7 +25,7 @@ namespace Repositories.Implements
                     new(JwtRegisteredClaimNames.Iat, DateTime.Now.ToString(CultureInfo.InvariantCulture)),
                     new(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new(ClaimTypes.Name, user.FullName ?? string.Empty),
-                    new(ClaimTypes.Role, user.Role.Code),
+                    new(ClaimTypes.Role, user.Role?.Code ?? string.Empty),
                     new(ClaimTypes.Email, user.Email ?? string.Empty),
                     new("IdNumber", user.IdNumber?? string.Empty),
                     new("Email", user.Email?? string.Empty),

@@ -30,7 +30,7 @@ namespace WebClient.ViewComponents
                     Type = AlertType.Danger
                 };
                 HttpContext.Session.SetString("Alert", JsonSerializer.Serialize(alert));
-                _httpContextAccessor.HttpContext.Response.Redirect("/Auth/Logout");
+                _httpContextAccessor?.HttpContext?.Response.Redirect("/Auth/Logout");
                 return View(new NavigationModel());
             }
 

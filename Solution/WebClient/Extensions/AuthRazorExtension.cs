@@ -10,7 +10,5 @@ namespace WebClient.Extensions
             string data = page.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value ?? "GetUserRole Error";
             return data;
         }
-
-
     }
 }

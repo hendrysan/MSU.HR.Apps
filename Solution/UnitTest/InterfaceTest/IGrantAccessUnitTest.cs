@@ -6,12 +6,12 @@ using Repositories.Interfaces;
 
 namespace UnitTest.InterfaceTest
 {
-    public class IGrandAccessUnitTest
+    public class IGrantAccessUnitTest
     {
         private readonly ConnectionContext _context;
-        private readonly IGrandAccessRepository _grandAccessRepository;
+        private readonly IGrantAccessRepository _grandAccessRepository;
 
-        public IGrandAccessUnitTest()
+        public IGrantAccessUnitTest()
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
               .AddJsonFile("appsettings.json")
@@ -20,7 +20,7 @@ namespace UnitTest.InterfaceTest
             var dbOption = new DbContextOptionsBuilder<ConnectionContext>().Options;
 
             _context = new ConnectionContext(dbOption, configuration);
-            _grandAccessRepository = new GrandAccessRepository(_context);
+            _grandAccessRepository = new GrantAccessRepository(_context);
         }
 
         [Fact]

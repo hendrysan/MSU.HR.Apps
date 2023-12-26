@@ -11,7 +11,7 @@ namespace Repositories
         public static IConfiguration? Configuration { get; }
         public static IServiceCollection AddRepositoryServices(this IServiceCollection services)
         {
-            services.AddScoped<IGrandAccessRepository, GrandAccessRepository>();
+            services.AddScoped<IGrantAccessRepository, GrantAccessRepository>();
             services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IMailRepository, MailRepository>();

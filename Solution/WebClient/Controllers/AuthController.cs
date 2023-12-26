@@ -12,11 +12,10 @@ using WebClient.ViewModels.Others;
 
 namespace WebClient.Controllers
 {
-    public class AuthController(IUserRepository userRepository, ITokenRepository tokenRepository, IGrandAccessRepository grandAccessRepository) : BaseController
+    public class AuthController(IUserRepository userRepository, ITokenRepository tokenRepository) : BaseController
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly ITokenRepository _tokenRepository = tokenRepository;
-        private readonly IGrandAccessRepository _grandAccessRepository = grandAccessRepository;
 
         [HttpGet]
         public async Task<IActionResult> EmailVerify(string secure, string requester)
@@ -50,10 +49,6 @@ namespace WebClient.Controllers
                 CountDown = response.Minutes ?? "00:00",
                 ShowTimer = response.StatusCode == System.Net.HttpStatusCode.OK
             };
-
-
-
-            //model.CountDown = response.Data.
 
             return View(model);
         }
@@ -91,9 +86,6 @@ namespace WebClient.Controllers
         [HttpGet]
         public IActionResult Login(string returnUrl = "")
         {
-
-            SetAlert("Response not found", AlertType.Danger);
-
             ViewData["returnUrl"] = returnUrl;
             var model = new LoginFormRequest
             {
@@ -139,8 +131,6 @@ namespace WebClient.Controllers
                 return View(formRequest);
             }
 
-            //MasterUser? masterUser = response.Data as MasterUser;
-
             var claims = _tokenRepository.CreateClaims(response.MasterUser);
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -148,10 +138,7 @@ namespace WebClient.Controllers
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-
-            var grandAccess = await _grandAccessRepository.ListAccess(response.MasterUser.Role.Code, Models.Entities.EnumEntities.EnumSource.WebClient);
-
-            NavigationModel navigation = NavigationExtension.GetNavigation(accesses: grandAccess.List, response.MasterUser.Role);
+            NavigationModel navigation = NavigationExtension.GetNavigation(accesses: response.Grants ?? new(), response.MasterUser.Role ?? new());
             HttpContext.Session.SetString("Navigation", JsonSerializer.Serialize(navigation));
 
             string? returnUrl = HttpContext.Request.Query["returnUrl"];

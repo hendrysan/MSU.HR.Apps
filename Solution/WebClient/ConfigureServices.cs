@@ -1,5 +1,6 @@
 ﻿using Infrastructures;
 using Repositories;
+using System.Text.Json.Serialization;
 
 namespace WebClient
 {
@@ -9,6 +10,9 @@ namespace WebClient
 
         public static IServiceCollection AddWebClientServices(this IServiceCollection services)
         {
+
+
+
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);//We set Time here 
@@ -39,13 +43,22 @@ namespace WebClient
             //   })
             //   .AddEntityFrameworkStores<ConnectionContext>();
 
-            services.AddMvc();
+
+            //services.AddControllers()
+            //  .AddJsonOptions(options =>
+            //  {
+            //      options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            //  });
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
             services.AddHttpContextAccessor();
             services.AddRepositoryServices();
 
             return services;
         }
 
-       
+
     }
 }
