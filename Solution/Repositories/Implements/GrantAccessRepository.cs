@@ -54,6 +54,10 @@ namespace Repositories.Implements
                             break;
                     }
                 }
+                else
+                {
+                    data = request.SortColumnDirection == "desc" ? data.OrderByDescending(x => x.Source) : data.OrderBy(x => x.Source);
+                }
 
                 var list = data.Skip(request.Skip).Take(request.PageSize);
 
