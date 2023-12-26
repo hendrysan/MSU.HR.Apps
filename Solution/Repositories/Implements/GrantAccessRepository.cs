@@ -59,7 +59,7 @@ namespace Repositories.Implements
                     data = request.SortColumnDirection == "desc" ? data.OrderByDescending(x => x.Source) : data.OrderBy(x => x.Source);
                 }
 
-                var list = data.Skip(request.Skip).Take(request.PageSize);
+                var list = await data.Skip(request.Skip).Take(request.PageSize).ToListAsync();
 
                 response.Draw = request.Draw;
                 response.RecordsTotal = totalRecord;
