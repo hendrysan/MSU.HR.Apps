@@ -2,19 +2,21 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Models.Entities;
 using Repositories.Interfaces;
 using System.Security.Claims;
+using System.Text.Json;
 using System.Web;
+using WebClient.Extensions;
 using WebClient.ViewModels.Auth;
 using WebClient.ViewModels.Others;
 
 namespace WebClient.Controllers
 {
-    public class AuthController(IUserRepository userRepository, ITokenRepository tokenRepository) : BaseController
+    public class AuthController(IUserRepository userRepository, ITokenRepository tokenRepository, IGrandAccessRepository grandAccessRepository) : BaseController
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly ITokenRepository _tokenRepository = tokenRepository;
+        private readonly IGrandAccessRepository _grandAccessRepository = grandAccessRepository;
 
         [HttpGet]
         public async Task<IActionResult> EmailVerify(string secure, string requester)
@@ -145,6 +147,12 @@ namespace WebClient.Controllers
             var principal = new ClaimsPrincipal(identity);
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+
+            var grandAccess = await _grandAccessRepository.ListAccess(response.MasterUser.Role.Code, Models.Entities.EnumEntities.EnumSource.WebClient);
+
+            NavigationModel navigation = NavigationExtension.GetNavigation(accesses: grandAccess.List, response.MasterUser.Role);
+            HttpContext.Session.SetString("Navigation", JsonSerializer.Serialize(navigation));
 
             string? returnUrl = HttpContext.Request.Query["returnUrl"];
             return Redirect(returnUrl ?? "/");

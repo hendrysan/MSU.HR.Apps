@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
 using Models.Entities;
+using System;
+using static Models.Entities.EnumEntities;
 
 namespace Infrastructures
 {
@@ -35,10 +38,26 @@ namespace Infrastructures
 
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    //throw new NotSupportedException();
-        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            var converterModul = new ValueConverter<EnumModule, string>(
+                v => v.ToString(),
+                 v => (EnumModule)Enum.Parse(typeof(EnumModule), v));
+
+            var converterSource = new ValueConverter<EnumSource, string>(
+                v => v.ToString(),
+                 v => (EnumSource)Enum.Parse(typeof(EnumSource), v));
+
+            modelBuilder
+               .Entity<GrantAccess>()
+               .Property(e => e.Module)
+               .HasConversion(converterModul);
+
+            modelBuilder
+               .Entity<GrantAccess>()
+               .Property(e => e.Source)
+               .HasConversion(converterSource);
+        }
 
     }
 }

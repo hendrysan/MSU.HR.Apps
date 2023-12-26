@@ -11,6 +11,8 @@ namespace Models.Entities
         [Required]
         [StringLength(250, MinimumLength = 3)]
         public string? FullName { get; set; }
+
+        [DataType(DataType.EmailAddress)]
         [StringLength(250, MinimumLength = 3)]
         public string? Email { get; set; }
         public bool EmailConfirmed { get; set; } = false;
@@ -25,5 +27,6 @@ namespace Models.Entities
         public bool IsActive { get; set; } = false;
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public MasterRole? Role { get; set; }
     }
 }

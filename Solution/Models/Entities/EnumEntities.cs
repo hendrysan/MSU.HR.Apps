@@ -10,8 +10,11 @@
 
         public enum EnumModule
         {
+            Role,
             User,
-            Employee
+            Employee,
+            GrandAccess,
+            WorkDay
         }
 
         public enum EnumStatusDocumentAttendance

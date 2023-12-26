@@ -218,6 +218,7 @@ namespace Repositories.Implements
                             (i.Email == request.UserInput || i.PhoneNumber == request.UserInput || i.IdNumber == request.UserInput)
                             && i.PasswordHash == passwordHash)
                             .OrderByDescending(i => i.UpdatedAt)
+                            .Include(i => i.Role)
                             .FirstOrDefaultAsync();
 
                 if (masterUser == null)

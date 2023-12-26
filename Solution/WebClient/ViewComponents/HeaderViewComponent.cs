@@ -8,7 +8,6 @@ namespace WebClient.ViewComponents
         public IViewComponentResult Invoke()
         {
             NavigationModel model = new();
-            model.Title = "model test";
             return View(model);
         }
     }
