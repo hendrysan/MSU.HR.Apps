@@ -55,7 +55,7 @@ namespace Repositories.Implements
                     }
                 }
 
-                var list = data.Skip(request.Skip).Take(request.PageSize).AsEnumerable();
+                var list = data.Skip(request.Skip).Take(request.PageSize);
 
                 response.Draw = request.Draw;
                 response.RecordsTotal = totalRecord;

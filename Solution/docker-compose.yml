@@ -6,7 +6,7 @@ services:
       dockerfile: ./Dockerfile-WebClient
     ports:
       - 5101:8080
-    container_name: hriswebclint
+    container_name: hriswebclient
 
   hriswebapi:
     build:
