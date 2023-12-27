@@ -86,15 +86,15 @@
           start: "2022-11-30T17:30:00",
         },
       ],
-      editable: true,
-      droppable: true, // this allows things to be dropped onto the calendar
-      drop: function (arg) {
-        // is the "remove after drop" checkbox checked?
-        if (document.getElementById("drop-remove").checked) {
-          // if so, remove the element from the "Draggable Events" list
-          arg.draggedEl.parentNode.removeChild(arg.draggedEl);
-        }
-      },
+      //editable: true,
+      //droppable: true, // this allows things to be dropped onto the calendar
+      //drop: function (arg) {
+      //  // is the "remove after drop" checkbox checked?
+      //  if (document.getElementById("drop-remove").checked) {
+      //    // if so, remove the element from the "Draggable Events" list
+      //    arg.draggedEl.parentNode.removeChild(arg.draggedEl);
+      //  }
+      //},
     });
     calendar.render();
   });

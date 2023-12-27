@@ -51,7 +51,7 @@ namespace Repositories.Implements
             }
             catch (Exception ex)
             {
-                throw new NullReferenceException("Attendacne BulkInsertDocumentAttendanceDetail Error : " + ex.Message, ex.InnerException);
+                throw new Exception("BulkInsertDocumentAttendanceDetail " + ex.Message, ex.InnerException);
             }
         }
 
@@ -128,7 +128,7 @@ namespace Repositories.Implements
             }
             catch (Exception e)
             {
-                throw new NullReferenceException(e.Message, e.InnerException);
+                throw new Exception("GetDocumentAttendanceDetails " + e.Message, e.InnerException);
             }
         }
 
@@ -185,7 +185,7 @@ namespace Repositories.Implements
                 response.StatusCode = HttpStatusCode.InternalServerError;
                 response.Message = ex.Message;
                 await DiscordLogger.SendAsync(repositoryName, ex);
-                throw new NullReferenceException(ex.Message, ex.InnerException);
+
             }
 
             return response;
@@ -284,7 +284,6 @@ namespace Repositories.Implements
                 response.StatusCode = HttpStatusCode.InternalServerError;
                 response.Message = ex.Message;
                 await DiscordLogger.SendAsync(repositoryName, ex);
-                throw new NullReferenceException(ex.Message, ex.InnerException);
             }
 
             return response;

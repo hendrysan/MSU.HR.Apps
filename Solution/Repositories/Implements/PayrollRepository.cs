@@ -49,7 +49,6 @@ namespace Repositories.Implements
                 response.StatusCode = HttpStatusCode.InternalServerError;
                 response.Message = ex.Message;
                 await DiscordLogger.SendAsync(repositoryName, ex, null, masterUser);
-                throw new NullReferenceException(ex.Message, ex.InnerException);
 
             }
             return response;

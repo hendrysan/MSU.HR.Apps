@@ -55,7 +55,6 @@ namespace Repositories.Implements
             {
                 response.StatusCode = HttpStatusCode.InternalServerError;
                 response.Message = e.Message;
-                throw new NullReferenceException(e.Message, e.InnerException);
             }
             return response;
         }

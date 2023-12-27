@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Models.Entities;
+using Models.Requests;
 using System.Diagnostics;
 using WebClient.ViewModels.Others;
+using WebClient.ViewModels.WorkDay;
 
 namespace WebClient.Controllers
 {
@@ -11,22 +14,24 @@ namespace WebClient.Controllers
     {
         private readonly ILogger<WorkDayController> _logger = logger;
 
-        public IActionResult Index()
+        public IActionResult Calendar()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        [Obsolete]
+        public async Task<JsonResult> PostCalendarData(PostCalendarDataRequest request)
         {
-            return View();
+            var result = new
+            {
+                title = "",
+                start = DateTime.Now,
+                end = DateTime.Now.AddDays(1),
+            };
+
+            return Json(result);
         }
 
-        
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }
