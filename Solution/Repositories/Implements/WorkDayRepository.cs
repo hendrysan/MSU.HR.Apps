@@ -1,7 +1,6 @@
 ﻿using ClosedXML.Excel;
 using Commons.Loggers;
 using Commons.Utilities;
-using DocumentFormat.OpenXml.Bibliography;
 using Infrastructures;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +8,6 @@ using Models.Entities;
 using Models.Requests;
 using Models.Responses;
 using Repositories.Interfaces;
-using System;
 using System.Globalization;
 using System.Net;
 
@@ -20,6 +18,49 @@ namespace Repositories.Implements
         private readonly string repositoryName = "WorkDayRepository";
         private readonly ConnectionContext _context = context;
 
+        public Task<DataTableResponse> DataTableAsync(DataTableRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<DefaultResponse> GenerateDate(MasterUser masterUser, int year)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<SearchWorkDayResponse> SearchAsync(string period)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<SearchWorkDayResponse> SearchAsync(DateTime date)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<SearchWorkDayResponse> SearchAsync(List<string> periods)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<SearchWorkDayResponse> SearchAsync(List<DateTime> dates)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<SearchWorkDayResponse> SearchAsync(DateTime start, DateTime end)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<DefaultResponse> UpdateDate(MasterUser masterUser, DateTime date, string value)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+        /*
         public async Task<FileTemplateResponse> GenerateTemplateAsync()
         {
             FileTemplateResponse response = new();
@@ -49,7 +90,7 @@ namespace Repositories.Implements
                 response.StatusCode = HttpStatusCode.InternalServerError;
                 response.Message = ex.Message;
                 await DiscordLogger.SendAsync(repositoryName, ex);
-                
+
             }
 
             return response;
@@ -186,7 +227,7 @@ namespace Repositories.Implements
                 response.StatusCode = HttpStatusCode.InternalServerError;
                 response.Message = ex.Message;
                 await DiscordLogger.SendAsync(repositoryName, ex);
-                
+
             }
 
             return response;
@@ -240,7 +281,7 @@ namespace Repositories.Implements
                 response.StatusCode = HttpStatusCode.InternalServerError;
                 response.Message = ex.Message;
                 await DiscordLogger.SendAsync(repositoryName, ex, null, period);
-                
+
 
             }
 
@@ -278,7 +319,7 @@ namespace Repositories.Implements
                 response.StatusCode = HttpStatusCode.InternalServerError;
                 response.Message = ex.Message;
                 await DiscordLogger.SendAsync(repositoryName, ex, null, date);
-                
+
 
             }
             return response;
@@ -314,7 +355,7 @@ namespace Repositories.Implements
                 response.StatusCode = HttpStatusCode.InternalServerError;
                 response.Message = ex.Message;
                 await DiscordLogger.SendAsync(repositoryName, ex, null, periods);
-                
+
             }
 
             return response;
@@ -350,7 +391,7 @@ namespace Repositories.Implements
                 response.StatusCode = HttpStatusCode.InternalServerError;
                 response.Message = ex.Message;
                 await DiscordLogger.SendAsync(repositoryName, ex, null, dates);
-                
+
             }
 
             return response;
@@ -403,7 +444,7 @@ namespace Repositories.Implements
 
                     workDays.Add(master);
                 }
-                
+
                 await BulkInsertUpdate(workDays, masterUser.Id);
             }
             catch (Exception ex)
@@ -411,7 +452,7 @@ namespace Repositories.Implements
                 response.StatusCode = HttpStatusCode.InternalServerError;
                 response.Message = ex.Message;
                 await DiscordLogger.SendAsync(repositoryName, ex, null, year);
-                
+
             }
 
             return response;
@@ -441,10 +482,12 @@ namespace Repositories.Implements
                 response.StatusCode = HttpStatusCode.InternalServerError;
                 response.Message = ex.Message;
                 await DiscordLogger.SendAsync(repositoryName, ex, null, new { date, value });
-                
+
             }
 
             return response;
         }
+        
+        */
     }
 }

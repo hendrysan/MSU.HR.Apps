@@ -35,8 +35,11 @@
     <link id="color" rel="stylesheet" href="@Url.Content("~/assets/css/color-1.css")" media="screen" )">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/css/responsive.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/css/vendors/calendar.css")">
+
 
     @await RenderSectionAsync("Styles", required: false)
+    @Html.PageStyles()
 </head>
 <body>
 
@@ -123,6 +126,8 @@
     <!-- Theme js-->
     <script src="@Url.Content("~/assets/js/script.js")"></script>
     @* <script src="~/assets/js/theme-customizer/customizer.js"></script> *@
+    <script src="@Url.Content("~/assets/js/moment.min.js")"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    @Html.PageScripts()
 </body>
 </html>

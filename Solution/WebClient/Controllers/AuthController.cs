@@ -138,7 +138,7 @@ namespace WebClient.Controllers
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-            NavigationModel navigation = NavigationExtension.GetNavigation(accesses: response.Grants ?? new(), response.MasterUser.Role ?? new());
+            NavigationModel navigation = NavigationExtensions.GetNavigation(accesses: response.Grants ?? new(), response.MasterUser.Role ?? new());
             HttpContext.Session.SetString("Navigation", JsonSerializer.Serialize(navigation));
 
             string? returnUrl = HttpContext.Request.Query["returnUrl"];

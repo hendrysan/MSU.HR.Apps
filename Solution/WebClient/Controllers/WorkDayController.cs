@@ -1,10 +1,5 @@
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Models.Entities;
-using Models.Requests;
-using System.Diagnostics;
-using WebClient.ViewModels.Others;
 using WebClient.ViewModels.WorkDay;
 
 namespace WebClient.Controllers
@@ -14,21 +9,26 @@ namespace WebClient.Controllers
     {
         private readonly ILogger<WorkDayController> _logger = logger;
 
-        public IActionResult Calendar()
+        
+        public IActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
-        [Obsolete]
-        public async Task<JsonResult> PostCalendarData(PostCalendarDataRequest request)
+        [AllowAnonymous]
+        public JsonResult CalendarData([FromBody] CalendarDataRequest request)
         {
-            var result = new
+
+            var result = new List<CalendarDataResponse>();
+
+            var data = new CalendarDataResponse
             {
-                title = "",
-                start = DateTime.Now,
-                end = DateTime.Now.AddDays(1),
+                Title = "Test HardCode",
+                Start = DateTime.Now.AddDays(1)
             };
+
+            result.Add(data);
 
             return Json(result);
         }

@@ -3,7 +3,7 @@ using System.Security.Claims;
 
 namespace WebClient.Extensions
 {
-    public static class AuthRazorExtension
+    public static class AuthRazorExtensions
     {
         public static string GetUserRoleName(this RazorPage page)
         {

@@ -4,7 +4,7 @@ using static Models.Entities.EnumEntities;
 
 namespace WebClient.Extensions
 {
-    public static class NavigationExtension
+    public static class NavigationExtensions
     {
         public static NavigationModel GetNavigation(List<GrantAccess> accesses, MasterRole role)
         {
