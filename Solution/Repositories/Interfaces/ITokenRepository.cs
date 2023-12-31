@@ -8,7 +8,7 @@ namespace Repositories.Interfaces
         DateTime GetRefreshTokenExpiryTime();
         ClaimsPrincipal? GetPrincipalFromExpiredToken(string? token);
         string GenerateRefreshToken();
-        string CreateToken(MasterUser user, DateTime expiryTime);
-        List<Claim> CreateClaims(MasterUser user);
+        string CreateToken(MasterUser user, List<GrantAccess> grants, DateTime expiryTime);
+        List<Claim> CreateClaims(MasterUser user, List<GrantAccess> grants);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Infrastructures;
 using Repositories;
 using System.Text.Json.Serialization;
+using WebClient.Filters;
 
 namespace WebClient
 {
@@ -49,7 +50,11 @@ namespace WebClient
             //  {
             //      options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             //  });
-            services.AddMvc().AddJsonOptions(options =>
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(LogActionFilter));
+            })
+                .AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });

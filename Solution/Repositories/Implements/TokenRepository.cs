@@ -8,13 +8,14 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 
 namespace Repositories.Implements
 {
     public class TokenRepository(IConfiguration configuration) : ITokenRepository
     {
         private readonly IConfiguration _configuration = configuration;
-        public List<Claim> CreateClaims(MasterUser user)
+        public List<Claim> CreateClaims(MasterUser user, List<GrantAccess> grants)
         {
             try
             {
@@ -31,7 +32,8 @@ namespace Repositories.Implements
                     new("Email", user.Email?? string.Empty),
                     new("Email", user.Email?? string.Empty),
                     new("PhoneNumber", user.PhoneNumber?? string.Empty),
-                    new("LastLogin", DateTime.Now.ToString())
+                    new("LastLogin", DateTime.Now.ToString()),
+                    new("GrantAccess", JsonSerializer.Serialize(grants)),
                 };
 
                 return claims;
@@ -43,11 +45,11 @@ namespace Repositories.Implements
             }
         }
 
-        public string CreateToken(MasterUser user, DateTime expiryTime)
+        public string CreateToken(MasterUser user, List<GrantAccess> grants, DateTime expiryTime)
         {
             var expiration = expiryTime;
             var token = CreateJwtToken(
-                CreateClaims(user),
+                CreateClaims(user, grants),
                 CreateSigningCredentials(),
                 expiration
             );
@@ -113,5 +115,6 @@ namespace Repositories.Implements
             int expirationMinutes = Convert.ToInt32(_configuration.GetSection("Jwt:RefreshTokenExpirationMinutes").Value);
             return DateTime.Now.AddMinutes(expirationMinutes);
         }
+
     }
 }

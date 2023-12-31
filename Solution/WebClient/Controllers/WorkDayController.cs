@@ -1,14 +1,11 @@
-using Discord.Net.Rest;
-using DocumentFormat.OpenXml.Drawing.Charts;
-using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Models.Entities;
 using Models.Requests;
 using Repositories.Interfaces;
 using System.Globalization;
+using WebClient.Filters;
 using WebClient.ViewModels.WorkDay;
+using static Models.Entities.EnumEntities;
 
 namespace WebClient.Controllers
 {
@@ -24,16 +21,9 @@ namespace WebClient.Controllers
         private readonly IWorkDayRepository _workDayRepository = workDayRepository;
 
 
-
+        [GrantAccessActionFilter(EnumAction = EnumAction.View, EnumModule = EnumModule.WorkDay)]
         public async Task<IActionResult> Index()
         {
-            var user = await GetCurrentUser(_httpContextAccessor, _userRepository);
-            var access = await _grantAccessRepository.CheckAccess(EnumEntities.EnumSource.WebClient, user.Role.Code, EnumEntities.EnumModule.WorkDay, EnumEntities.EnumAction.View);
-            if (access.StatusCode != System.Net.HttpStatusCode.OK)
-            {
-                SetAlert("You cannot access this page", ViewModels.Others.AlertType.Danger);
-                return RedirectToAction("Logout", "Auth");
-            }
 
             var model = new WorkDayIndexFormRequest();
             return View(model);

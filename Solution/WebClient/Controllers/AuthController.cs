@@ -131,7 +131,7 @@ namespace WebClient.Controllers
                 return View(formRequest);
             }
 
-            var claims = _tokenRepository.CreateClaims(response.MasterUser);
+            var claims = _tokenRepository.CreateClaims(response.MasterUser, response.Grants);
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             var principal = new ClaimsPrincipal(identity);
@@ -140,6 +140,7 @@ namespace WebClient.Controllers
 
             NavigationModel navigation = NavigationExtensions.GetNavigation(accesses: response.Grants ?? new(), response.MasterUser.Role ?? new());
             HttpContext.Session.SetString("Navigation", JsonSerializer.Serialize(navigation));
+            HttpContext.Session.SetString("GrantAccess", JsonSerializer.Serialize(response.Grants));
 
             string? returnUrl = HttpContext.Request.Query["returnUrl"];
             return Redirect(returnUrl ?? "/");

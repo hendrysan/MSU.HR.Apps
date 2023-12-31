@@ -5,6 +5,7 @@ using Repositories.Interfaces;
 using System.Security.Claims;
 using System.Text.Json;
 using WebClient.ViewModels.Others;
+using static Models.Entities.EnumEntities;
 
 namespace WebClient.Controllers
 {
@@ -16,6 +17,20 @@ namespace WebClient.Controllers
 
         }
 
+
+        public bool CheckAccess(EnumModule modul, EnumAction action)
+        {
+            var grant = HttpContext.Session.GetString("GrantAccess");
+            if (!string.IsNullOrEmpty(grant))
+            {
+                var grantAccess = JsonSerializer.Deserialize<List<GrantAccess>>(grant);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public async Task<MasterUser?> GetCurrentUser(IHttpContextAccessor _httpContextAccessor, IUserRepository _userRepository)
         {
