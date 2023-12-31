@@ -26,14 +26,14 @@
                         </a>
                         <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
                     </li>
-                    <li class="sidebar-main-title">
+                    @* <li class="sidebar-main-title">
                         <div>
                             <h6>General</h6>
                         </div>
-                    </li>
+                    </li> *@
 
                     <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title link-nav" href="@Url.Action("Index","Home")">
+                        <a class="sidebar-title link-nav" href="@Url.Action("Index","Home")">
                             <i class="fa fa-dashboard"></i>
                             <span>Dashboard</span>
                         </a>
@@ -45,16 +45,17 @@
                     </li>
                     @if (Model.MasterNavigation.IsViewEmployee)
                     {
-                        <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="#">
-                                <i class="fa fa-users"></i>
-                                <span>Employee</span>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="@Url.Action("List","Employee")">Index</a></li>
 
-                            </ul>
-                        </li>
+                        @*   <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title" href="#">
+                    <i class="fa fa-users"></i>
+                    <span>Employee</span>
+                    </a>
+                    <ul class="sidebar-submenu">
+                    <li><a href="@Url.Action("List","Employee")">Index</a></li>
+
+                    </ul>
+                    </li> *@
                     }
 
                     @if (Model.MasterNavigation.IsViewWorkDay)
