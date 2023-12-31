@@ -10,7 +10,7 @@
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="modal-toggle-wrapper">
-                            
+
                             <table>
                                 <thead>
                                     <tr><td></td><td></td></tr>
@@ -54,76 +54,51 @@
     <script src="@Url.Content("~/assets/js/calendar/fullcalendar.min.js" )"></script>
 
     <script>
-        (function ($) {
+        document.addEventListener("DOMContentLoaded", function () {
 
-            document.addEventListener("DOMContentLoaded", function () {
+            var calendarEl = document.getElementById("calendar");
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                headerToolbar: {
+                    left: "prev,next today",
+                    center: "title",
+                    right: "dayGridMonth,timeGridWeek",
+                },
+                initialView: 'dayGridMonth',
+                navLinks: true, // can click day/week names to navigate views
+                editable: true,
+                selectable: true,
+                nowIndicator: true,
+                events: function (currentDate, start, end, timezone, callback) {
 
-                var calendarEl = document.getElementById("calendar");
-                var calendar = new FullCalendar.Calendar(calendarEl, {
-                    headerToolbar: {
-                        left: "prev,next today",
-                        center: "title",
-                        right: "dayGridMonth,timeGridWeek",
-                    },
-                    initialView: 'dayGridMonth',
-                    navLinks: true, // can click day/week names to navigate views
-                    editable: true,
-                    selectable: true,
-                    nowIndicator: true,
-                    events: function (currentDate, start, end, timezone, callback) {
+                    var dataRequest = {
+                        Start: moment(currentDate.startStr).format("YYYY-MM-DD"),
+                        End: moment(currentDate.endStr).format("YYYY-MM-DD")
+                    };
 
-                        var dataRequest = {
-                            Start: moment(currentDate.startStr).format("YYYY-MM-DD"),
-                            End: moment(currentDate.endStr).format("YYYY-MM-DD")
-                        };
+                    var dataEvents =
+                        $.ajax({
+                            type: "POST",
+                            url: "@Url.Action("CalendarData", "WorkDay")",
+                            contentType: "application/json",
+                            data: JSON.stringify(dataRequest),
+                            success: function (doc) { 
+                                return doc;
+                            }
+                        })
 
-                        var dataEvents =
-                            $.ajax({
-                                type: "POST",
-                                url: "@Url.Action("CalendarData", "WorkDay")",
-                                contentType: "application/json",
-                                data: JSON.stringify(dataRequest),
-                                success: function (doc) {
-                                    console.log(doc);
-                                    return doc;
-                                }
-                            })
-
-                        return dataEvents;
-                    },
-                    eventClick: function (info) {
-                        $("#calendarModal").modal('show');
-                        console.log(info);
-                        console.log(info.view.activeStart);
-
-                        $("#calendarModalDate").text(moment(info.view.activeStart).format("YYYY-MM-DD"));
-
-                        $("#calendarModalRemarks").text(info.event.title);
-
-                        // alert('Event: ' + info.event.title);
-                        // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-                        // alert('View: ' + info.view.type);
-
-                        // // change the border color just for fun
-                        // info.el.style.borderColor = 'red';
-                    }
-
-
-                });
-                calendar.render();
-                // var cdate = calendar.getDate();
-                // var month_int = cdate.getMonth();
-                // alert((month_int + 1));  // March 2020 month will return 3
-
+                    return dataEvents;
+                },
+                eventClick: function (info) {
+                    $("#calendarModal").modal('show');
+                    $("#calendarModalDate").text(moment(info.view.activeStart).format("YYYY-MM-DD"));
+                    $("#calendarModalRemarks").text(info.event.title);
+                }
             });
+            calendar.render();
+
+        });
 
 
-            $(document).ready(function () {
-
-
-            });
-
-        })(jQuery);
     </script>
 }
 

@@ -1,5 +1,8 @@
 ﻿using Commons.Loggers;
 using Microsoft.AspNetCore.Mvc;
+using Models.Entities;
+using Repositories.Interfaces;
+using System.Security.Claims;
 using System.Text.Json;
 using WebClient.ViewModels.Others;
 
@@ -11,6 +14,21 @@ namespace WebClient.Controllers
         public BaseController()
         {
 
+        }
+
+
+        public async Task<MasterUser?> GetCurrentUser(IHttpContextAccessor _httpContextAccessor, IUserRepository _userRepository)
+        {
+
+            var id = _httpContextAccessor?.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (id == null) return null;
+
+            var user = await _userRepository.Find(Guid.Parse(id));
+
+            if (user.StatusCode != System.Net.HttpStatusCode.OK)
+                return null;
+
+            return user.MasterUser;
         }
 
         public async Task GetAlert()

@@ -49,7 +49,6 @@
 
 @section Scripts {
     <script src="@Url.Content("~/assets/js/datatable/datatables/jquery.dataTables.min.js")"></script>
-    <script src="@Url.Content("~/assets/js/moment.min.js")"></script>
 
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -72,6 +71,7 @@
                     ajax: {
                         url: "@Url.Action("PostDataTableGrantAccess", "GrantAccess")",
                         type: "POST",
+                        contentType: "application/json",
                     },
                     processing: true,
                     serverSide: true,

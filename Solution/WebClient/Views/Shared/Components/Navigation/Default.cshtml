@@ -28,6 +28,18 @@
                     </li>
                     <li class="sidebar-main-title">
                         <div>
+                            <h6>General</h6>
+                        </div>
+                    </li>
+
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title link-nav" href="@Url.Action("Index","Home")">
+                            <i class="fa fa-dashboard"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-main-title">
+                        <div>
                             <h6>Master</h6>
                         </div>
                     </li>
@@ -48,13 +60,10 @@
                     @if (Model.MasterNavigation.IsViewWorkDay)
                     {
                         <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="#">
+                            <a class="sidebar-link sidebar-title link-nav" href="@Url.Action("Index","WorkDay")">
                                 <i class="fa fa-calendar"></i>
                                 <span>Work Day</span>
                             </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="@Url.Action("Calendar","WorkDay")">Calendar</a></li>
-                            </ul>
                         </li>
                     }
 

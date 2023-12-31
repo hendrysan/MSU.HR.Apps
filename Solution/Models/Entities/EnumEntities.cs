@@ -8,6 +8,15 @@
             WebClient
         }
 
+        public enum EnumAction
+        {
+            View,
+            Create,
+            Edit,
+            Delete,
+            Export
+        }
+
         public enum EnumModule
         {
             Role,

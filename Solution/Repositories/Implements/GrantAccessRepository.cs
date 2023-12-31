@@ -1,5 +1,6 @@
 ﻿using Commons.Loggers;
 using Infrastructures;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
 using Models.Requests;
@@ -14,6 +15,50 @@ namespace Repositories.Implements
     {
         private readonly string repositoryName = "GrandAccessRepository";
         private readonly ConnectionContext _context = context;
+
+        public async Task<DefaultResponse> CheckAccess(EnumSource source, string roleCode, EnumModule module, EnumAction action)
+        {
+            DataTableResponse response = new();
+            try
+            {
+                var data = await _context.GrantAccesses.Where(i => i.Source == source && i.Role.Code == roleCode && i.Module == module).FirstOrDefaultAsync();
+
+                if (data == null)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    return response;
+                }
+
+                switch (action)
+                {
+                    case EnumAction.View:
+                        response.StatusCode = data.IsView ? HttpStatusCode.OK : HttpStatusCode.Unauthorized;
+                        break;
+                    case EnumAction.Delete:
+                        response.StatusCode = data.IsDelete ? HttpStatusCode.OK : HttpStatusCode.Unauthorized;
+                        break;
+                    case EnumAction.Create:
+                        response.StatusCode = data.IsCreate ? HttpStatusCode.OK : HttpStatusCode.Unauthorized;
+                        break;
+                    case EnumAction.Edit:
+                        response.StatusCode = data.IsEdit ? HttpStatusCode.OK : HttpStatusCode.Unauthorized;
+                        break;
+                    case EnumAction.Export:
+                        response.StatusCode = data.IsExport ? HttpStatusCode.OK : HttpStatusCode.Unauthorized;
+                        break;
+                    default:
+                        response.StatusCode = HttpStatusCode.BadRequest;
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Message = ex.Message;
+                await DiscordLogger.SendAsync(repositoryName, ex.Message);
+            }
+            return response;
+        }
 
         public async Task<DataTableResponse> DataTableAsync(DataTableRequest request)
         {

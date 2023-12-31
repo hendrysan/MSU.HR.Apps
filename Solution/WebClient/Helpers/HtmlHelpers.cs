@@ -20,19 +20,19 @@ namespace WebClient.Helpers
 
         private static List<string> GetPageStylesList(HttpContext httpContext)
         {
-            var pageScripts = (List<string>)httpContext.Items[ScriptsKey];
-            if (pageScripts == null)
+            var pageStyles = (List<string>)httpContext.Items[StylesKey];
+            if (pageStyles == null)
             {
-                pageScripts = new List<string>();
-                httpContext.Items[ScriptsKey] = pageScripts;
+                pageStyles = new List<string>();
+                httpContext.Items[StylesKey] = pageStyles;
             }
-            return pageScripts;
+            return pageStyles;
         }
 
         private class StyleBlock : IDisposable
         {
             private readonly TextWriter _originalWriter;
-            private readonly StringWriter _scriptsWriter;
+            private readonly StringWriter _stylesWriter;
 
             private readonly ViewContext _viewContext;
 
@@ -40,14 +40,14 @@ namespace WebClient.Helpers
             {
                 _viewContext = viewContext;
                 _originalWriter = _viewContext.Writer;
-                _viewContext.Writer = _scriptsWriter = new StringWriter();
+                _viewContext.Writer = _stylesWriter = new StringWriter();
             }
 
             public void Dispose()
             {
                 _viewContext.Writer = _originalWriter;
                 var pageScripts = GetPageStylesList(_viewContext.HttpContext);
-                pageScripts.Add(_scriptsWriter.ToString());
+                pageScripts.Add(_stylesWriter.ToString());
             }
         }
 

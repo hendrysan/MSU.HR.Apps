@@ -1,12 +1,183 @@
-﻿@{
-    ViewData["Title"] = "WorkDay Page";
+﻿@using WebClient.ViewModels.WorkDay
+@model WorkDayIndexFormRequest
+@{
+    ViewData["Title"] = "Dashboard Page";
     Layout = "_LayoutMain";
+    var selectListYear = new List<SelectListItem>();
+
+    for (int i = DateTime.Now.Year; i <= DateTime.Now.Year + 2; i++)
+    {
+        selectListYear.Add(new SelectListItem() { Text = i.ToString(), Value = i.ToString() });
+    }
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 
+@section styles {
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/css/vendors/datatables.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/css/style.css")">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+}
 
-    @await Html.PartialAsync("_CalendarPartial")
+<div class="row">
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h4>@ViewData["Title"]</h4>
+                </div>
+                <div class="ml-auto">
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <form class="theme-form" method="post" asp-controller="WorkDay" asp-action="Create" needs-validation>
+                <div class="row">
+                    <div class="col-xxl-4 col-lg-12 box-col-12">
+                        <div class="card height-equal">
+                            <div class="card-header card-no-border">
+                                <div class="header-top">
+                                    <h5>Create Event Holiday</h5>
+                                </div>
+                            </div>
+
+                            @Html.AntiForgeryToken()
+                            <div class="card-body pt-0">
+
+                                <div class="form-group">
+                                    <label class="col-form-label">Date Picker</label>
+                                    <div class="input-group has-validation">
+                                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                        @Html.TextBoxFor(i => i.DateRangePicker, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-form-label">Remarks</label>
+                                    @Html.TextBoxFor(i => i.Remarks, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="card-footer text-end">
+                                <input class="btn btn-primary btn-block w-100 " type="submit" name="Submit" value="Create" id="submitButton" />
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body pt-0">
+                                <br />
+                                <div class="form-group">
+                                    <label class="col-form-label">Select year for genrate week end holiday</label>
+                                    @Html.DropDownListFor(i => i.Year, selectListYear, new { @class = "form-control" })
+
+                                </div>
+                            </div>
+                            <div class="card-footer text-end">
+                                <input class="btn btn-primary btn-block w-100" type="submit" name="Submit" value="Generate" id="submitButton" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xxl-8 col-lg-12 box-col-12">
+                        <div class="card">
+                            <div class="card-header card-no-border">
+                                <h5>Calendar Working</h5>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row m-0 overall-card">
+                                    @await Html.PartialAsync("_CalendarPartial")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-xxl-12">
+                    <div class="card">
+                        <div class="card-header card-no-border">
+                            <h5>Detail Information Calendar</h5>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="row m-0 overall-card">
+                                <div class="table-responsive">
+                                    <table class="display" id="datatable-workday" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>DateWork</th>
+                                                <th>Is Holiday</th>
+                                                <th>Remarks</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+@section scripts {
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <script src="@Url.Content("~/assets/js/datatable/datatables/jquery.dataTables.min.js")"></script>
+
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+
+            $(document).ready(function () {
+
+
+                $('input[name="DateRangePicker"]').daterangepicker({
+                    locale: {
+                        format: 'YYYY-MM-DD'
+                    },
+                    "autoApply": true,
+                }, function (start, end, label) {
+                    alert("A new date range was chosen: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                });
+
+                const table = $("#datatable-workday").DataTable({
+                    ajax: {
+                        url: "@Url.Action("DataTableWorkDay", "WorkDay")",
+                        type: "POST",
+                    },
+                    processing: true,
+                    serverSide: true,
+                    filter: true,
+                    ordering: false,
+                    columns: [
+                        {
+                            mRender: function (data, type, row) {
+                                // console.log(row);
+                                return moment(row.dateWork).format("YYYY-MM-DD");
+                            }
+                        },
+                        { data: "isHoliday", name: "IsHoliday" },
+                        { data: "remarks", name: "Remarks" },
+                        {
+                            mRender: function (data, type, row) {
+                                // console.log(row);
+                                var linkDetails = '@Html.ActionLink("Delete", "Delete", "WorkDay", new { id = -1, date = -2 })';
+                                linkDetails = linkDetails.replace("-1", row.id).replace("-2", row.dateWork);
+                                return linkDetails;
+                            }
+                        }
+                    ],
+                });
+            });
+
+
+        });
+    </script>
+}

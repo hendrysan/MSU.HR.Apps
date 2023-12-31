@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using WebClient.ViewModels.Others;
 
 namespace WebClient.Controllers
@@ -10,6 +12,7 @@ namespace WebClient.Controllers
     public class HomeController(ILogger<HomeController> logger) : BaseController
     {
         private readonly ILogger<HomeController> _logger = logger;
+        
 
         [Route("404")]
         public IActionResult PageNotFound()

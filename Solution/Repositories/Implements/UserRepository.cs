@@ -1,6 +1,7 @@
 ﻿using Commons.Loggers;
 using Commons.Utilities;
 using Discord.Net;
+using DocumentFormat.OpenXml.Office2016.Excel;
 using Infrastructures;
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
@@ -250,7 +251,7 @@ namespace Repositories.Implements
                 }
 
                 response.StatusCode = HttpStatusCode.OK;
-                masterUser.PasswordHash = string.Empty;
+                //masterUser.PasswordHash = string.Empty;
                 response.MasterUser = masterUser;
                 response.MasterEmployee = masterEmployee;
                 response.Grants = grants;
@@ -370,7 +371,7 @@ namespace Repositories.Implements
                     _context.Update(user);
                     await _context.SaveChangesAsync();
 
-                    user.PasswordHash = string.Empty;
+                    //user.PasswordHash = string.Empty;
                     response.StatusCode = HttpStatusCode.OK;
                     //response.Data = user;
                     response.Message = "Phone Number Success Confirmed";
@@ -434,6 +435,64 @@ namespace Repositories.Implements
                 await DiscordLogger.SendAsync(repositoryName, ex);
             }
 
+            return response;
+        }
+
+        public async Task<LoginResponse> Find(Guid userId)
+        {
+            LoginResponse response = new();
+
+            try
+            {
+                var masterUser = await _context.MasterUsers
+                .Where(i => i.Id == userId)
+                .OrderByDescending(i => i.UpdatedAt)
+                .Include(i => i.Role).FirstOrDefaultAsync();
+
+                if (masterUser == null)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Message = "User or Password invalid";
+                    return response;
+                }
+
+                if (!masterUser.IsActive)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Message = "Account user not active, call administrator";
+                    return response;
+                }
+
+                var masterEmployee = await _context.MasterEmployees
+                    .Where(i => i.IdNumber == masterUser.IdNumber && i.IsActive)
+                    .FirstOrDefaultAsync();
+
+                if (masterEmployee == null)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Message = "Employee not active, call administrator";
+                }
+
+                var grants = await _context.GrantAccesses.Where(i => i.Role == masterUser.Role).ToListAsync();
+                if (grants == null)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Message = "Grant access user not found, call administrator";
+                }
+
+                response.StatusCode = HttpStatusCode.OK;
+                //masterUser.PasswordHash = string.Empty;
+                response.MasterUser = masterUser;
+                response.MasterEmployee = masterEmployee;
+                response.Grants = grants;
+
+            }
+            catch (Exception ex)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Message = ex.Message;
+                await DiscordLogger.SendAsync(repositoryName, ex, null, userId);
+            }
             return response;
         }
     }

@@ -1,8 +1,5 @@
-﻿using ClosedXML.Excel;
-using Commons.Loggers;
-using Commons.Utilities;
+﻿using Commons.Loggers;
 using Infrastructures;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
 using Models.Requests;
@@ -10,6 +7,7 @@ using Models.Responses;
 using Repositories.Interfaces;
 using System.Globalization;
 using System.Net;
+using System.Reflection;
 
 namespace Repositories.Implements
 {
@@ -18,44 +16,316 @@ namespace Repositories.Implements
         private readonly string repositoryName = "WorkDayRepository";
         private readonly ConnectionContext _context = context;
 
-        public Task<DataTableResponse> DataTableAsync(DataTableRequest request)
+        public async Task<DataTableResponse> DataTableAsync(DataTableRequest request)
         {
-            throw new NotImplementedException();
+            DataTableResponse response = new();
+            try
+            {
+                int totalRecord = 0;
+                int filterRecord = 0;
+
+                string whereClause = string.Empty;
+                string orderClause = string.Empty;
+
+                if (!string.IsNullOrEmpty(request.SearchValue))
+                {
+                    string search = request.SearchValue;
+                    whereClause = $"WHERE \"Remarks\" LIKE '%{search}%' OR to_char(\"DateWork\", 'YYYY-MM-DD') LIKE '%{search}%'";
+                }
+                else
+                {
+                    whereClause = $"WHERE \"DateWork\" >= '%{new DateTime(year: DateTime.Today.Year, month: 1, day: 1)}%'";
+                }
+
+                if (!string.IsNullOrEmpty(request.SortColumn) && !string.IsNullOrEmpty(request.SortColumnDirection))
+                {
+                    string column = request.SortColumn;
+                    string direction = request.SortColumnDirection;
+
+                    orderClause = $"ORDER BY \"{column}\" {direction}";
+                }
+                else
+                {
+                    orderClause = $"ORDER BY \"Id\" ASC";
+                }
+
+                string baseQuery = $"SELECT * FROM \"MasterWorkDays\"";
+
+                totalRecord = await _context.MasterWorkDays.FromSqlRaw(baseQuery).CountAsync();
+                filterRecord = await _context.MasterWorkDays.FromSqlRaw($"{baseQuery} {whereClause}").CountAsync();
+
+                var _data = await _context.MasterWorkDays.FromSqlRaw($"{baseQuery} {whereClause} {orderClause}").Skip(request.Skip).Take(request.PageSize).ToListAsync();
+
+
+
+                /*
+                var data = _context.Set<MasterWorkDay>()
+                                   .AsQueryable();
+
+                totalRecord = data.Count();
+
+                if (!string.IsNullOrEmpty(request.SearchValue))
+                {
+                    data = data.Where(x =>
+                        x.Remarks.ToLower().Contains(request.SearchValue.ToLower()) ||
+                        request.SearchValue.Contains(x.DateWork.ToString("yyyy-MM-dd"))
+                    ).AsQueryable();
+                }
+                filterRecord = data.Count();
+
+                if (!string.IsNullOrEmpty(request.SortColumn) && !string.IsNullOrEmpty(request.SortColumnDirection))
+                {
+                    switch (request.SortColumn)
+                    {
+                        case nameof(MasterWorkDay.DateWork):
+                            data = request.SortColumnDirection == "desc" ? data.OrderByDescending(x => x.DateWork) : data.OrderBy(x => x.DateWork);
+                            break;
+
+                        case nameof(MasterWorkDay.Remarks):
+                            data = request.SortColumnDirection == "desc" ? data.OrderByDescending(x => x.Remarks) : data.OrderBy(x => x.Remarks);
+                            break;
+                        default:
+                            data = request.SortColumnDirection == "desc" ? data.OrderByDescending(x => x.Id) : data.OrderBy(x => x.Id);
+                            break;
+                    }
+                }
+                else
+                {
+                    data = request.SortColumnDirection == "desc" ? data.OrderByDescending(x => x.Id) : data.OrderBy(x => x.Id);
+                }
+
+
+                var list = await data.Skip(request.Skip).Take(request.PageSize).ToListAsync();
+
+                */
+
+                response.Draw = request.Draw;
+                response.RecordsTotal = totalRecord;
+                response.RecordsFiltered = filterRecord;
+                response.Data = _data;
+
+
+            }
+            catch (Exception ex)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Message = ex.Message;
+                await DiscordLogger.SendAsync(repositoryName, ex.Message);
+            }
+            return response;
         }
 
-        public Task<DefaultResponse> GenerateDate(MasterUser masterUser, int year)
+        private async Task BulkInsertUpdate(List<MasterWorkDay> workDays, MasterUser masterUser)
         {
-            throw new NotImplementedException();
+            List<MasterWorkDay> masters = new List<MasterWorkDay>();
+            foreach (var workDay in workDays)
+            {
+                var exists = await _context.MasterWorkDays.FirstOrDefaultAsync(i => i.DateWork == workDay.DateWork);
+                if (exists != null)
+                {
+                    exists.UpdatedAt = DateTime.Now;
+                    exists.UpdatedByUser = masterUser.Id;
+                    exists.IsHoliday = workDay.IsHoliday;
+                    exists.Remarks = workDay.Remarks;
+
+                    _context.MasterWorkDays.Update(exists);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                    masters.Add(workDay);
+            }
+
+            if (masters.Count > 0)
+            {
+                _context.MasterWorkDays.AddRange(masters);
+                await _context.SaveChangesAsync();
+            }
         }
 
-        public Task<SearchWorkDayResponse> SearchAsync(string period)
+        public async Task<DefaultResponse> GenerateDate(MasterUser masterUser, int year)
         {
-            throw new NotImplementedException();
+            DefaultResponse response = new();
+            try
+            {
+                DateTime startDate = new(year: year, month: 1, day: 1);
+                DateTime endDate = new(year: year, month: 12, day: 31);
+                List<MasterWorkDay> workDays = [];
+
+                MasterWorkDay? workDay;
+
+                for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
+                {
+
+                    if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+                    {
+                        workDay = new MasterWorkDay()
+                        {
+                            DateWork = date,
+                            IsHoliday = true,
+                            CreatedAt = DateTime.Now,
+                            Remarks = date.DayOfWeek.ToString(),
+                            CreatedByUser = masterUser.Id,
+                            UpdatedAt = DateTime.Now,
+                            UpdatedByUser = masterUser.Id,
+                        };
+
+                        workDays.Add(workDay);
+                    }
+                }
+
+                await BulkInsertUpdate(workDays, masterUser);
+
+            }
+            catch (Exception ex)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Message = ex.Message;
+                await DiscordLogger.SendAsync(repositoryName, ex.Message);
+            }
+            return response;
         }
 
-        public Task<SearchWorkDayResponse> SearchAsync(DateTime date)
+        public async Task<SearchWorkDayResponse> SearchAsync(string period)
         {
-            throw new NotImplementedException();
+            SearchWorkDayResponse response = new();
+            response.MasterWorkDays = new List<MasterWorkDay>();
+            try
+            {
+                DateTime startDate = DateTime.ParseExact($"{period}01", "yyyyMMdd", CultureInfo.InvariantCulture);
+                DateTime endDate = startDate.AddMonths(1).AddDays(-1);
+
+                var datas = await _context.MasterWorkDays.Where(i => i.DateWork >= startDate && i.DateWork <= endDate).ToListAsync();
+                response.MasterWorkDays.AddRange(datas);
+            }
+            catch (Exception ex)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Message = ex.Message;
+                await DiscordLogger.SendAsync(repositoryName, ex.Message);
+            }
+            return response;
         }
 
-        public Task<SearchWorkDayResponse> SearchAsync(List<string> periods)
+        public async Task<SearchWorkDayResponse> SearchAsync(DateTime date)
         {
-            throw new NotImplementedException();
+            SearchWorkDayResponse response = new();
+            response.MasterWorkDays = new List<MasterWorkDay>();
+            try
+            {
+                var datas = await _context.MasterWorkDays.Where(i => i.DateWork == date).ToListAsync();
+                response.MasterWorkDays.AddRange(datas);
+            }
+            catch (Exception ex)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Message = ex.Message;
+                await DiscordLogger.SendAsync(repositoryName, ex.Message);
+            }
+            return response;
         }
 
-        public Task<SearchWorkDayResponse> SearchAsync(List<DateTime> dates)
+        public async Task<SearchWorkDayResponse> SearchAsync(List<string> periods)
         {
-            throw new NotImplementedException();
+            SearchWorkDayResponse response = new();
+            response.MasterWorkDays = new List<MasterWorkDay>();
+            try
+            {
+                foreach (var period in periods)
+                {
+                    DateTime startDate = DateTime.ParseExact($"{period}01", "yyyyMMdd", CultureInfo.InvariantCulture);
+                    DateTime endDate = startDate.AddMonths(1).AddDays(-1);
+
+                    var datas = await _context.MasterWorkDays.Where(i => i.DateWork >= startDate && i.DateWork <= endDate).ToListAsync();
+                    response.MasterWorkDays.AddRange(datas);
+                }
+            }
+            catch (Exception ex)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Message = ex.Message;
+                await DiscordLogger.SendAsync(repositoryName, ex.Message);
+            }
+            return response;
         }
 
-        public Task<SearchWorkDayResponse> SearchAsync(DateTime start, DateTime end)
+        public async Task<SearchWorkDayResponse> SearchAsync(List<DateTime> dates)
         {
-            throw new NotImplementedException();
+            SearchWorkDayResponse response = new();
+            response.MasterWorkDays = new List<MasterWorkDay>();
+            try
+            {
+                var datas = await _context.MasterWorkDays.Where(i => dates.Contains(i.DateWork)).ToListAsync();
+                response.MasterWorkDays.AddRange(datas);
+            }
+            catch (Exception ex)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Message = ex.Message;
+                await DiscordLogger.SendAsync(repositoryName, ex.Message);
+            }
+            return response;
         }
 
-        public Task<DefaultResponse> UpdateDate(MasterUser masterUser, DateTime date, string value)
+        public async Task<SearchWorkDayResponse> SearchAsync(DateTime start, DateTime end)
         {
-            throw new NotImplementedException();
+            SearchWorkDayResponse response = new();
+            response.MasterWorkDays = new List<MasterWorkDay>();
+            try
+            {
+                var datas = await _context.MasterWorkDays.Where(i => i.DateWork >= start && i.DateWork <= end).ToListAsync();
+                response.MasterWorkDays.AddRange(datas);
+            }
+            catch (Exception ex)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Message = ex.Message;
+                object obj = new { start, end };
+                await DiscordLogger.SendAsync(repositoryName, ex.Message);
+            }
+            return response;
+        }
+
+        public async Task<DefaultResponse> UpdateDate(MasterUser masterUser, DateTime date, string remarks)
+        {
+            DefaultResponse response = new();
+            try
+            {
+                List<MasterWorkDay> masters = new List<MasterWorkDay>()
+                {
+                    new MasterWorkDay() {DateWork = date, IsHoliday = true, Remarks = remarks},
+                };
+
+                await BulkInsertUpdate(masters, masterUser);
+            }
+            catch (Exception ex)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Message = ex.Message;
+                await DiscordLogger.SendAsync(repositoryName, ex.Message);
+            }
+            return response;
+        }
+
+        public async Task<DefaultResponse> DeleteDate(MasterUser masterUser, int id)
+        {
+            DefaultResponse response = new();
+            try
+            {
+                var deleted = await _context.MasterWorkDays.FirstOrDefaultAsync(i => i.Id == id);
+
+                if (deleted != null)
+                {
+                    _context.MasterWorkDays.Remove(deleted);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Message = ex.Message;
+                await DiscordLogger.SendAsync(repositoryName, ex.Message);
+            }
+            return response;
         }
 
 

@@ -9,6 +9,8 @@
     public class CalendarDataResponse
     {
         public string? Title { get; set; }
-        public DateTime Start { get; set; }
+        public bool AllDay { get; set; } = true;
+        public bool Stick { get; set; } = true;
+        public string? Start { get; set; }
     }
 }

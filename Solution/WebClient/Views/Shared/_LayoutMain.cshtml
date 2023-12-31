@@ -73,7 +73,7 @@
                                     </li>
                                     @* @foreach (var item in (List<BreadcrumbItemModel>)ViewBag.BreadcrumbItems)
                                     {
-                                        <li class="breadcrumb-item" @(item.IsActive ? "active" : string.Empty)> <a href="@item.Url"> @item.Title</a></li>
+                                    <li class="breadcrumb-item" @(item.IsActive ? "active" : string.Empty)> <a href="@item.Url"> @item.Title</a></li>
                                     } *@
                                 </ol>
                             </div>
@@ -84,6 +84,7 @@
                 <div class="container-fluid">
                     <div class="row m-0">
                         <div class="col-12 p-0">
+                            @await Component.InvokeAsync("Alert")
                             @RenderBody()
                         </div>
                     </div>

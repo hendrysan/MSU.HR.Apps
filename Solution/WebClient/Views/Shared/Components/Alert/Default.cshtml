@@ -3,11 +3,7 @@
 
 @if (Model != null)
 {
-    <div class="alert border-@(Model.Type.ToString().ToLower()) alert-dismissible fade show p-0" role="alert"
-         style=" position: fixed;
-    top: 5px;
-    left:2%;
-    width: 96%;">
+    <div class="alert border-@(Model.Type.ToString().ToLower()) alert-dismissible fade show p-0" role="alert">
         <div class="alert-arrow bg-@(Model.Type.ToString().ToLower())">
             @if (Model.Type == AlertType.Success)
             {

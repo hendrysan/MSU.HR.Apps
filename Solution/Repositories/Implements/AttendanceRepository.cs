@@ -226,7 +226,7 @@ namespace Repositories.Implements
 
                 List<DateTime> dates = presents.Select(i => i.DateTimeWork.Date).Distinct().ToList();
 
-                var workDays = _workDayRepository.SearchAsync(dates: dates).Result.DetailWorkDays;
+                var workDays = _workDayRepository.SearchAsync(dates: dates).Result.MasterWorkDays;
 
                 if (workDays?.Count == 0)
                 {
@@ -252,7 +252,7 @@ namespace Repositories.Implements
 
                     ticks = workOut.Ticks - workIn.Ticks;
 
-                    var getHoliday = workDays?.Where(i => i.Day?.Date == workIn.Date).FirstOrDefault();
+                    var getHoliday = workDays?.Where(i => i.DateWork.Date == workIn.Date).FirstOrDefault();
 
                     master = new MasterAttendance()
                     {
@@ -264,7 +264,7 @@ namespace Repositories.Implements
                         TotalWorkHours = Convert.ToDouble(TimeSpan.FromTicks(ticks).TotalHours),
                         PresentIn = workIn,
                         PresentOut = workOut == workIn ? null : workOut,
-                        IsHoliday = !string.IsNullOrEmpty(getHoliday?.Value),
+                        IsHoliday = getHoliday == null ? false : getHoliday.IsHoliday,
                     };
 
                     double countOverTime = master.TotalWorkHours - maxWorkHours - breakHours;

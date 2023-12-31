@@ -5,6 +5,7 @@ namespace Repositories.Interfaces
 {
     public interface IUserRepository
     {
+        Task<LoginResponse> Find(Guid userId);
         Task<LoginResponse> Login(LoginRequest request);
         Task<DefaultResponse> Register(RegisterRequest request);
         Task<DefaultResponse> EmailVerify(string tokenSecure, string requester);
