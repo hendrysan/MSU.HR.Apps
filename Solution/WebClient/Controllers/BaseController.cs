@@ -12,24 +12,23 @@ namespace WebClient.Controllers
     public abstract class BaseController : Controller
     {
         public static string ServiceName = "WebClient";
+        public IHttpContextAccessor _httpContextAccessor2 { get; set; }
         public BaseController()
         {
 
         }
 
 
-        public bool CheckAccess(EnumModule modul, EnumAction action)
+        public GrantAccess GetAccessButton(EnumModule modul)
         {
             var grant = HttpContext.Session.GetString("GrantAccess");
             if (!string.IsNullOrEmpty(grant))
             {
                 var grantAccess = JsonSerializer.Deserialize<List<GrantAccess>>(grant);
-                return true;
+                return grantAccess?.FirstOrDefault(i => i.Module == modul) ?? new GrantAccess();
             }
-            else
-            {
-                return false;
-            }
+
+            return new GrantAccess();
         }
 
         public async Task<MasterUser?> GetCurrentUser(IHttpContextAccessor _httpContextAccessor, IUserRepository _userRepository)

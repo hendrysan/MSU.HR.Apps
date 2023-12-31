@@ -1,4 +1,6 @@
-﻿namespace WebClient.ViewModels.WorkDay
+﻿using Models.Entities;
+
+namespace WebClient.ViewModels.WorkDay
 {
     public class WorkDayIndexFormRequest
     {
@@ -6,5 +8,6 @@
         public string Remarks { get; set; }
         public int Year { get; set; }
         public string Submit { get; set; }
+        public GrantAccess ButtonAccess { get; set; }
     }
 }

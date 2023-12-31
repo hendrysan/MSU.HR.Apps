@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Models.Requests;
 using Repositories.Interfaces;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using WebClient.Filters;
 using WebClient.ViewModels.WorkDay;
 using static Models.Entities.EnumEntities;
@@ -10,12 +11,13 @@ using static Models.Entities.EnumEntities;
 namespace WebClient.Controllers
 {
     [Authorize]
-    public class WorkDayController(ILogger<WorkDayController> logger, IHttpContextAccessor httpContextAccessor, IUserRepository userRepository, IGrantAccessRepository grantAccessRepository, IWorkDayRepository workDayRepository) : BaseController
+    public class WorkDayController(ILogger<WorkDayController> logger, IHttpContextAccessor httpContextAccessor, IUserRepository userRepository, IWorkDayRepository workDayRepository) : BaseController
     {
         private readonly ILogger<WorkDayController> _logger = logger;
         private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
         private readonly IUserRepository _userRepository = userRepository;
-        private readonly IGrantAccessRepository _grantAccessRepository = grantAccessRepository;
+        
+
 
 
         private readonly IWorkDayRepository _workDayRepository = workDayRepository;
@@ -24,13 +26,15 @@ namespace WebClient.Controllers
         [GrantAccessActionFilter(EnumAction = EnumAction.View, EnumModule = EnumModule.WorkDay)]
         public async Task<IActionResult> Index()
         {
-
+            var button = GetAccessButton(EnumModule.WorkDay);
             var model = new WorkDayIndexFormRequest();
+            model.ButtonAccess = button;
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [GrantAccessActionFilter(EnumAction = EnumAction.Edit, EnumModule = EnumModule.WorkDay)]
         public async Task<IActionResult> Create(WorkDayIndexFormRequest formRequest)
         {
             var user = await GetCurrentUser(_httpContextAccessor, _userRepository);
@@ -80,6 +84,7 @@ namespace WebClient.Controllers
 
         [HttpPost]
         [Obsolete]
+
         public async Task<JsonResult> DataTableWorkDay()
         {
             _logger.LogInformation("Data Table Start");
@@ -106,6 +111,7 @@ namespace WebClient.Controllers
         }
 
         [HttpGet("Delete/{id}/{date}")]
+        [GrantAccessActionFilter(EnumAction = EnumAction.Delete, EnumModule = EnumModule.WorkDay)]
         public async Task<IActionResult> Delete(int id, string date)
         {
             var user = await GetCurrentUser(_httpContextAccessor, _userRepository);
