@@ -1,5 +1,5 @@
 /**=====================
-    3.26 Landing CSS Start
+     38. Landing CSS Start
 ==========================**/
 /* MESH LOADER */
 @keyframes mesh {
@@ -520,28 +520,13 @@
     top: 50px;
     right: -170px;
 
-    @media (max-width:1674px) {
-      top: 60px;
-      right: -160px;
-
-    }
-
     @media (max-width: 1600px) {
       top: 0px;
       right: -20px;
     }
 
-    @media (max-width:1655px) {
-      right: -130px;
-    }
-
-    @media (max-width: 1595px) {
-      right: -6px;
-      top: -10px;
-    }
-
     @media (max-width: 1399px) {
-      top: -6px;
+      top: 10px;
       right: -10px;
     }
 
@@ -551,14 +536,6 @@
 
     img {
       height: 370px;
-
-      @media (max-width:1674px) {
-        height: 340px;
-      }
-
-      @media (max-width:1655px) {
-        height: 310px;
-      }
 
       @media (max-width: 1600px) {
         height: 300px;
@@ -1248,7 +1225,7 @@
     align-items: center;
 
     h2 {
-      width: 53%;
+      width: 62%;
 
       @media (max-width: 1660px) {
         width: 58%;
@@ -2081,7 +2058,7 @@ $landing-color : var(--theme-deafult);
 
   .vector-image {
     left: 30px;
-    bottom: 2px;
+    top: 110px;
 
     @media (max-width: 1660px) {
       left: 50px;
@@ -2330,7 +2307,7 @@ footer {
   }
 }
 
-.landing-page {
+.page-wrapper {
   .bg-Widget {
     background: linear-gradient(180deg, #F7F8F9 69%, rgba(247, 248, 249, 0) 91.83%);
 
@@ -2417,8 +2394,7 @@ footer {
   }
 }
 
-.page-wrapper,
-.landing-page {
+.page-wrapper {
   overflow: hidden;
 
   .section-space {
@@ -2521,10 +2497,6 @@ footer {
   }
 }
 
-.landing-page {
-  overflow: unset;
-}
-
 .fluid-space {
   padding: 0 calc(10px + (80 - 10) * ((100vw - 300px) / (1920 - 300)));
 
@@ -2604,7 +2576,6 @@ ul.dot-group {
 
           img {
             margin-bottom: -2px;
-            height: 25px;
           }
         }
 
@@ -2690,15 +2661,6 @@ ul.dot-group {
     .img-effect {
       box-shadow: 0px 3px 20px rgba(46, 35, 94, 0.1);
       border-radius: 5px;
-
-
-      &.image-height {
-        a {
-          img {
-            height: auto;
-          }
-        }
-      }
     }
 
     a {
@@ -3205,15 +3167,13 @@ ul.dot-group {
     padding: 15px 30px;
   }
 
-  .page-wrapper,
-  .landing-page {
+  .page-wrapper {
     .cuba-demo-content {
       margin-bottom: 20px;
     }
 
     .section-space {
       padding: 40px 0;
-      overflow: hidden;
     }
   }
 
@@ -3261,5 +3221,5 @@ ul.dot-group {
 }
 
 /**=====================
-    3.26 Landing CSS Ends
+     38. Landing CSS Ends
 ==========================**/

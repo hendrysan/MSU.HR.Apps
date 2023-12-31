@@ -1,5 +1,5 @@
 /**=====================
-    3.41 User-profile CSS start
+     22. User profile css start
 ==========================**/
 .user-profile {
   .ttl-info {
@@ -8,15 +8,12 @@
       color: $semi-dark;
     }
   }
-
   .border-right {
     border-right: 1px solid $light-color;
   }
-
   hr {
     margin: 30px 0;
   }
-
   .hovercard {
     .cardheader {
       background: url(../images/other-images/bg-profile.png);
@@ -24,14 +21,11 @@
       background-position: 10%;
       height: 470px;
     }
-
     .user-image {
       position: relative;
       height: 0;
-
       .avatar {
         margin-top: -80px;
-
         img {
           width: 100px;
           height: 100px;
@@ -41,7 +35,6 @@
           border: 7px solid $white;
         }
       }
-
       .icon-wrapper {
         position: absolute;
         bottom: -20px;
@@ -60,17 +53,14 @@
         box-shadow: 0 0 6px 3px rgba(68, 102, 242, 0.1);
       }
     }
-
     .info {
       padding: 30px;
-
       .title {
         margin-bottom: 4px;
         font-size: 24px;
         line-height: 1;
         color: $dark-color;
         vertical-align: middle;
-
         a {
           color: $theme-font-color;
           font-size: 20px;
@@ -78,7 +68,6 @@
           font-weight: 500;
         }
       }
-
       .desc {
         overflow: hidden;
         font-size: 14px;
@@ -89,79 +78,58 @@
       }
     }
   }
-
   .follow {
     margin-top: 20px;
-
     .follow-num {
       font-size: 20px;
       color: $theme-font-color;
       font-family: $font-rubik, $font-serif;
       font-weight: 500;
     }
-
     span {
       color: $semi-dark;
     }
   }
-
   .profile-img-style {
     padding: 30px;
-
-    .img-container {
+    .img-container{
       margin-top: 30px;
     }
-
     .user-name {
       font-size: 14px;
       color: $theme-font-color;
       margin: 0;
       font-weight: 600;
     }
-
     p {
       line-height: 30px;
       font-size: 14px;
       color: $dark-gray;
       margin-bottom: 0;
     }
-
     .media {
       img {
         width: 50px;
       }
     }
   }
-
   .like-comment {
-    li {
-      a {
-        color: $dark-gray;
-      }
-
-      &:first-child {
-        a {
-
-          &:hover,
-          &:active {
-            color: $danger-color;
-          }
-        }
+    a{
+      color: $dark-gray;
+      &:hover{
+        color: $danger-color;
       }
     }
-
     span {
       font-family: $font-rubik, $font-serif;
     }
   }
-
   .social-media {
     a {
-      padding: 0 15px;
+      padding:0 15px;
       color: $semi-dark;
       font-size: 24px;
       cursor: pointer;
-
       &:hover {
         color: var(--theme-deafult);
       }
@@ -171,15 +139,13 @@
 
 
 //Edit profile //
-.edit-profile {
-  .profile-title {
-    .media {
-      align-items: center;
-      margin-bottom: 30px;
-
-      .media-body {
-        margin-left: 14px;
-
+.edit-profile{
+  .profile-title{
+    .media{
+      align-items:center;
+      margin-bottom:30px;
+      .media-body{
+        margin-left:14px;
         [dir="rtl"] & {
           margin-left: unset;
           margin-right: 14px;
@@ -192,5 +158,9 @@
 
 
 /**=====================
-    3.41 User-profile CSS Ends
+     22. User profile css Ends
 ==========================**/
+
+
+
+

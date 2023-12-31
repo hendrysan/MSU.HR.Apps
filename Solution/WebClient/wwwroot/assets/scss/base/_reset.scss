@@ -1,6 +1,9 @@
 /**=====================
-    1.1 Reset CSS start
+     Reset css start
 ==========================**/
+.font-roboto {
+  font-family: $font-roboto, $font-serif;
+}
 
 .f-light {
   color: rgba($theme-body-sub-title-color, 0.8);
@@ -165,7 +168,7 @@ $i: 0;
 /*====== Border-radius css starts ======*/
 $i: 0;
 
-@while $i<=35 {
+@while $i<=10 {
   .b-r-#{$i} {
     border-radius:#{$i}px !important;
   }
@@ -812,69 +815,7 @@ $table-color: $primary-color,
 
 /*======= Table styling css ends  ======= */
 
-/*======= Svg stroke css start  ======= */
-$stroke-name: primary,
-  secondary,
-  success,
-  danger,
-  info,
-  light,
-  dark,
-  warning;
-$stroke-color: $primary-color,
-  $secondary-color,
-  $success-color,
-  $danger-color,
-  $info-color,
-  $light-color,
-  $dark-color,
-  $warning-color;
 
-@each $var in $stroke-name {
-  $i: index($stroke-name, $var);
-
-  .stroke-#{$var} {
-    stroke: nth($stroke-color, $i) !important;
-  }
-}
-
-/*======= Svg stroke css end  ======= */
-
-/*======= Checkbox color css start  ======= */
-$checkbox-name: primary,
-  secondary,
-  success,
-  danger,
-  info,
-  light,
-  dark,
-  warning;
-$checkbox-color: $primary-color,
-  $secondary-color,
-  $success-color,
-  $danger-color,
-  $info-color,
-  $light-color,
-  $dark-color,
-  $warning-color;
-
-@each $var in $checkbox-name {
-  $i: index($stroke-name, $var);
-
-  .checkbox-#{$var} {
-
-    &.form-check-input {
-      &:checked {
-        background-color: nth($checkbox-color, $i);
-        border-color: nth($checkbox-color, $i);
-
-      }
-    }
-
-  }
-}
-
-/*======= Checkbox color css end  ======= */
 
 
 /*======= All-Borders-color css starts  ======= */
@@ -907,15 +848,7 @@ $b-color: $primary-color,
     border-top: 1px solid nth($b-color, $i) !important;
   }
 
-  .border-t-#{$var} {
-    border-top: 1px solid nth($b-color, $i) !important;
-  }
-
   .b-b-#{$var} {
-    border-bottom: 1px solid nth($b-color, $i) !important;
-  }
-
-  .border-b-#{$var} {
     border-bottom: 1px solid nth($b-color, $i) !important;
   }
 
@@ -923,18 +856,11 @@ $b-color: $primary-color,
     border-left: 1px solid nth($b-color, $i) !important;
   }
 
-  .border-l-#{$var} {
-    border-left: 1px solid nth($b-color, $i) !important;
-  }
-
   .b-r-#{$var} {
     border-right: 1px solid nth($b-color, $i) !important;
   }
-
-  .border-r-#{$var} {
-    border-right: 1px solid nth($b-color, $i) !important;
-  }
 }
+
 
 /*======= All-Borders-color css ends  ======= */
 
@@ -952,8 +878,28 @@ $i: 1;
 
 /*====== Border width css ends ======*/
 
+.opacity-0 {
+  opacity: 0;
+}
+
+.map-block {
+  height: 350px;
+  width: 100%;
+}
+
 .map-js-height {
   height: 500px;
+
+  .btn-group {
+    input {
+      background-color: $primary-color;
+      color: $white;
+
+      &+input {
+        background-color: $secondary-color;
+      }
+    }
+  }
 }
 
 /**====== custom scrollbar css start ======**/
@@ -975,6 +921,10 @@ $i: 1;
 /**====== Custom scrollbar css end ======**/
 
 /**====== Animation css Start ======**/
+.comment {
+  color: #9f9ba5;
+  font-style: italic;
+}
 
 .line {
   color: $dark-color;
@@ -986,32 +936,42 @@ $i: 1;
 
 /**====== Animation css end ======**/
 
+/**====== list style css Start ======**/
+.list-circle {
+  list-style: circle;
+}
+
+/**====== list style css end ======**/
+
 /**====== Modal style css Start ======**/
 .theme-close {
   opacity: 1;
+  height: 40px;
+  width: 40px;
   position: absolute;
+  font-weight: 400;
   z-index: 1;
   right: 0;
   background-color: $white !important;
+  border-radius: 5px;
 }
 
 /**====== Modal style css end ======**/
 
 /**====== Animation css start ======**/
 .options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-
   >div {
     color: $gray-60;
+    display: inline-block;
     padding: 2px 10px;
     border: 1px solid;
+    margin: 0 8px 8px 0;
+    transition: all 0.3s ease;
 
     &:hover {
       background-color: $primary-color;
       color: $white;
-      transition: background-color 0.3s ease;
+      transition: all 0.3s ease;
     }
   }
 }
@@ -1023,6 +983,9 @@ $i: 1;
 }
 
 .img-cropper {
+  #putData {
+    margin-bottom: 0;
+  }
 
   .img-container {
     min-height: auto;
@@ -1062,6 +1025,43 @@ $i: 1;
     .form-group {
       margin-bottom: 0;
     }
+  }
+}
+
+.editor-statusbar {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.page-builder {
+  .ge-canvas {
+    &.ge-editing {
+      .row {
+        padding: 30px;
+        margin-bottom: 0;
+        background-color: rgba($primary-color, 0.02);
+      }
+    }
+  }
+
+  .btn-screen {
+    padding: 0 18px 0 0;
+  }
+}
+
+.bg-overlay {
+  &.active {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba($black, 0.2);
+    position: fixed;
+    z-index: 8;
+    top: 0;
+  }
+}
+
+button {
+  &:focus {
+    outline: none !important;
   }
 }
 
@@ -1158,76 +1158,27 @@ $i: 1;
   }
 }
 
+.daterangepicker {
+  select {
+
+    &.monthselect,
+    &.yearselect {
+      border-color: #efefef;
+      background-color: #fff;
+      font-size: 14px;
+      color: #898989;
+      padding: 5px 10px;
+      border-radius: 5px;
+      width: 46%;
+    }
+  }
+}
+
 .code-box-copy {
   width: 100%;
   overflow: auto;
 }
 
-@media (max-width: 1660px) and (min-width: 1400px) {
-  .custom-rs-4 {
-    width: 33.33333333%;
-  }
-
-  .custom-rs-12 {
-    width: 100%;
-  }
-}
-
-// dashboard-7
-.apexcharts-canvas {
-  .apexcharts-tooltip {
-    .apexcharts-tooltip-marker {
-      width: 10px;
-      height: 10px;
-    }
-
-    .apexcharts-tooltip-goals-group,
-    .apexcharts-tooltip-z-group {
-      display: none;
-    }
-  }
-}
-
-// dashboard-8
-.bg-gray {
-  background-color: var(--text-gray);
-}
-
-.text-gray {
-  color: var(--text-gray) !important;
-}
-
-
-// common css
-.common-space {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Override the default tooltip arrow color */
-.bs-tooltip-top .tooltip-arrow::before,
-.bs-tooltip-auto[data-popper-placement^=top] .tooltip-arrow::before {
-  border-top-color: $light-primary;
-}
-
-.bs-tooltip-end .tooltip-arrow::before,
-.bs-tooltip-auto[data-popper-placement^=right] .tooltip-arrow::before {
-  border-right-color: $light-primary;
-}
-
-.bs-tooltip-bottom .tooltip-arrow::before,
-.bs-tooltip-auto[data-popper-placement^=bottom] .tooltip-arrow::before {
-  border-bottom-color: $light-primary;
-}
-
-.bs-tooltip-start .tooltip-arrow::before,
-.bs-tooltip-auto[data-popper-placement^=left] .tooltip-arrow::before {
-  border-left-color: $light-primary;
-}
-
-
-
 /**=====================
-    1.1 Reset CSS Ends
+     Reset css Ends
 ==========================**/

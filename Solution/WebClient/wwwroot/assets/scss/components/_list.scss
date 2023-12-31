@@ -1,5 +1,5 @@
 /**=====================
-   2.20 List CSS Start
+    List CSS Start
 ==========================**/
 .list-group-item.active {
 	background-color: var(--theme-deafult);
@@ -58,7 +58,6 @@ $list-light-color: $light-primary,
 		&:focus {
 			background-color: nth($list-light-color, $i);
 			color: $dark-color;
-			z-index: 0;
 		}
 	}
 }
@@ -78,8 +77,7 @@ $list-light-color: $light-primary,
 	flex-wrap: wrap;
 
 	@media (max-width: 414px) {
-		flex-wrap: unset;
-		word-break: break-word;
+		display: block;
 	}
 
 	@media (max-width: 366px) {
@@ -115,42 +113,12 @@ $list-light-color: $light-primary,
 
 .list-behavior-1 {
 	@media (max-width: 1199px) {
+		flex-direction: column;
 		gap: 12px;
-	}
-
-	@media (max-width:575px) {
-		&:first-child {
-			margin-bottom: 14px;
-		}
-	}
-
-	img {
-		@media (max-width:1999px) {
-			height: 86px;
-		}
-
-		@media (max-width:992px) {
-			height: 70px;
-		}
 	}
 
 	.flex-grow-1 {
 		margin-left: 16px;
-
-		@media (max-width:1199px) {
-			margin-left: 0;
-
-			p {
-				display: block;
-				display: -webkit-box;
-				max-width: 100%;
-				margin: 0 auto;
-				-webkit-line-clamp: 3;
-				-webkit-box-orient: vertical;
-				overflow: hidden;
-				text-overflow: ellipsis;
-			}
-		}
 
 		[dir="rtl"] & {
 			margin-right: 16px;
@@ -159,18 +127,17 @@ $list-light-color: $light-primary,
 	}
 }
 
-.list-behaviors {
-	>div:nth-child(even) {
-		.flex-grow-1 {
-			order: -1;
-			margin-left: unset;
-			margin-right: 16px;
+.list-behavior-2 {
+	@media (max-width: 1199px) {
+		display: none;
+	}
 
-			@media (max-width:1199px) {
-				margin-left: 0;
-				margin-right: 0;
-				order: unset;
-			}
+	.flex-grow-1 {
+		margin-right: 16px;
+
+		[dir="rtl"] & {
+			margin-left: 16px;
+			margin-right: unset;
 		}
 	}
 }
@@ -194,41 +161,6 @@ $list-light-color: $light-primary,
 	}
 }
 
-
-.contact-profile {
-	@media (max-width:1216px) {
-		background-color: unset;
-
-		&.list-light-dark {
-			&:hover {
-				background-color: unset;
-			}
-		}
-	}
-}
-
-
-.badge-list {
-	.list-group-item {
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-start;
-		flex-wrap: wrap;
-
-		div {
-			margin-right: auto;
-			margin-left: 8px;
-
-			[dir="rtl"] & {
-				margin-left: auto;
-				margin-right: 8px;
-			}
-
-		}
-
-	}
-}
-
 /**=====================
-   2.20 List CSS Ends
+    List CSS Ends
 ==========================**/

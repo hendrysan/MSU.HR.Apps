@@ -1,13 +1,11 @@
 /**=====================
-    3.33 Pricing CSS Start
+     34. Pricing CSS Start
 ==========================**/
 .pricing-simple {
   box-shadow: 0 0 10px 5px rgba(68, 102, 242, 0.05);
   margin-bottom: 0 !important;
-
   .card-body {
     border-bottom: none;
-
     h3 {
       position: relative;
       margin-bottom: 38px;
@@ -36,15 +34,14 @@
 
 .pricingtable {
   text-align: center;
-  padding-top: 45px;
-  padding-bottom: 45px;
+  padding-top:45px;
+  padding-bottom:45px;
   border-radius: 10px;
   box-shadow: $card-hover-box-shadow;
   overflow: hidden;
   position: relative;
   z-index: 1;
-  height: 100%;
-
+  height:100%;
   &:before,
   &:after {
     content: "";
@@ -57,7 +54,7 @@
     z-index: -1;
     opacity: 0.1;
   }
-
+ 
 }
 
 
@@ -75,8 +72,8 @@
   }
 
   .title {
-    text-transform: uppercase;
-    margin-bottom: 20px;
+    text-transform:uppercase;
+    margin-bottom:20px;
   }
 
   .price-value {
@@ -87,11 +84,9 @@
     padding: 45px 0 0;
     margin: 0 auto 25px;
     border-radius: 50%;
-
     .duration {
       margin: 0 0 0 -5px;
     }
-
     .amount {
       font-size: 58px;
       font-weight: 700;
@@ -107,7 +102,6 @@
   .pricing-content {
     margin: 0 0 25px;
     display: inline-block;
-
     li {
       font-weight: 500;
       text-align: left;
@@ -135,41 +129,39 @@
   }
 }
 
-@media (max-width:1470px) {
-  .pricing-block {
-    >div {
-      flex: 50%;
-
-      &:nth-child(n+3) {
-        margin-top: 30px;
+@media (max-width:1470px){
+  .pricing-block{
+    >div{
+      flex:50%;
+      &:nth-child(n+3){
+        margin-top:30px;
       }
     }
   }
 
 }
 
-@media only screen and (max-width: 991px) {
+@media only screen and (max-width: 991px) { 
   .pricing-simple {
     .card-body {
       h1 {
         margin-bottom: 20px;
       }
-
       h3 {
         margin-bottom: 28px;
       }
     }
   }
 
-  .pricing-block {
-    >div {
-      &:nth-child(n+2) {
-        margin-top: 20px;
+  .pricing-block{
+    >div{      
+      &:nth-child(n+2){
+        margin-top:20px;
       }
     }
   }
-
-
+ 
+ 
 
 }
 
@@ -181,21 +173,20 @@
       }
     }
   }
-
   .pricing-block {
-    >div {
-      flex: 100%;
+    > div{
+      flex:100%;
     }
   }
 
-  .pricingtable {
-    padding-top: 30px;
-    padding-bottom: 30px;
+  .pricingtable{
+    padding-top:30px;
+    padding-bottom:30px;
   }
 
 
 }
 
 /**=====================
-   3.33 Pricing CSS Ends
+    34. Pricing CSS Ends
 ==========================**/

@@ -1,5 +1,5 @@
 /**=====================
-    2.30 Table CSS Start
+     39. Table  CSS Start
 ==========================**/
 
 thead,
@@ -13,18 +13,6 @@ th {
 
 .pills-component {
 	width: 20%;
-}
-
-#row_create {
-	td.highlight {
-		font-weight: 600;
-		color: $primary-color;
-	}
-
-	td.danger {
-		font-weight: 600;
-		color: $danger-color;
-	}
 }
 
 .table {
@@ -322,6 +310,7 @@ th {
 }
 
 .table-bordered {
+
 	thead,
 	tbody,
 	tfoot,
@@ -333,5 +322,5 @@ th {
 }
 
 /**=====================
-    2.30 Table CSS Ends
+     39.Table CSS Ends
 ==========================**/

@@ -1,5 +1,5 @@
 /**=====================
-  5.9 Box-layout CSS start
+    63. Box-layout CSS start
 ==========================**/
 
 .box-layout {
@@ -11,79 +11,55 @@
     .learning-filter {
       order: -1;
     }
-
-    .artist-table {
-      .appointment-table.customer-table {
-        table {
-          tr {
-            td {
-              &:last-child {
-                min-width: 100px;
-              }
-            }
-          }
-        }
-      }
-    }
-
     .md-sidebar {
       .md-sidebar-toggle {
         display: block;
       }
-
-      .md-sidebar-aside {
-        position: absolute;
-        top: 40px;
-        left: 0;
-        opacity: 0;
-        visibility: hidden;
-        z-index: 3;
-        width: 280px;
-
-        &.open {
-          opacity: 1;
-          visibility: visible;
+       .md-sidebar-aside {
+          position: absolute;
+          top: 40px;
+          left: 0;
+          opacity: 0;
+          visibility: hidden;
+          z-index: 3;
+          width: 280px;
+          &.open {
+            opacity: 1;
+            visibility: visible;
+          }
         }
-      }
     }
-
     .job-sidebar {
       background-color: var(--white);
       padding: 20px;
     }
-
     .widget-1 {
       &.mb-xl-0 {
         margin-bottom: 25px !important;
       }
     }
-
     .radial-progress-card {
       .radial-chart-wrap {
         margin-right: -10px;
       }
     }
-
     .currency-widget {
       div[class*=bg-light-] {
         display: none;
       }
     }
-
     .box-order {
       .order-1 {
         order: 1 !important;
       }
     }
-
-    .activity-card {
+    .activity-card  {
       .appointment-table {
         &.customer-table {
           height: 187px;
         }
       }
     }
-
     .transaction-table {
       tr {
         td {
@@ -93,30 +69,25 @@
         }
       }
     }
-
     .welcome-card {
       .welcome-img {
         height: 170px;
         bottom: -22px;
       }
     }
-
     .purchase-card {
       img {
         margin: -210px auto 0;
         width: 80%;
       }
-
       &.discover {
         margin-top: 90px;
-
         img {
           margin-top: -90px;
           width: 64%;
         }
       }
     }
-
     .apache-cotainer-large,
     #line-visual,
     #line-visulH {
@@ -126,14 +97,13 @@
         width: 100% !important;
       }
     }
-
+    
     .page-wrapper,
     &.page-wrapper {
       &.box-layout {
         padding-top: 40px;
         margin-top: 0 !important;
       }
-
       &.compact-wrapper {
         margin-top: $box-layout-space;
 
@@ -357,7 +327,6 @@
             .left-header {
               width: 36%;
             }
-
             .nav-right {
               width: 46%;
             }
@@ -426,9 +395,7 @@
       &.horizontal-wrapper {
         .page-header {
           .header-wrapper {
-
-            .nav-right,
-            .left-header {
+            .nav-right, .left-header {
               width: 36%;
             }
           }
@@ -560,10 +527,72 @@
           padding-left: 230px;
         }
 
+        .chat-box {
+          .chat-history {
+            .call-content {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              min-width: 300px;
+
+              >div {
+                z-index: 8;
+                background-color: rgba(255, 255, 255, 0.75);
+                background-blend-mode: overlay;
+                width: 100%;
+                padding: 30px;
+                left: 15px;
+              }
+
+              button {
+                width: 40%;
+                font-size: 14px;
+                margin: 0 auto;
+              }
+            }
+
+            .call-icons {
+              margin-top: 20px;
+              margin-bottom: 20px;
+
+              ul {
+                li {
+                  border: 1px solid #717171;
+                  width: 50px;
+                  height: 50px;
+                  padding: 8px;
+                }
+              }
+            }
+
+            .receiver-img {
+              margin-top: 30px;
+              margin-bottom: 30px;
+
+              img {
+                width: 38%;
+              }
+            }
+
+            .total-time {
+              h2 {
+                font-size: 28px;
+                color: #717171;
+              }
+            }
+          }
+        }
+
         canvas {
           &#myLineCharts {
             width: 100%;
           }
+        }
+
+        .chat-right-aside {
+          flex: 0 0 60%;
+          max-width: 60%;
+          overflow: hidden;
         }
 
         .caller-img {
@@ -788,6 +817,33 @@
         display: none !important;
       }
 
+      .chat-box {
+        .chat-right-aside {
+          .chat {
+            .chat-header {
+              .chat-menu-icons {
+                li {
+                  a {
+                    i {
+                      font-size: 19px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          flex: 0 0 100%;
+          max-width: calc(100% - 15px);
+          overflow: hidden;
+        }
+
+        .toogle-bar {
+          display: inline-block;
+          margin-right: 0 !important;
+        }
+      }
+
       .chat-menu {
         right: 0;
         border-top: 1px solid #ddd;
@@ -858,6 +914,16 @@
             }
           }
         }
+
+        .email-content {
+          .email-top {
+            .user-emailid {
+              &:after {
+                right: -10px;
+              }
+            }
+          }
+        }
       }
 
       .todo {
@@ -894,5 +960,5 @@
 }
 
 /**=====================
-  5.9 Box-layout CSS Ends
+    63. Box-layout CSS ends
 ==========================**/

@@ -1,5 +1,5 @@
 /**=====================
-    5.8 Rtl CSS Start
+    60. RTL CSS Start
 ==========================**/
 html[dir="rtl"] {
   ul {
@@ -9,10 +9,6 @@ html[dir="rtl"] {
   .ms-auto {
     margin-left: unset !important;
     margin-right: auto !important;
-  }
-
-  .slider-wrapper {
-    direction: ltr;
   }
 
   .f-right {
@@ -30,6 +26,15 @@ html[dir="rtl"] {
   .form-check-inline {
     margin-right: unset;
     margin-left: 1rem;
+  }
+
+  .color-box {
+    button {
+      +button {
+        margin-left: unset;
+        margin-right: 5px;
+      }
+    }
   }
 
   .knowledgebase-search {
@@ -149,6 +154,7 @@ html[dir="rtl"] {
             &:hover {
               .sidebar-main {
                 .sidebar-links {
+
                   .simplebar-wrapper {
                     .simplebar-mask {
                       .simplebar-content-wrapper {
@@ -1538,14 +1544,6 @@ html[dir="rtl"] {
     }
   }
 
-  .explore-card {
-    text-align: left;
-
-    .group-btn {
-      justify-content: flex-end;
-    }
-  }
-
   .balance-box {
     text-align: center;
   }
@@ -2062,14 +2060,6 @@ html[dir="rtl"] {
     }
   }
 
-  .form-check-reverse {
-    .form-check-input {
-      float: right;
-      margin-left: 0;
-      margin-right: 10px;
-    }
-  }
-
   .mega-menu {
     .default-according {
       .card {
@@ -2123,6 +2113,16 @@ html[dir="rtl"] {
 
       ul {
         padding-right: 0;
+      }
+    }
+
+    .email-content {
+      .email-top {
+        .user-emailid {
+          &:after {
+            float: left;
+          }
+        }
       }
     }
 
@@ -2445,6 +2445,15 @@ html[dir="rtl"] {
                       border-bottom-right-radius: 0;
                     }
                   }
+
+                  #prependedcheckbox {
+                    border-top-right-radius: 0 !important;
+                    border-bottom-right-radius: 0 !important;
+                  }
+
+                  #appendedcheckbox {
+                    border-right-color: $light-semi-gray;
+                  }
                 }
               }
             }
@@ -2463,6 +2472,11 @@ html[dir="rtl"] {
             margin-right: unset;
             margin-left: -1px;
           }
+        }
+
+        .pl-md-radios {
+          padding-right: 37px;
+          padding-left: unset;
         }
       }
     }
@@ -2979,9 +2993,119 @@ html[dir="rtl"] {
   }
 
   // chat page
+  .call-chat-body {
+    .chat-box {
+      .chat-right-aside {
+        .chat {
+          .chat-history {
+            .caller-img {
+              &.ps-0 {
+                padding-left: 15px !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .chat-box {
+    .user-image {
+      float: right;
+      margin-left: 5px;
+      margin-right: 0;
+    }
+
+    .people-list {
+      .search {
+        i {
+          left: 10px;
+          right: unset;
+        }
+      }
+    }
+
+    .about {
+      float: right;
+      padding-right: 10px;
+      padding-left: unset;
+      text-align: right;
+    }
+
+    .chat-menu {
+      border-right: 1px solid $light-color;
+      border-left: unset;
+
+      .nav {
+        padding-right: 0;
+      }
+
+      &.ps-0 {
+        padding-left: 15px !important;
+      }
+    }
+
+    .chat-right-aside {
+      .chat {
+        .chat-message {
+          .smiley-box {
+            margin-left: 0.5rem;
+            margin-right: unset;
+          }
+
+          .text-box {
+            .btn {
+              border-radius: 5px 0 0 5px;
+            }
+          }
+        }
+      }
+
+      &.pe-0 {
+        padding-right: 15px !important;
+      }
+    }
+
+    .chat {
+      .chat-message {
+        .text-box {
+          .input-group-append {
+            margin-right: -2px;
+          }
+        }
+      }
+    }
+  }
+
   .chat-msg-box {
     ul {
       padding-right: 0;
+    }
+  }
+
+  .chat-left-aside {
+    .status-circle {
+      left: unset;
+      right: 40px;
+    }
+  }
+
+  .chat-right-aside {
+    .chat {
+      .chat-header {
+        .chat-menu-icons {
+          padding-left: 0;
+          padding-right: unset;
+
+          &.float-sm-right {
+            float: left !important;
+          }
+        }
+
+        img {
+          float: right;
+        }
+      }
     }
   }
 
@@ -3466,7 +3590,7 @@ html[dir="rtl"] {
     }
   }
 
-  .ps-4 {
+  .pl-navs-inline {
     padding-right: 30px !important;
     padding-left: 0 !important;
   }
@@ -3754,6 +3878,14 @@ html[dir="rtl"] {
     margin-left: unset;
   }
 
+  // tabbed card page
+  .tabbed-card {
+    ul {
+      left: 22px;
+      right: unset;
+    }
+  }
+
   // checkbox & radios page
   .checkbox {
     label {
@@ -3765,15 +3897,6 @@ html[dir="rtl"] {
         left: unset;
         margin-right: -16px;
         margin-left: unset;
-      }
-    }
-  }
-
-  .checkbox-wrapper,
-  .radio-wrapper {
-    li {
-      label {
-        padding-right: 0;
       }
     }
   }
@@ -3790,6 +3913,13 @@ html[dir="rtl"] {
   }
 
   // timeline page
+  .cd-timeline-content {
+    &::before {
+      border-right: 7px solid $light-color;
+      border-left-color: transparent;
+    }
+  }
+
   .cd-timeline-img {
     i {
       right: 40%;
@@ -3815,8 +3945,8 @@ html[dir="rtl"] {
         &::before {
           right: auto;
           left: 100%;
-          border: 15px solid transparent;
-          border-left: 15px solid #f4f4f4;
+          border-left-color: #eeeeee;
+          border-right-color: transparent;
         }
       }
     }
@@ -4232,25 +4362,6 @@ html[dir="rtl"] {
       .page-body-wrapper {
         .page-body {
           .card:not(.email-body) {
-            .cd-timeline-block {
-              &:nth-child(odd) {
-                .cd-timeline-content {
-                  &::before {
-                    border-left: none;
-                    border-right-color: $dark-border-color;
-                  }
-                }
-              }
-
-              &:nth-child(even) {
-                .cd-timeline-content {
-                  &::before {
-                    border-left-color: $dark-border-color;
-                    border-right: unset;
-                  }
-                }
-              }
-            }
 
             .b-r-light,
             .border-right {
@@ -4308,11 +4419,32 @@ html[dir="rtl"] {
         }
       }
     }
+
+    // chat page
+    .chat-left-aside {
+      .status-circle {
+        left: unset;
+        right: 22px;
+      }
+    }
   }
 
   @media (min-width: 1200px) {
     .float-xl-end {
       float: left !important;
+    }
+
+    // chat page
+    .chat-box {
+      .pe-xl-0 {
+        padding-left: 0 !important;
+        padding-right: 15px !important;
+      }
+
+      .ps-xl-0 {
+        padding-right: 0 !important;
+        padding-left: 15px !important;
+      }
     }
 
     // vertical page
@@ -4416,7 +4548,15 @@ html[dir="rtl"] {
         }
       }
 
-
+      .email-content {
+        .email-top {
+          .user-emailid {
+            &:after {
+              float: left;
+            }
+          }
+        }
+      }
 
       .email-right-aside {
         .email-body {
@@ -4435,6 +4575,17 @@ html[dir="rtl"] {
 
     .chat-menu-icons {
       text-align: left;
+    }
+
+    .chat-box {
+      .chat-history {
+        .row {
+          .col-sm-7 {
+            padding-left: 0 !important;
+            padding-right: unset !important;
+          }
+        }
+      }
     }
 
     .chat-menu {
@@ -4627,13 +4778,6 @@ html[dir="rtl"] {
   @media (min-width: 768px) {
     .float-md-end {
       float: left !important;
-    }
-
-    .income-wrap {
-      .ps-md-0 {
-        padding-left: 30px !important;
-        padding-right: 0 !important;
-      }
     }
 
     .text-md-end {
@@ -5011,5 +5155,5 @@ html[dir="rtl"] {
 }
 
 /**=====================
-    5.8 Rtl CSS Ends
+    60. RTL CSS Ends
 ==========================**/

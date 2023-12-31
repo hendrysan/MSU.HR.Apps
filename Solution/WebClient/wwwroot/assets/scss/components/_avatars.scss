@@ -1,5 +1,5 @@
 /**=====================
-  2.3 Avatars CSS start
+    Avatars CSS start
 ==========================**/
 .avatars {
     .avatar {
@@ -11,6 +11,23 @@
         &:last-child {
             margin-right: 0;
         }
+
+        .b-r-30 {
+            border-radius: 30px;
+        }
+
+        .b-r-35 {
+            border-radius: 35px;
+        }
+
+        .b-r-25 {
+            border-radius: 25px;
+        }
+
+        .b-r-15 {
+            border-radius: 15px;
+        }
+
         &.ratio {
             img {
                 width: auto;
@@ -25,7 +42,39 @@
             bottom: 12%;
             right: 4%;
         }
+
+        .img-100 {
+            width: calc(75px + (100 - 75) * ((100vw - 320px) / (1920 - 320))) !important;
+            height: calc(75px + (100 - 75) * ((100vw - 320px) / (1920 - 320)));
+        }
+
+        .img-90 {
+            width: calc(65px + (90 - 65) * ((100vw - 320px) / (1920 - 320))) !important;
+            height: calc(65px + (90 - 65) * ((100vw - 320px) / (1920 - 320)));
+        }
+
+        .img-80 {
+            width: calc(55px + (80 - 55) * ((100vw - 320px) / (1920 - 320))) !important;
+            height: calc(55px + (80 - 55) * ((100vw - 320px) / (1920 - 320)));
+        }
+
+        .img-70 {
+            width: calc(45px + (70 - 45) * ((100vw - 320px) / (1920 - 320))) !important;
+            height: calc(45px + (70 - 45) * ((100vw - 320px) / (1920 - 320)));
+        }
     }
+}
+
+.status-offline {
+    background-color: $danger-color;
+}
+
+.status-online {
+    background-color: $success-color ;
+}
+
+.status-dnd {
+    background-color: $warning-color ;
 }
 
 .customers {
@@ -34,7 +83,7 @@
 
         li {
             img {
-                border: 2px solid var(--white);
+                border: 2px solid $white;
                 transition: 0.5s;
 
                 &:hover {
@@ -81,5 +130,5 @@
 }
 
 /**=====================
-    2.3 Avatars CSS Ends
+     80. avatars CSS Ends
 ==========================**/

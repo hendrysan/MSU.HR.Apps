@@ -1,23 +1,6 @@
 /**=====================
-    3.20 Helper CSS start
+     15. Helper CSS start
 ==========================**/
-.helper-common-box {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-    gap: 8px;
-
-    &:last-child {
-        margin-bottom: 0;
-    }
-
-    &.helper-p-wrapper {
-        gap: 12px;
-        margin-bottom: 0;
-        flex-wrap: wrap;
-    }
-}
-
 
 .border-wrapper {
     padding: 20px;
@@ -66,31 +49,6 @@
     padding: 12px 20px;
 }
 
-
-.helper-padding {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.helper-p-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    span {
-        color: var(--body-font-color);
-    }
-}
-
-
-.common-p-box {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    align-items: flex-start;
-}
-
 /**=====================
-    3.20 Helper CSS end
+     15. Helper CSS end
 ==========================**/

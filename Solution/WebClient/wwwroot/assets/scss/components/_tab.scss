@@ -1,7 +1,8 @@
 /**=====================
-  2.29 Tab CSS Start
+  Tabs CSS Start
 ==========================**/
 .nav-pills {
+
   .nav-link.active,
   .show>.nav-link {
     background-color: var(--theme-deafult);
@@ -56,6 +57,7 @@ $nav-color: var(--theme-deafult),
 
 .nav-tabs.nav-bottom {
   .nav-item {
+
     .nav-link.active,
     .nav-link.focus,
     .nav-link.hover {
@@ -114,6 +116,7 @@ $nav-color: var(--theme-deafult),
     transition: all 0.3s ease;
     color: $dark-color;
   }
+
   .nav-link.active,
   .show>.nav-link {
     background-color: transparent;
@@ -195,13 +198,16 @@ $nav-color: var(--theme-deafult),
   }
 
   .border-tab.nav-left.nav-#{$var} {
+
     .nav-link.active,
     .show>.nav-link {
       border-left-color: nth($nav-color, $i);
       color: nth($nav-color, $i);
     }
   }
+
   .border-tab.nav-right.nav-#{$var} {
+
     .nav-link.active,
     .show>.nav-link {
       border-right-color: nth($nav-color, $i);
@@ -210,12 +216,37 @@ $nav-color: var(--theme-deafult),
   }
 }
 
+.tabbed-card {
+  ul {
+    position: absolute;
+    right: 22px;
+    top: 23px;
+    border-bottom: none;
+
+    &.border-tab {
+      &.nav-tabs {
+        top: 12px;
+
+        .nav-item {
+          float: right;
+
+          .nav-link {
+            padding: 23px 15px;
+          }
+        }
+      }
+    }
+  }
+}
+
 .flex-space {
   display: flex;
   gap: 16px;
+
   @media (max-width:576px) {
     justify-content: center;
   }
+
 }
 
 .tab-img {
@@ -340,11 +371,6 @@ $nav-color: var(--theme-deafult),
       display: flex;
       padding-bottom: 6px;
       border-bottom: 1px solid var(--light-border);
-      align-items: center;
-
-      @media (max-width:630px) {
-        align-items: unset;
-      }
     }
   }
 }
@@ -409,12 +435,14 @@ $dark-color;
       opacity: 0;
       -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
       transition: opacity 0.35s, transform 0.35s;
+      -webkit-transform: scale(0, 1);
       transform: scale(0, 1);
     }
 
     &:hover {
       &::after {
         opacity: 1;
+        -webkit-transform: scale(1);
         transform: scale(1);
       }
     }
@@ -426,6 +454,7 @@ $dark-color;
     &.nav-secondary {
       &.nav-left {
         .nav-link {
+
           &:hover,
           &.active {
             background-color: unset;
@@ -461,5 +490,5 @@ $dark-color;
 }
 
 /**=====================
-    2.29 Tab CSS Ends
+    Tabs CSS Ends
 ==========================**/

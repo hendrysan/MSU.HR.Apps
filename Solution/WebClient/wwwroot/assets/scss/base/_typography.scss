@@ -1,5 +1,5 @@
 /**=====================
-    1.2 Typography CSS start
+    Typography css start
 ==========================**/
 //Custom css Start
 body {
@@ -9,6 +9,7 @@ body {
     color: $theme-body-font-color;
 }
 
+
 h1,
 h2,
 h3,
@@ -17,6 +18,8 @@ h5,
 h6 {
     margin: 0;
 }
+
+
 
 ul {
     padding-left: $ul-padding-left;
@@ -53,14 +56,11 @@ a {
 .btn {
     font-size: 14px;
 }
+
 *.btn:focus {
     box-shadow: $btn-focus-box-shadow !important;
 }
-button {
-    &:focus {
-      outline: none !important;
-    }
-  }
+
 p {
     font-size: $paragraph-font-size;
     line-height: $paragraph-line-height;
@@ -95,7 +95,9 @@ blockquote {
         blockquote {
             border: none !important;
         }
+
     }
+
     &.text-end {
         blockquote {
             border-left: none !important;
@@ -139,10 +141,11 @@ label {
     }
 }
 
-//Custom Css end
+//Custom css End
 
-//Typography CSS start
+//Typography css start
 .typography {
+
     h1,
     .h1,
     h2,
@@ -174,8 +177,8 @@ pre {
     padding: $pre-tag-padding;
 }
 
-// Typography CSS end
 
+//Typography css end
 .owl-theme {
     .owl-dots {
         .owl-dot {
@@ -228,7 +231,7 @@ pre {
     }
 }
 
-// Modal page
+// modal page
 .modal {
     .modal-body {
         .card {
@@ -269,7 +272,7 @@ pre {
 
 .alert-theme {
     button {
-        top: 45px !important;
+        top: 25px !important;
         right: 20px !important;
         color: var(--theme-deafult);
 
@@ -398,6 +401,7 @@ pre {
 }
 
 fieldset {
+
     .bootstrap-touchspin-postfix,
     .bootstrap-touchspin-prefix {
         border-radius: 0;
@@ -460,7 +464,7 @@ table {
     }
 }
 
-// Common flex
+// common flex property
 .common-flex {
     display: flex;
     gap: 12px;
@@ -492,5 +496,5 @@ table {
 }
 
 /**=====================
-    1.2 Typography CSS Ends
+    Typography css Ends
 ==========================**/

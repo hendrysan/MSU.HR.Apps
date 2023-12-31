@@ -1,15 +1,10 @@
-/**=====================
-  5.3 Header CSS Start
-==========================**/
-
+/*======= Page Header css Start ======= */
 .left-header {
   .d-flex {
     align-items: center;
   }
-
   h6 {
     line-height: 1.6;
-
     @media (max-width: 1199px) {
       width: 160px;
       overflow: hidden;
@@ -17,32 +12,26 @@
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-
     @media (max-width: 991px) {
       width: 120px;
     }
-
     @media (max-width: 767px) {
       width: 66px;
     }
   }
-
   @media (max-width: 755px) {
-    display: none;
+     display: none;
   }
-
   img {
     margin-top: -12px;
     height: 26px;
   }
-
   i {
     font-weight: 600;
     font-size: 12px;
     margin-bottom: -4px;
   }
 }
-
 /*======= Page Header css ends  ======= */
 
 
@@ -58,7 +47,6 @@
     }
   }
 }
-
 .offcanvas {
   position: unset;
   visibility: visible;
@@ -138,6 +126,8 @@
     }
   }
 }
+
+
 /**======Main Header css Ends ======**/
 
 /*=======Mega menu css start=======*/
@@ -148,6 +138,7 @@
         font-weight: 500;
         color: gray;
       }
+
       .card-body {
         font-size: 12px;
       }
@@ -190,5 +181,5 @@
 /*=======Mega menu css end=======*/
 
 /**=====================
-    5.3 Header CSS Ends
+    05. Header CSS Ends
 ==========================**/

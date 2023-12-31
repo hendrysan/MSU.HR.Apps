@@ -77,12 +77,12 @@ pre[class*=language-] ::selection, pre[class*=language-]::selection {
 
 .language-css .token.string, .style .token.string {
   color: #a67f59;
-  background: hsla(0, 0%, 100%, 0.5);
+  background: hsla(0deg, 0%, 100%, 0.5);
 }
 
 .token.entity, .token.operator, .token.url {
   color: #a67f59;
-  background: hsla(0, 0%, 100%, 0.5);
+  background: hsla(0deg, 0%, 100%, 0.5);
 }
 .token.atrule, .token.attr-value, .token.keyword {
   color: #07a;
@@ -103,7 +103,7 @@ pre[class*=language-] ::selection, pre[class*=language-]::selection {
   cursor: help;
 }
 
-
+/*# sourceMappingURL=prism.min.css.map */
 .code-box-copy {
   position: relative;
   font-size: 16px;

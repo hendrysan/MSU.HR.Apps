@@ -1,11 +1,10 @@
 /**=====================
-  5.2 Grid CSS Start
+  GRID CSS Start
 ==========================**/
 .grid-showcase {
   margin-bottom: -10px;
 
-  span,
-  .grid-wrapper {
+  span {
     display: block;
     padding: 10px;
     margin-bottom: 10px;
@@ -31,20 +30,6 @@
   color: $black;
 }
 
-table {
-  &.table-bordered {
-    thead {
-      tr {
-        th {
-          p {
-            margin-bottom: 0;
-          }
-        }
-      }
-    }
-  }
-}
-
 /**=====================
-    5.2 Grid CSS Ends
+     GRID CSS Ends
 ==========================**/

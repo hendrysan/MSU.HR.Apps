@@ -322,3 +322,25 @@
 .clockpicker .input-group-addon {
   cursor: pointer;
 }
+
+.clockpicker-align-left.popover > .arrow {
+  left: 25px;
+}
+
+.clockpicker-align-top.popover > .arrow {
+  top: 17px;
+}
+
+.clockpicker-align-right.popover > .arrow {
+  left: auto;
+  right: 25px;
+}
+
+.clockpicker-align-bottom.popover > .arrow {
+  top: auto;
+  bottom: 6px;
+}
+
+.clockpicker-hours.clockpicker-dial-out {
+  transform: scale(1.2, 1.2);
+}

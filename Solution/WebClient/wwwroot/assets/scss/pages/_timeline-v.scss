@@ -1,24 +1,6 @@
 /**=====================
-    3.40 Timeline-v CSS Start
+     42. Timeline CSS Start
 ==========================**/
-
-.timeline-wrapper {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding-bottom: 12px;
-}
-
-.time-content {
-	display: flex;
-	align-items: center;
-	gap: 4px;
-
-	i {
-		font-size: 18px;
-	}
-}
-
 .activity {
 	.media {
 		margin-bottom: 30px;
@@ -361,15 +343,15 @@
 }
 
 .cd-timeline-img {
-	width: 40px;
-	height: 40px;
-	left: 51%;
+	width: 60px;
+	height: 60px;
+	left: 50%;
 	margin-left: -30px;
 	-webkit-transform: translateZ(0);
 	-webkit-backface-visibility: hidden;
 	position: absolute;
 	top: 0;
-	border-radius: 50px;
+	border-radius: 4px;
 
 	i {
 		display: block;
@@ -378,7 +360,7 @@
 		top: 44%;
 		margin-left: -12px;
 		margin-top: -12px;
-		font-size: 20px;
+		font-size: 27px;
 		color: $white;
 	}
 }
@@ -421,7 +403,7 @@
 
 .cd-timeline-content {
 	position: relative;
-	background: $light-color;
+	background: $light;
 	border-radius: 4px;
 	padding: 30px;
 	box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.08);
@@ -456,22 +438,12 @@
 .cd-timeline-content::before {
 	content: '';
 	position: absolute;
-	top: 28px;
+	top: 16px;
 	right: 100%;
 	height: 0;
 	width: 0;
-	border: 15px solid transparent;
-	border-left: 15px solid $light-color;
-
-	[dir="rtl"] & {
-		border-right: 15px solid $light-color;
-		border-left: unset;
-	}
-
-
-	@media (max-width:1169px) {
-		display: none;
-	}
+	border: 7px solid transparent;
+	border-left: 7px solid $light-color;
 }
 
 @media only screen and (min-width: 768px) {
@@ -612,241 +584,6 @@
 	}
 }
 
-.main-timeline {
-	ul {
-		&::before {
-			left: 5px;
-
-			[dir="rtl"] & {
-				right: 5px;
-				left: unset;
-			}
-		}
-	}
-}
-
-.square-timeline {
-	position: relative;
-
-	&::before {
-		border: 1px dashed $gray-60;
-		content: '';
-		margin-left: 0px;
-		position: absolute;
-		top: 0;
-		left: 18px;
-		width: 1px;
-		height: 100%;
-
-		[dir="rtl"] & {
-			margin-left: unset;
-			margin-right: 0;
-			left: unset;
-			right: 18px;
-		}
-	}
-
-	.timeline-event {
-		position: relative;
-
-		&:hover {
-			.timeline-event-icon {
-				transform: rotate(-105deg);
-				background-color: $badge-light-color;
-			}
-
-			.timeline-event-wrapper {
-				.timeline-thumbnail {
-					box-shadow: inset 40em 0 0 0 $light-warning;
-				}
-			}
-		}
-
-		.timeline-event-wrapper {
-			padding: 0 0 0 14px;
-			position: relative;
-			top: -7px;
-			left: 38px;
-			width: 95%;
-
-			[dir="rtl"] & {
-				left: unset;
-				right: 38px;
-				padding: 0 14px 0 0;
-			}
-
-			@media (max-width: 1200px) {
-				width: calc(84% + (95 - 84) * ((100vw - 320px) / (1200 - 320)));
-			}
-
-			.designer-details {
-				padding-top: 20px;
-			}
-
-			.timeline-thumbnail {
-				transition: box-shadow 0.5s ease-in 0.1s;
-				color: $dark-color;
-				background-color: $light-primary;
-				box-shadow: inset 0 0 0 0em $light-info;
-				display: inline-block;
-				margin-bottom: 12px;
-				padding: 2px 25px;
-			}
-
-			.list-group-item-action {
-
-				&:hover,
-				&:active,
-				&:focus {
-					background-color: unset;
-				}
-			}
-
-			>div {
-				display: inline-block;
-				width: 100%;
-
-			}
-		}
-
-		.timeline-event-icon {
-			transition: 0.2s ease-in;
-			transform: rotate(45deg);
-			background-color: $primary-color;
-			outline: 6px solid $light-primary;
-			display: block;
-			margin: 0px;
-			position: absolute;
-			top: 0;
-			left: 14px;
-			width: 10px;
-			height: 10px;
-
-			[dir="rtl"] & {
-				right: 14px;
-				left: unset;
-			}
-		}
-	}
-}
-
-// Horizontal timeline
-.list-inline {
-	display: flex;
-	justify-content: center;
-
-
-	&.events {
-		.event-list {
-			display: block;
-			position: relative;
-			text-align: center;
-			padding-top: 70px;
-			margin-right: 0;
-
-			p {
-				white-space: nowrap;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				display: -webkit-box;
-				-webkit-box-orient: vertical;
-				-webkit-line-clamp: 2;
-			}
-
-			.event-date {
-				position: absolute;
-				top: 38px;
-				left: 0;
-				right: 0;
-				width: 75px;
-				margin: 0 auto;
-				border-radius: 4px;
-				padding: 2px 4px;
-
-
-				p {
-					-webkit-line-clamp: 3;
-					-webkit-box-orient: vertical;
-					display: -webkit-box;
-					overflow: hidden;
-					line-height: 1.5;
-					margin-top: 7px;
-				}
-			}
-		}
-	}
-}
-
-.timeline-list {
-
-	&.timeline-border {
-		border-bottom: 1px solid $gray-60;
-	}
-
-	&.list-inline {
-		padding-bottom: 0;
-
-		&.events {
-
-			.event-list {
-				padding-top: 35px;
-
-				&::before {
-					content: '';
-					height: 0;
-					border-right: unset;
-				}
-
-				.event-date {
-					top: 2px;
-
-					p {
-						-webkit-line-clamp: 3;
-						-webkit-box-orient: vertical;
-						display: -webkit-box;
-						overflow: hidden;
-						line-height: 1.5;
-						margin-top: 7px;
-					}
-				}
-
-				.read-more-btn {
-					position: relative;
-					margin-bottom: 3px;
-				}
-			}
-		}
-
-		.vertical-line {
-			height: 45px;
-			width: 1px;
-			margin: 0 auto;
-			position: relative;
-			border: 1px dashed $primary-color;
-		}
-	}
-}
-
-.list-group {
-	&.main-lists-content {
-		padding-top: 20px;
-	}
-
-	.list-group-item {
-		.timeline-icon {
-			@media (max-width:1218px) {
-				display: none;
-			}
-		}
-	}
-}
-
-.horizontal-timeline {
-	@media (max-width: 1400px) {
-		display: none;
-	}
-}
-
 /**=====================
-    3.40 Timeline-v CSS Ends
+     42. Timeline  CSS Ends
 ==========================**/

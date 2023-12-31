@@ -1,5 +1,5 @@
 /**=====================
-    3.31 Order-history CSS start
+     76. Order History CSS start
 ==========================**/
 .prooduct-details-box {
   .close {
@@ -8,10 +8,6 @@
     right: 10px;
     height: 16px;
     cursor: pointer;
-  }
-
-  .btn {
-    line-height: 13px;
   }
 
   .media {
@@ -31,7 +27,6 @@
     a {
       color: gray;
     }
-
     h6 {
       margin-bottom: 0;
     }
@@ -50,14 +45,11 @@
     text-align: right;
     max-width: 300px;
   }
-
   table {
-
     th,
     td {
       text-align: center;
     }
-
     thead {
       tr {
         th {
@@ -72,43 +64,36 @@
     }
 
     .qty-box {
-      width: 120px;
+      width:120px;
       margin: 0 auto;
       border-radius: 5px;
-      overflow: hidden;
-
+      overflow: hidden;     
       input {
         width: 44px;
         max-width: 44px;
-        background-color: transparent;
+        background-color:transparent;
         border: none !important;
-      }
-
-      .input-group {
+      }    
+      .input-group{
         justify-content: space-between;
-        align-items: center;
-        background-color: transparent;
-        border-radius: 5px;
+        align-items:center;
+        background-color:transparent;
+        border-radius:5px;
         border: 1px solid $light-gray;
-        overflow: hidden;
-      }
-
-      .btn {
-        background-color: transparent;
+        overflow:hidden;       
+      } 
+      .btn{
+        background-color:transparent;    
         border: none;
-
         &.bootstrap-touchspin-down {
           border-right: 1px solid;
-
           [dir="rtl"] & {
             border-right: unset;
             border-left: 1px solid;
           }
         }
-
         &.bootstrap-touchspin-up {
           border-left: 1px solid;
-
           [dir="rtl"] & {
             border-left: unset;
             border-right: 1px solid;
@@ -177,5 +162,5 @@
 }
 
 /**=====================
-    3.31 Order-history CSS End
+     76. Order History CSS end
 ==========================**/

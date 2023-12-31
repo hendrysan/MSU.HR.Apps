@@ -1,11 +1,10 @@
-(function ($) {
-  $(window).scroll(function () {
-    if ($(this).scrollTop() > 0) {
-      $("header").addClass("sticky");
-    } else {
-      $("header").removeClass("sticky");
+$(window).scroll(function() {
+    if ($(this).scrollTop() > 0){  
+        $('header').addClass("sticky");
     }
-  });
+    else{
+        $('header').removeClass("sticky");
+    }
+});
 
-  new WOW().init();
-})(jQuery);
+new WOW().init();

@@ -1,8 +1,14 @@
 /**=====================
-    2.22 Modal CSS start
+     Modal CSS start
 ==========================**/
 
 .modal-toggle-wrapper {
+    padding: 40px;
+
+    @media (max-width:768px) {
+        padding: calc(14px + (40 - 14) * ((100vw - 320px) / (768 - 320)));
+    }
+
     .form-control {
         &::placeholder {
             font-size: 13px;
@@ -86,55 +92,6 @@
     }
 }
 
-.modal-footer {
-    .btn {
-        margin: 0 4px;
-    }
-}
-
-.modal-content {
-    .modal-header {
-        .btn-close {
-            &:focus {
-                box-shadow: unset;
-            }
-        }
-    }
-}
-
-.modal-details {
-    h6 {
-        padding-bottom: 12px;
-    }
-
-    .web-content {
-        margin-bottom: 16px;
-
-        .d-flex {
-            p {
-                padding-bottom: 8px;
-            }
-
-            &:last-child {
-                p {
-                    padding-bottom: 0;
-                }
-            }
-
-        }
-
-        &:last-child {
-            margin-bottom: 0;
-        }
-
-        // +.web-content {
-        //     margin-top: 12px;
-        // }
-    }
-
-}
-
-
 /**=====================
-    2.22 Modal CSS end
+     Modal CSS end
 ==========================**/

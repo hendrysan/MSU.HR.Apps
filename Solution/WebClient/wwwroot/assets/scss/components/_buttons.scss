@@ -1,5 +1,5 @@
 /**=====================
-  2.9 Buttons CSS start
+    06. Button CSS start
 ==========================**/
 .btn-link {
   color: var(--theme-deafult);
@@ -25,10 +25,6 @@
     min-width: 140px;
     padding: 10px 17px;
     font-size: 16px;
-  }
-
-  @media (max-width: 575px) {
-    font-size: 14px;
   }
 }
 
@@ -177,13 +173,6 @@
 
 .btn {
   padding: $btn-padding;
-
-  &.bg-light-primary {
-    &:hover {
-      background: $primary-color !important;
-      color: $white !important;
-    }
-  }
 }
 
 .btn-lg {
@@ -215,7 +204,6 @@
   &:hover,
   &:focus {
     background: $white;
-    color: var(--theme-deafult);
   }
 }
 
@@ -403,34 +391,7 @@ $btn-color in (primary, $primary-color),
   }
 }
 
-// Default button on hover 
-.card-header-right-icon {
-  .btn {
-    &.btn-light-primary {
-      background-color: var(--light-shade-primary);
-      color: var(--theme-deafult);
-
-      &:hover {
-        color: var(--white);
-        background-color: var(--theme-deafult);
-      }
-    }
-  }
-}
-
-.btn,
-button {
-  &.button-primary {
-    background-color: var(--light-shade-primary);
-    color: var(--theme-deafult);
-
-    &:hover {
-      background-color: var(--theme-deafult);
-      color: var(--white);
-    }
-  }
-}
 
 /**=====================
-    2.9 Buttons CSS end
+     06. Button CSS end
 ==========================**/

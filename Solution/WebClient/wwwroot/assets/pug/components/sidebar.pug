@@ -13,6 +13,7 @@
     .logo-icon-wrapper
       a(href="index.html")
         img.img-fluid(src='../assets/images/logo/logo-icon.png', alt='')
+
     nav.sidebar-main
       .left-arrow#left-arrow
         i(data-feather='arrow-left')
@@ -24,21 +25,17 @@
             .mobile-back.text-end
               span Back
               i.fa.fa-angle-right.ps-2(aria-hidden='true')
-          li.pin-title.sidebar-main-title
-            div 
-              h6 Pinned
           li.sidebar-main-title
             div
               h6.lan-1 General
           li.sidebar-list
-            i.fa.fa-thumb-tack
-            label.badge.badge-light-primary 8
+            label.badge.badge-light-primary 5
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-home')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-home')
-              span.lan-3 Dashboard          
+              span.lan-3 Dashboard              
             ul.sidebar-submenu
               li
                 a(href='index.html').lan-4
@@ -51,35 +48,25 @@
                 a(href='dashboard-04.html') Crypto
               li
                 a(href='dashboard-05.html') Social
-              li
-                a(href='dashboard-06.html') NFT
-              li 
-                a(href='dashboard-07.html') School management
-              li 
-                a(href='dashboard-08.html') POS
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-widget')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-widget')
               span.lan-6 Widgets
-
             ul.sidebar-submenu
               li
                 a(href='general-widget.html') General
               li
                 a(href='chart-widget.html') Chart
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-layout')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-layout')
               span.lan-7 Page layout
-            
             ul.sidebar-submenu
               li
                 a(href='box-layout.html') Boxed
@@ -95,19 +82,18 @@
                 a(href='footer-dark.html') Footer Dark
               li
                 a(href='footer-fixed.html') Footer Fixed
+
           li.sidebar-main-title
             div
               h6.lan-8 Applications
           li.sidebar-list
-            i.fa.fa-thumb-tack     
             label.badge.badge-light-secondary New
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-project')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-project')
-              span Project           
-            
+              span Project                
             ul.sidebar-submenu
               li
                 a(href='projects.html') Project List
@@ -115,16 +101,13 @@
                 a(href='projectcreate.html') Create new
 
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title.link-nav(href='file-manager.html')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-file')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-file')
               span File manager
-            
-          li.sidebar-list
-            i.fa.fa-thumb-tack
+          li.sidebar-list   
             label.badge.badge-light-danger Latest             
             a.sidebar-link.sidebar-title.link-nav(href='kanban.html')
               svg.stroke-icon
@@ -132,23 +115,17 @@
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-board')
               span kanban Board
-            
+
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-ecommerce')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-ecommerce')
               span Ecommerce
-            
             ul.sidebar-submenu
               li
-                a(href='add-products.html') Add Products
-              li
                 a(href='product.html') Product
-              li
-                a(href='category.html') Category page
               li
                 a(href='product-page.html') Product page
               li
@@ -158,23 +135,7 @@
               li
                 a(href='order-history.html') Order History
               li
-                a.submenu-title(href='#')
-                  | Invoices
-                  span.sub-arrow
-                    i.fa.fa-angle-right
-                ul.nav-sub-childmenu.submenu-content
-                  li
-                    a(href='invoice-1.html') Invoice-1
-                  li
-                    a(href='invoice-2.html') Invoice-2
-                  li
-                    a(href='invoice-3.html') Invoice-3
-                  li
-                    a(href='invoice-4.html') Invoice-4
-                  li
-                    a(href='invoice-5.html') Invoice-5
-                  li
-                    a(href='invoice-template.html') Invoice-6
+                a(href='invoice-template.html') Invoice
               li
                 a(href='cart.html') Cart
               li
@@ -182,39 +143,38 @@
               li
                 a(href='checkout.html') Checkout
               li
-                a(href='pricing.html') Pricing          
-
+                a(href='pricing.html') Pricing              
           li.sidebar-list
-            i.fa.fa-thumb-tack
-            a.sidebar-link.sidebar-title.link-nav(href='letter-box.html')
+            a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-email')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-email')
-              span Letter Box
+              span Email
+            ul.sidebar-submenu
+              li
+                a(href='email-application.html') Email App
+              li
+                a(href='email-compose.html') Email Compose
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-chat')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-chat')
               span Chat
-            
             ul.sidebar-submenu
               li
-                a(href='private-chat.html') Private Chat
+                a(href='chat.html') Chat App
               li
-                a(href='group-chat.html') Group Chat
+                a(href='chat-video.html') Video chat
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-user')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-user')
               span Users
-            
             ul.sidebar-submenu
               li
                 a(href='user-profile.html') Users Profile
@@ -224,81 +184,65 @@
                 a(href='user-cards.html') Users Cards
 
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title.link-nav(href='bookmark.html')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-bookmark')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-bookmark') 
               span Bookmarks
-            
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title.link-nav(href='contacts.html')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-contact')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-contact') 
               span Contacts
-            
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title.link-nav(href='task.html')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-task')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-task') 
               span Tasks
-            
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title.link-nav(href='calendar-basic.html')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-calendar')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-calender')
               span Calendar
-            
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title.link-nav(href='social-app.html')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-social')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-social') 
               span Social App
-            
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title.link-nav(href='to-do.html')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-to-do')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-to-do') 
               span To-Do
-            
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title.link-nav(href='search.html')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-search')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-search') 
               span Search Result
-            
 
           li.sidebar-main-title
             div
               h6 Forms & Table
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-form')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-form') 
               span Forms
-            
             ul.sidebar-submenu
               li
                 a.submenu-title(href='#')
@@ -314,8 +258,6 @@
                     a(href='radio-checkbox-control.html') Checkbox & Radio
                   li
                     a(href='input-group.html') Input Groups
-                  li 
-                    a(href='input-mask.html') Input Mask
                   li
                     a(href='megaoptions.html') Mega Options
               li
@@ -326,6 +268,12 @@
                 ul.nav-sub-childmenu.submenu-content
                   li
                     a(href='datepicker.html') Datepicker
+                  li
+                    a(href='time-picker.html') Timepicker
+                  li
+                    a(href='datetimepicker.html') Datetimepicker
+                  li
+                    a(href='daterangepicker.html') Daterangepicker
                   li
                     a(href='touchspin.html') Touchspin
                   li
@@ -343,21 +291,21 @@
                     i.fa.fa-angle-right
                 ul.nav-sub-childmenu.submenu-content
                   li
+                    a(href='default-form.html') Default Forms
+                  li
                     a(href='form-wizard.html') Form Wizard 1
                   li
                     a(href='form-wizard-two.html') Form Wizard 2
                   li
-                    a(href='two-factor.html') Two Factor
+                    a(href='form-wizard-three.html') Form Wizard 3
 
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-table')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-table')
               span Tables
-            
             ul.sidebar-submenu
               li
                 a.submenu-title(href='#')
@@ -377,8 +325,6 @@
                 ul.nav-sub-childmenu.submenu-content
                   li
                     a(href='datatable-basic-init.html') Basic Init
-                  li 
-                    a(href="datatable-advance.html") Advance Init 
                   li
                     a(href='datatable-API.html') API
                   li
@@ -394,14 +340,12 @@
             div
               h6 Components
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-ui-kits')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-ui-kits')
               span Ui Kits
-            
             ul.sidebar-submenu
               li
                 a(href='typography.html') Typography
@@ -433,21 +377,19 @@
               li
                 a(href='list.html') Lists
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-bonus-kit')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-bonus-kit')
               span Bonus Ui
-            
             ul.sidebar-submenu
               li
                 a(href='scrollable.html') Scrollable
               li
                 a(href='tree.html') Tree view
               li
-                a(href='toasts.html') Toasts
+                a(href='bootstrap-notify.html') Bootstrap Notify
               li
                 a(href='rating.html') Rating
               li
@@ -471,23 +413,49 @@
               li
                 a(href='image-cropper.html') Image cropper
               li
+                a(href='sticky.html') Sticky
+              li
                 a(href='basic-card.html') Basic Card
               li
                 a(href='creative-card.html') Creative Card
               li
+                a(href='tabbed-card.html') Tabbed Card
+              li
                 a(href='dragable-card.html') Draggable Card
               li
-                a(href='timeline-v-1.html') Timeline 
+                a.submenu-title(href='#')
+                  | Timeline
+                  span.sub-arrow
+                    i.fa.fa-angle-right
+                ul.nav-sub-childmenu.submenu-content
+                  li
+                    a(href='timeline-v-1.html') Timeline 1
+                  li
+                    a(href='timeline-v-2.html') Timeline 2
 
           li.sidebar-list
-            i.fa.fa-thumb-tack
+            a.sidebar-link.sidebar-title(href='#')
+              svg.stroke-icon
+                use(href='../assets/svg/icon-sprite.svg#stroke-builders')
+              svg.fill-icon
+                use(href='../assets/svg/icon-sprite.svg#fill-builders')
+              span Builders
+            ul.sidebar-submenu
+              li
+                a(href='form-builder-1.html')  Form Builder 1
+              li
+                a(href='form-builder-2.html')  Form Builder 2
+              li
+                a(href='pagebuild.html') Page Builder
+              li
+                a(href='button-builder.html') Button Builder
+          li.sidebar-list
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-animation')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-animation')
               span Animation
-            
             ul.sidebar-submenu
               li
                 a(href='animate.html') Animate
@@ -500,14 +468,12 @@
               li
                 a(href='wow.html') Wow Animation
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-icons')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-icons')
               span Icons
-            
             ul.sidebar-submenu
               li
                 a(href='flag-icon.html') Flag icon
@@ -523,14 +489,12 @@
                 a(href='whether-icon.html') Whether Icon
 
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-button')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-botton')
               span Buttons
-            
             ul.sidebar-submenu
               li
                 a(href='buttons.html') Default Style
@@ -543,14 +507,12 @@
               li
                 a(href='button-group.html') Button Group
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-charts')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-charts')
               span Charts
-            
             ul.sidebar-submenu
               li
                 a(href='echarts.html') Echarts
@@ -572,38 +534,34 @@
                 a(href='chartist.html') Chartist Chart
               li
                 a(href='chart-peity.html') Peity Chart
-                
+
+
           li.sidebar-main-title
             div
               h6 Pages
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title.link-nav(href='landing-page.html')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-landing-page')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-landing-page')
               span Landing page
-            
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title.link-nav(href='sample-page.html')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-sample-page')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-sample-page')
               span Sample page
-            
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title.link-nav(href='internationalization.html')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-internationalization')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-internationalization')
               span Internationalization
+
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title.link-nav(href='../starter-kit/index.html' target='_blank')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-starter-kit')
@@ -611,8 +569,7 @@
                 use(href='../assets/svg/icon-sprite.svg#fill-starter-kit')
               span Starter kit
 
-          li.mega-menu.sidebar-list
-            i.fa.fa-thumb-tack
+          li.mega-menu
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-others')
@@ -714,14 +671,12 @@
             div
               h6 Miscellaneous
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-gallery')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-gallery')
               span Gallery
-            
             ul.sidebar-submenu
               li
                 a(href='gallery.html') Gallery Grid
@@ -734,14 +689,12 @@
               li
                 a(href='gallery-hover.html') Hover Effects
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-blog')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-blog')
               span Blog
-            
             ul.sidebar-submenu
               li
                 a(href='blog.html') Blog Details
@@ -750,23 +703,19 @@
               li
                 a(href='add-post.html') Add Post
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title.link-nav(href='faq.html')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-faq')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-faq')
               span FAQ
-            
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-job-search')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-job-search')
               span Job Search
-            
             ul.sidebar-submenu
               li
                 a(href='job-cards-view.html') Cards view
@@ -779,66 +728,59 @@
 
 
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-learning')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-learning')
               span Learning
-            
             ul.sidebar-submenu
               li
                 a(href='learning-list-view.html') Learning List
               li
                 a(href='learning-detailed.html') Detailed Course
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-maps')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-maps')
               span Maps
-            
             ul.sidebar-submenu
               li
                 a(href='map-js.html') Maps JS
               li
                 a(href='vector-map.html') Vector Maps
-                
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title(href='#')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-editors')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-editors')
               span Editors
-            
             ul.sidebar-submenu
               li
-                a(href='quilleditor.html') Quill editor
+                a(href='summernote.html') Summer Note
+              li
+                a(href='ckeditor.html') CK editor
+              li
+                a(href='simple-MDE.html') MDE editor
               li
                 a(href='ace-code-editor.html') ACE code editor 
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title.link-nav(href='knowledgebase.html')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-knowledgebase')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-knowledgebase')
               span Knowledgebase
-            
           li.sidebar-list
-            i.fa.fa-thumb-tack
             a.sidebar-link.sidebar-title.link-nav(href='support-ticket.html')
               svg.stroke-icon
                 use(href='../assets/svg/icon-sprite.svg#stroke-support-tickets')
               svg.fill-icon
                 use(href='../assets/svg/icon-sprite.svg#fill-support-tickets')
               span Support Ticket
-            
       .right-arrow#right-arrow
         i(data-feather='arrow-right')
 // Page Sidebar Ends

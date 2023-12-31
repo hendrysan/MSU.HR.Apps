@@ -1,5 +1,5 @@
 /**=====================
-    3.8 Contacts CSS Start
+      86. contacts CSS Start
 ==========================**/
 .alert-contactadd {
   background-color: $white;
@@ -27,7 +27,6 @@
   background-color: $white;
   transition: .5s;
   box-shadow: 0 0 9px rgba(191, 191, 191, 0.36);
-
   [dir="rtl"] & {
     right: unset;
     left: -320px;
@@ -44,7 +43,6 @@
   &.show {
     right: 0;
     transition: .3s;
-
     [dir="rtl"] & {
       right: unset;
       left: 0;
@@ -356,10 +354,10 @@
   .contact-options {
     form {
       .row {
-        >div {
+        > div {
           .row {
-            >div {
-              >div {
+           > div {
+              > div {
                 margin-bottom: 0;
               }
 
@@ -403,20 +401,6 @@
   }
 }
 
-.dark-contact {
-  .nav {
-    .nav-link {
-      .media {
-        .media-body {
-          h6 {
-            color: var(--body-font-color);
-          }
-        }
-      }
-    }
-  }
-}
-
 /**=====================
-   3.8 Contacts CSS Ends
+    86. contacts CSS Ends
 ==========================**/

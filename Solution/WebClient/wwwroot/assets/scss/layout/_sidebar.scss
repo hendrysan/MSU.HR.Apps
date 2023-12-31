@@ -1,5 +1,5 @@
 /**=====================
-  5.7 Sidebar CSS Start
+    78. Sidebar CSS Start
 ==========================**/
 %sidebar-after {
   position: absolute;
@@ -7,22 +7,6 @@
   top: 48%;
   width: 8px;
   border-top: 1px solid rgba($theme-body-sub-title-color, 0.4);
-}
-
-// default dashboard
-.media {
-  &.media-wrapper {
-
-    width: 100%;
-    display: -webkit-flex;
-
-    .media-body {
-      flex: unset;
-    }
-  }
-  .media-body {
-    flex: unset;
-  }
 }
 
 %sidebar-active-dot {
@@ -170,11 +154,6 @@
             top: 30px;
             color: $dark-gray;
             cursor: pointer;
-
-            [dir="rtl"] & {
-              left: 30px;
-              right: unset;
-            }
           }
 
           &:before {
@@ -185,11 +164,6 @@
             font-size: 16px;
             color: $dark-gray;
             font-family: FontAwesome;
-
-            [dir="rtl"] & {
-              left: unset;
-              right: 30px;
-            }
           }
         }
       }
@@ -319,6 +293,7 @@
             font-size: 16px;
           }
         }
+
 
         .bookmark-flip {
           width: unset !important;
@@ -479,6 +454,8 @@
             &+li {
               margin-top: 15px;
             }
+
+
 
             &:last-child {
               padding-bottom: 15px;
@@ -911,29 +888,6 @@
       }
     }
 
-    .sidebar-list {
-
-      i.fa-thumb-tack {
-        visibility: hidden;
-        position: absolute;
-        top: 19px;
-        right: 0px;
-        color: $primary-color;
-
-        [dir="rtl"] & {
-          left: 0;
-          right: unset;
-        }
-      }
-
-      &:hover {
-        i.fa-thumb-tack {
-          visibility: hidden;
-          cursor: pointer;
-        }
-      }
-    }
-
     .page-body-wrapper {
       .sidebar-wrapper {
         height: 54px;
@@ -948,10 +902,6 @@
         width: 100vw;
         border-top: 1px solid $light-semi-gray;
         z-index: 3;
-
-        .simplebar-content {
-          display: flex;
-        }
 
         li {
           display: inline-block;
@@ -1011,7 +961,6 @@
             white-space: nowrap;
 
             li {
-
               &.sidebar-list {
 
                 a {
@@ -1054,17 +1003,6 @@
                       position: relative;
                       padding-top: 10px;
                       padding-bottom: 10px;
-
-                      &.sidebar-main-title {
-
-                        &.pin-title {
-                          display: none !important;
-
-                          &.show {
-                            display: none !important;
-                          }
-                        }
-                      }
 
                       &:hover {
                         >a {
@@ -1111,6 +1049,7 @@
                         transition: all 0.3s ease;
 
                         &.active {
+                          //background-image: linear-gradient(90deg, var(--theme-deafult) 0%, #a26cf8 100%);
                           background-color: lighten($primary-color, 22%);
                           transition: all 0.3s ease;
 
@@ -1139,6 +1078,7 @@
 
                       .sidebar-submenu {
                         position: fixed;
+                        // left: 0;
                         z-index: 4;
                         box-shadow: 0 0 1px 0 $dark-gray;
                         padding: 15px 0px 15px 0px;
@@ -1382,39 +1322,6 @@
 
   // left sidebar css
   &.compact-wrapper {
-
-    .sidebar-list {
-
-      i.fa-thumb-tack {
-        visibility: hidden;
-        position: absolute;
-        top: 11px;
-        right: -9px;
-        color: $primary-color;
-        z-index: 9999;
-
-        [dir="rtl"] & {
-          left: -9px;
-          right: unset;
-        }
-      }
-
-      &:hover {
-        i.fa-thumb-tack {
-          visibility: visible;
-          cursor: pointer;
-        }
-      }
-
-      &.pined {
-        order: -1;
-      }
-    }
-
-    .pin-title {
-      order: -1;
-    }
-
     .page-header {
       margin-left: $sidebar-compact-width;
       width: calc(100% - $sidebar-compact-width);
@@ -1451,7 +1358,7 @@
 
           .logo-wrapper,
           .logo-icon-wrapper {
-            padding: 22px 30px;
+            padding: 27px 30px;
             box-shadow: -9px 0 20px rgba($semi-dark, 0.1);
           }
 
@@ -1646,38 +1553,6 @@
               display: none;
             }
 
-            .sidebar-list {
-
-              i.fa-thumb-tack {
-                visibility: hidden;
-                position: absolute;
-                top: 16px;
-                right: 35px;
-                color: $primary-color;
-
-                [dir="rtl"] & {
-                  left: 35px;
-                  right: unset;
-                }
-              }
-
-              &:hover {
-                i.fa-thumb-tack {
-                  visibility: visible;
-                  cursor: pointer;
-                }
-              }
-
-              &.pined,
-              &.pin-title {
-                order: -1;
-              }
-            }
-
-            .pin-title {
-              order: -1;
-            }
-
             .sidebar-links {
               height: $sidebar-height;
               left: -300px;
@@ -1753,14 +1628,6 @@
                         &.sidebar-main-title {
                           padding: 25px 0 6px 20px;
                           margin-top: 10px;
-
-                          &.pin-title {
-                            display: none;
-
-                            &.show {
-                              display: block;
-                            }
-                          }
 
                           [dir="rtl"] & {
                             padding: 25px 20px 6px 0;
@@ -2143,11 +2010,6 @@
 
             }
           }
-
-          .simplebar-content {
-            display: flex;
-            flex-direction: column;
-          }
         }
       }
 
@@ -2160,7 +2022,7 @@
       .according-menu {
         position: absolute;
         right: 20px;
-        top: 11px;
+        top: 13px;
         display: block;
 
         i {
@@ -2197,6 +2059,7 @@
         min-height: calc(100vh - 80px);
         margin-top: 80px;
         margin-left: $sidebar-compact-width;
+        // animation: pagebody 1000ms ease-in-out;
       }
     }
 
@@ -2388,57 +2251,6 @@
 
   // compact icon css
   &.compact-sidebar {
-
-    .simplebar-wrapper {
-      .simplebar-mask {
-        .simplebar-content-wrapper {
-          .simplebar-content {
-            display: flex;
-            flex-direction: column;
-          }
-        }
-      }
-    }
-
-    .sidebar-list {
-
-      i.fa-thumb-tack {
-        visibility: hidden;
-        position: absolute;
-        top: 8px;
-        right: 54px;
-        color: $primary-color;
-        width: 20px;
-        height: 20px;
-        background-color: $light-primary;
-        border-radius: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        [dir="rtl"] & {
-          left: 54px;
-          right: unset;
-        }
-      }
-
-      &:hover {
-        i.fa-thumb-tack {
-          visibility: visible;
-          cursor: pointer;
-          z-index: 1;
-        }
-      }
-
-      &.pined {
-        order: -1;
-      }
-    }
-
-    .pin-title {
-      order: -1;
-    }
-
     ~.bg-overlay1 {
       transition: 0.8s;
 
@@ -2796,41 +2608,6 @@
       top: unset;
       margin-right: 15px;
     }
-
-    .sidebar-list {
-
-      i.fa-thumb-tack {
-        visibility: hidden;
-        position: absolute;
-        top: 8px;
-        right: 22px;
-        color: $primary-color;
-        width: 20px;
-        height: 20px;
-        background-color: $light-primary;
-        border-radius: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        [dir="rtl"] & {
-          left: 22px;
-          right: unset;
-        }
-      }
-
-      &:hover {
-        i.fa-thumb-tack {
-          visibility: visible;
-        }
-      }
-
-      &.pined,
-      &.pin-title {
-        order: -1;
-      }
-    }
-
 
     .sidebar-main-title,
     .logo-wrapper {
@@ -3372,6 +3149,39 @@
   }
 }
 
+
+// Responsive menu css start //
+// @media screen and (max-width: 1780px) {
+//   .page-wrapper {
+//     &.horizontal-wrapper {
+//       .page-body-wrapper {
+//         .sidebar-wrapper {
+//           .sidebar-main {
+//             .sidebar-links {
+//               .simplebar-wrapper {
+//                 .simplebar-mask {
+//                   .simplebar-content-wrapper {
+//                     .simplebar-content {
+//                        >li {
+//                          .mega-menu-container {
+
+//                            right: -18%;
+//                            width: 91%;
+//                          }
+//                        }
+//                     }
+//                   }
+//                 }
+//               }
+
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+
 @media screen and (max-width: 1480px) {
   .page-wrapper {
     &.horizontal-wrapper {
@@ -3869,5 +3679,5 @@
 }
 
 /**=====================
-  5.7 Sidebar CSS Ends
+    78. Sidebar CSS Ends
 ==========================**/

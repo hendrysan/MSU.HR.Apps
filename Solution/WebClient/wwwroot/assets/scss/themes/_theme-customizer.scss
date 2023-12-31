@@ -1,5 +1,5 @@
 /**=====================
-  4.2 Theme-customizer CSS Start
+   59. Customizer  CSS Start
 ==========================**/
 .customizer-links {
   position: fixed;
@@ -163,13 +163,11 @@
     padding: 15px 25px;
     max-height: calc(100vh - 200px);
     overflow-y: scroll;
-
     .fade {
       &:not(.show) {
         display: none;
       }
     }
-
     .unlimited-color-layout {
       display: flex;
       align-items: center;
@@ -314,14 +312,12 @@
           .body {
             ul {
               li {
-
                 &.bg-dark,
                 &.sidebar {
                   width: 100%;
                   height: 10px;
                   display: block;
                 }
-
                 &.bg-light,
                 &.body {
                   height: calc(100% - 10px);
@@ -330,7 +326,6 @@
               }
             }
           }
-
           &.body-compact {
             .body {
               ul {
@@ -363,7 +358,6 @@
           }
         }
       }
-
       .box-layout {
         background: unset;
       }
@@ -453,9 +447,10 @@
       }
     }
   }
-
+  
 }
 
+
 /**=====================
-    4.2 Theme-customizer CSS Ends
+     59.Customizer CSS Ends
 ==========================**/

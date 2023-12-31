@@ -1,14 +1,13 @@
 /**=====================
-   3.6 Checkout CSS start
+    84. Checkout CSS start
 ==========================**/
 .checkout {
 	.checkout-details {
 		background-color: #f9f9f9;
 		border: 1px solid #dddddd;
 		padding: 40px;
-
-		.order-place {
-			margin-top: 15px;
+		.order-place{
+		margin-top:15px;
 		}
 
 	}
@@ -26,7 +25,7 @@
 			width: 35%;
 			float: right;
 			font-weight: 600;
-			text-align: right;
+			text-align:right;
 		}
 
 		h4 {
@@ -57,9 +56,9 @@
 				font-weight: 400;
 				width: 35%;
 				float: right;
-				text-align: right;
+				text-align:right;
 			}
-
+			
 		}
 
 		.shipping-class {
@@ -201,7 +200,6 @@
 			padding: 15px;
 		}
 	}
-
 	.order-box {
 		.sub-total {
 			.shipping-class {
@@ -220,5 +218,5 @@
 }
 
 /**=====================
-   3.6 Checkout CSS ends
+    84. Checkout CSS ends
 ==========================**/

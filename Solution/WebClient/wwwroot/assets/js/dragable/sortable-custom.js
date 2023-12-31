@@ -1,12 +1,13 @@
-(function ($) {
+(function($) {
   "use strict";
-  Sortable.create(draggableMultiple, {
-    group: "draggableMultiple",
-    animation: 150,
-  });
-
-  $("#draggableMultiple").sortable({
-    revert: true,
-    animation: 150,
-  });
+    Sortable.create(draggableMultiple, {
+      group: 'draggableMultiple',
+      animation: 150
+    });
 })(jQuery);
+  $( function() {
+    $( "#draggableMultiple" ).sortable({
+      revert: true,
+      animation:150
+    });
+  }); 

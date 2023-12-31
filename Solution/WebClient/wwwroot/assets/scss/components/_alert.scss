@@ -1,23 +1,12 @@
 /**=====================
-     2.2 Alert CSS start
+     Alert CSS start
 ==========================**/
 
 .notify-alert {
   .close {
-      color: $white;
-      background: unset;
-      border: none;
-      font-size: 25px;
-      [dir="rtl"] & {
-          right: unset !important;
-          left: 10px !important;
-      }
-  }
-
-  &.alert-light {
-      .close {
-          color: $theme-body-font-color;
-      }
+    background: unset;
+    border: none;
+    font-size: 25px;
   }
 }
 
@@ -192,81 +181,6 @@ $dark-color;
     border-color: nth($alert-color, $i) !important;
   }
 
-  // dashboard-7
-  .income-wrapper {
-    ul {
-      li {
-        .income-dot {
-          &.dot-#{$var} {
-            background-color: nth($alert-color, $i);
-          }
-        }
-      }
-    }
-  }
-
-  // touchspin 
-  .touchspin-wrapper {
-    .btn-touchspin {
-      &.touchspin-#{$var} {
-        background-color: nth($alert-color, $i);
-        border: 1px solid nth($alert-color, $i);
-        color: $white;
-      }
-
-      &.spin-border-#{$var} {
-        background-color: unset;
-        border: 1px solid nth($alert-color, $i);
-        color: nth($alert-color, $i);
-      }
-    }
-
-    input[type='number'] {
-      &.spin-outline-#{$var} {
-        outline: 1px solid nth($alert-color, $i);
-        border: none;
-        border-radius: 3px;
-      }
-    }
-  }
-
-  .pre-post-touchspin {
-
-    .btn-touchspin {
-      &.touchspin-#{$var} {
-        background-color: nth($alert-color, $i);
-        border: 1px solid nth($alert-color, $i);
-        color: $white;
-      }
-    }
-  }
-
-  // switches
-
-  .form-switch {
-    .form-check-input {
-      &.switch-#{$var} {
-        &:checked {
-          background-color: nth($alert-color, $i);
-          border-color: nth($alert-color, $i);
-        }
-      }
-    }
-  }
-
-
-  .payment-second {
-    .mega-icons {
-      &.stroke-#{$var} {
-        stroke: nth($alert-color, $i);
-      }
-    }
-  }
-
-  .toast-#{$var} {
-    color: nth($alert-color, $i) !important;
-  }
-
   .list-group-horizontal {
 
     &-sm,
@@ -277,38 +191,6 @@ $dark-color;
       .list-group-item {
         &.border-left-#{$var} {
           border-left: 4px solid nth($alert-color, $i);
-        }
-      }
-    }
-  }
-
-  // Radio-toggle
-  .main-radio-toggle {
-    .btn-check {
-      &.radio-light-#{$var} {
-        &:focus {
-          +.btn {
-            box-shadow: 0 0 0 4px rgba(nth($alert-color, $i), 0.55);
-          }
-        }
-      }
-    }
-  }
-
-  // radio button
-  .fill-radios {
-    .radio {
-      &.radio-#{$var} {
-        input[type='radio']:checked {
-          &+label {
-            &::before {
-              border: 10px solid nth($alert-color, $i);
-            }
-
-            &::after {
-              background-color: nth($alert-color, $i);
-            }
-          }
         }
       }
     }
@@ -480,10 +362,6 @@ $alert-light-color: $light-primary,
   align-items: center;
   position: relative;
 
-  i {
-    margin-right: 0;
-  }
-
 }
 
 .ellipsis.content {
@@ -506,15 +384,6 @@ $alert-light-color: $light-primary,
 
 }
 
-// flag-icons
-.alert {
-  &.notify-alert {
-    &.alert-copy {
-      display: flex !important;
-    }
-  }
-}
-
 /**=====================
-   2.2 Alert CSS end
+   Alert CSS end
 ==========================**/

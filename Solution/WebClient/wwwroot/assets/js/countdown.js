@@ -1,50 +1,19 @@
-(function () {
-  /***** CALCULATE THE TIME REMAINING *****/
-  function getTimeRemaining(endtime) {
-    var t = Date.parse(endtime) - Date.parse(new Date());
+"use strict";
+// Countdown js
+const second = 1000,
+    minute = second * 60,
+    hour = minute * 60,
+    day = hour * 24;
 
-    /***** CONVERT THE TIME TO A USEABLE FORMAT *****/
-    var seconds = Math.floor((t / 1000) % 60);
-    var minutes = Math.floor((t / 1000 / 60) % 60);
-    var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
-    var days = Math.floor(t / (1000 * 60 * 60 * 24));
+var countDown = new Date('Sep 30, 2021 00:00:00').getTime(),
+    x = setInterval(function() {
 
-    /***** OUTPUT THE CLOCK DATA AS A REUSABLE OBJECT *****/
-    return {
-      total: t,
-      days: days,
-      hours: hours,
-      minutes: minutes,
-      seconds: seconds,
-    };
-  }
+        var now = new Date().getTime(),
+            distance = countDown - now;
 
-  /***** DISPLAY THE CLOCK AND STOP IT WHEN IT REACHES ZERO *****/
-  function initializeClock(id, endtime) {
-    var clock = document.getElementById(id);
-    var daysSpan = clock.querySelector(".days");
-    var hoursSpan = clock.querySelector(".hours");
-    var minutesSpan = clock.querySelector(".minutes");
-    var secondsSpan = clock.querySelector(".seconds");
+            document.getElementById('days').innerText = Math.floor(distance / (day)),
+            document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour)),
+            document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute)),
+            document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
 
-    function updateClock() {
-      var t = getTimeRemaining(endtime);
-
-      daysSpan.innerHTML = t.days;
-      hoursSpan.innerHTML = ("0" + t.hours).slice(-2);
-      minutesSpan.innerHTML = ("0" + t.minutes).slice(-2);
-      secondsSpan.innerHTML = ("0" + t.seconds).slice(-2);
-
-      if (t.total <= 0) {
-        clearInterval(timeinterval);
-      }
-    }
-
-    updateClock(); // run function once at first to avoid delay
-    var timeinterval = setInterval(updateClock, 1000);
-  }
-
-  /***** SET A VALID END DATE *****/
-  var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
-  initializeClock("clock-arrival", deadline);
-})();
+    }, second);

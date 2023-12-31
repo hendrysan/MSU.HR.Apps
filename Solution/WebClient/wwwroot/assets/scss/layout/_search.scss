@@ -1,5 +1,5 @@
 /**=====================
-   5.5 Search CSS Start
+     51. Search CSS Start
 ==========================**/
 .search-page {
   .theme-form {
@@ -8,22 +8,18 @@
       padding-left: 20px;
       border-radius: 10px 0 0 10px;
       flex: 1 1 auto;
-
       &::placeholder {
         color: $primary-color;
       }
-
       &:focus {
         outline: none;
       }
     }
-
     .input-group {
       .btn {
         line-height: 32px;
         font-size: 16px;
       }
-
       .form-control-plaintext {
         background: transparent;
       }
@@ -55,9 +51,9 @@
   }
 
   .media {
-    .media-body {
-      overflow: hidden;
-    }
+     .media-body {
+       overflow: hidden;
+     }
   }
 
 
@@ -117,7 +113,6 @@
 
       i {
         color: $warning-color;
-
         &:not(:last-child) {
           margin-right: 4px;
         }
@@ -164,5 +159,5 @@
 }
 
 /**=====================
-  5.5 Search CSS Ends
+    51. Search CSS Ends
 ==========================**/

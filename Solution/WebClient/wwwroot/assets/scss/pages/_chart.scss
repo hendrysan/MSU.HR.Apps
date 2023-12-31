@@ -1,5 +1,5 @@
 /**=====================
-   3.5 Chat CSS Start
+    41. Chart CSS Start
 ==========================**/
 //urls
 $url-0: url(data:image/svg+xml;charset=utf8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTYiIGhlaWdodD0iMTciPjxwYXRoIGZpbGw9IiM4ODgiIGQ9Ik0wIDE2aDE0djFIMHoiLz48cGF0aCB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTIsLTEwKSIgZmlsbD0iIzg4OCIgZD0iTTE3LjA5OCAyMC4zMDVjLS4xNDIuMTQ2LjEwMS4wNC4xMzcuMDA0LjAyNy0uMDI4LjIwNC0uMDkuNDg0LS4wOS4zMzguMC42MjYuMDkyLjc4Ny4yNTUuNDczLjQ3Mi40MjQuOTMyLjM5MyAxLjA3OGwtMi41MjEgMS4wNTUtMS41NzctMS41NzcgMS4wNTQtMi41MmMuMDM5LS4wMDkuMTA1LS4wMTguMTg4LS4wMTguMjE5LjAuNTU1LjA2OS44OTMuNDA3LjM3OC4zNzguMjQ2IDEuMTg4LjE2NiAxLjI3MUMxNy4wNjIgMjAuMjA3IDE3LjA2MiAyMC4yNjkgMTcuMDk4IDIwLjMwNXpNMjYuOTg0IDE0LjQ3MmMtLjAwOC0uNjc0LS42MS0xLjI1Ny0xLjMxLTEuOTMzLS4xMzQtLjEyOS0uNjc5LS42NzMtLjgwOS0uODA4LS42NzktLjcwMi0xLjI2Ni0xLjMxLTEuOTQzLTEuMzEtLjM3LjAtLjczNC4yMDctMS4xMTQuNTg3bC02Ljg1MiA2Ljg0N2MtLjAxMi4wMTYtMi44NzcgNy4zNTQtMi44NzcgNy4zNTQtLjAxMi4wMzIuMC4wNjMuMDIyLjA5MS4wMjEuMDIxLjA0NC4wMjkuMDY3LjAyOS4wMS4wLjAxOC0uMDAzLjAyOC0uMDA3LjAuMCA3LjM1Ny0yLjg2NCA3LjM2OS0yLjg3N2w2Ljg1NC02Ljg0N0MyNi44MDMgMTUuMjE2IDI2Ljk4OCAxNC44NDggMjYuOTg0IDE0LjQ3MnoiLz48L3N2Zz4=);
@@ -440,7 +440,6 @@ p {
 .apex-chart {
   margin: 0 auto;
 }
-
 .apexcharts-toolbar {
   z-index: 1 !important;
 }
@@ -533,28 +532,23 @@ p {
 }
 
 .apexcharts-canvas {
-
-  .apexcharts-tooltip,
-  .apexcharts-xaxistooltip,
-  .apexcharts-yaxistooltip {
+  .apexcharts-tooltip, .apexcharts-xaxistooltip, .apexcharts-yaxistooltip {
     z-index: 1;
   }
 }
 
 .flot-chart-container {
   .flot-chart-placeholder {
-    ~p.float-end {
-      @media (max-width: 1346px) {
-        float: left !important;
-
-        [dir="rtl"] & {
-          float: right !important;
-        }
-      }
+    ~ p.float-end {
+     @media (max-width: 1346px) {
+       float: left !important;
+       [dir="rtl"] & {
+        float: right !important;
+       }
+     }
     }
   }
 }
-
 /**=====================
-    3.5 Chat CSS End
+     41. Chart CSS End
 ==========================**/

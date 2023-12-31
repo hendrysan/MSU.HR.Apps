@@ -1,5 +1,5 @@
 /**=====================
-    2.10 Card CSS Start
+    03.  Card CSS Start
 ==========================**/
 //Card css
 .card {
@@ -28,6 +28,7 @@
     }
 
     h5 {
+
       &:not(.mb-0),
       &:not(.m-0) {
         margin-bottom: 0;
@@ -103,8 +104,10 @@
   }
 
   .sub-title {
+    // border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     padding-bottom: 12px;
-    font-size: calc(15px + (18 - 15) * ((100vw - 320px) / (1920 - 320)));
+    // margin-bottom: 8px;
+    font-size: 18px;
   }
 
   .card-footer {
@@ -393,5 +396,5 @@
 }
 
 /**=====================
-    2.10 Card CSS End
+    03. Card CSS End
 ==========================**/

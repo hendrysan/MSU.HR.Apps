@@ -1,161 +1,11 @@
 /**=====================
-	4.1. Dark CSS Start
+55. theme layout CSS Start
 ==========================**/
+
 body {
 	&.dark-only {
 		color: $dark-all-font-color;
 		background-color: $dark-body-background;
-
-		.card {
-
-			--bs-card-title-color: var(--body-font-color);
-			--bs-card-subtitle-color: var(--body-font-color);
-			--bs-card-cap-color: var(--body-font-color);
-			--bs-card-color: var(--body-font-color);
-			--bs-body-color: var(--body-font-color);
-		}
-
-		.breadcrumb {
-			--bs-breadcrumb-bg: transparent;
-		}
-
-		.toast {
-			--bs-toast-color: var(--body-font-color);
-		}
-
-		.modal {
-			--bs-modal-color: rgba(255, 255, 255, 0.2);
-			--bs-modal-footer-bg: $dark-card-background;
-		}
-
-		.form-control {
-			background-color: $dark-card-background;
-			border-color: $dark-card-border;
-		}
-
-		// ========================================== start===================================
-
-		.apexcharts-tooltip.light {
-			.apexcharts-tooltip-title {
-				background: $dark-body-background;
-				color: $white;
-			}
-		}
-
-		.apexcharts-tooltip.apexcharts-theme-light {
-			border: 1px solid $dark-card-border;
-			background: $dark-body-background;
-		}
-
-		.apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
-			border: 1px solid $dark-card-border;
-			background: $dark-body-background;
-			color: $dark-all-font-color;
-		}
-
-		.apexcharts-tooltip-series-group {
-			color: $dark-all-font-color !important;
-		}
-
-		.apexcharts-yaxistooltip,
-		.apexcharts-xaxistooltip {
-			color: $dark-all-font-color;
-			background: $dark-body-background;
-			border: 1px solid $dark-card-border;
-		}
-
-		.apexcharts-yaxistooltip-left {
-
-			&::before,
-			&::after {
-				border-left-color: $dark-card-border;
-			}
-		}
-
-		.apexcharts-xaxistooltip-bottom {
-
-			&::before,
-			&::after {
-				border-bottom-color: $dark-card-border;
-			}
-		}
-
-		.bottom-content {
-			.apexcharts-canvas {
-				span {
-					color: $dark-all-font-color;
-				}
-			}
-		}
-
-		.apexcharts-canvas {
-			.apexcharts-tooltip {
-				border: 1px solid $dark-card-border;
-
-				.apexcharts-tooltip-title {
-					margin-bottom: 0;
-				}
-
-				.apexcharts-tooltip-series-group {
-					background-color: $dark-card-background;
-					color: $dark-all-font-color;
-				}
-			}
-
-			.apexcharts-yaxis {
-				text {
-					fill: $dark-small-font-color;
-				}
-			}
-		}
-
-		.apexcharts-xaxistooltip {
-			background-color: $dark-body-background;
-			color: $dark-all-font-color;
-			border: 1px solid $dark-card-border;
-		}
-
-		.apexcharts-xaxistooltip-bottom:before {
-			border-bottom-color: $dark-card-border;
-		}
-
-		.apexcharts-xaxistooltip-bottom:after {
-			border-bottom-color: $dark-card-border;
-		}
-
-		.apexcharts-tooltip.apexcharts-theme-light {
-			border: 1px solid $dark-card-border;
-			background: $dark-body-background;
-
-			.apexcharts-tooltip-text {
-				color: $dark-small-font-color;
-			}
-
-			.apexcharts-tooltip-title {
-				background: $dark-card-background;
-				border-bottom: 1px solid $dark-card-border;
-				color: $dark-small-font-color;
-			}
-		}
-
-		.apexcharts-yaxis {
-			text {
-				color: $dark-all-font-color;
-			}
-		}
-
-		.theme-form input[type=text] {
-			background-color: $dark-body-background;
-			border: 1px solid $dark-card-border;
-		}
-
-		.theme-form textarea {
-			background-color: $dark-body-background;
-		}
-
-
-		// =====================================End======================-=========
-
 
 		.page-body {
 			.bg-light {
@@ -174,10 +24,6 @@ body {
 					background-color: $dark-body-background;
 				}
 			}
-		}
-
-		.total-balance {
-			background-blend-mode: overlay;
 		}
 
 		.icon-state {
@@ -411,22 +257,6 @@ body {
 			}
 		}
 
-		// Toasts 
-		.toast {
-			border: 1px solid $dark-card-border;
-
-			.toast-header {
-				background-color: $dark-card-background;
-				color: $dark-all-font-color;
-
-			}
-
-			.toast-dark {
-				background-color: $dark-card-background;
-				color: $dark-all-font-color !important;
-			}
-		}
-
 		.btn-close {
 			filter: brightness(0.8) invert(1);
 		}
@@ -471,17 +301,6 @@ body {
 
 		.form-check-input {
 			background-color: $dark-body-background;
-			border-color: $dark-card-border;
-		}
-
-		// Radio and checkbox control
-		.checkbox-wrapper,
-		.radio-wrapper {
-			li {
-				.form-check-input {
-					background-color: transparent;
-				}
-			}
 		}
 
 		.switch-state {
@@ -490,6 +309,58 @@ body {
 			}
 		}
 
+		// daterangepicker css start
+		.daterangepicker {
+			&:before {
+				border-bottom-color: $dark-card-background;
+			}
+
+			.ranges {
+				li {
+					background-color: $dark-body-background;
+					border-color: $dark-card-background;
+					color: $dark-gray;
+				}
+			}
+
+			.daterangepicker_input {
+				.form-control {
+					background-color: $dark-body-background;
+					border-color: $dark-card-background !important;
+				}
+			}
+
+			.calendar-time {
+				select {
+					border-color: $dark-card-background;
+					background-color: $dark-body-background;
+				}
+			}
+
+			&.dropdown-menu {
+				background-color: $dark-card-background;
+				-webkit-box-shadow: 0 0 14px $dark-body-background;
+				box-shadow: 0 0 14px $dark-body-background;
+			}
+
+			.calendar-table {
+				background-color: $dark-card-background;
+				border-color: $dark-card-background;
+			}
+
+			&.ltr {
+				td {
+
+					&.in-range,
+					&.off {
+						background-color: $dark-body-background;
+						color: $white;
+					}
+				}
+			}
+		}
+
+		// daterangepicker css end
 		// tooltip css start
 		// tooltip css start
 		.tooltip {
@@ -644,15 +515,6 @@ body {
 						background-color: $white;
 					}
 				}
-			}
-		}
-
-		.login-dark {
-			background-color: $dark-card-background;
-			background-blend-mode: overlay;
-
-			.login-main {
-				background-color: $dark-card-inbox;
 			}
 		}
 
@@ -1818,8 +1680,6 @@ body {
 		.mega-inline,
 		.mega-horizontal,
 		.mega-vertical {
-			--bs-body-color: rgba(255, 255, 255, 0.6);
-
 			.card {
 				box-shadow: 1px 1px 7px 0 rgba($dark-card-border, 0.5) !important;
 			}
@@ -2348,6 +2208,16 @@ body {
 										border-bottom: 7px solid $dark-body-background;
 									}
 								}
+
+								.notification-dropdown.onhover-show-div {
+									li {
+										border-color: $dark-card-background;
+
+										span {
+											color: $dark-small-font-color;
+										}
+									}
+								}
 							}
 						}
 
@@ -2656,15 +2526,6 @@ body {
 							}
 						}
 
-						&.trending-card {
-							background-color: #010314;
-						}
-
-						&.explore-card {
-							background-color: $dark-card-background;
-							background-blend-mode: overlay;
-						}
-
 						// cypto dashboard css start
 						&.balance-box {
 							background-blend-mode: overlay;
@@ -2959,7 +2820,7 @@ body {
 						}
 
 						.text-muted {
-							color: $dark-all-font-color !important;
+							color: $sidebar-submenu-font-color !important;
 						}
 
 						.btn-outline-light,
@@ -3484,21 +3345,18 @@ body {
 
 						.cd-timeline-content {
 							background-color: $dark-border-color;
+
+							&::before {
+								border-left: 7px solid $dark-border-color;
+							}
 						}
 
 						.cd-timeline-block {
-							&:nth-child(odd) {
-								.cd-timeline-content {
-									&::before {
-										border-left-color: $dark-border-color;
-									}
-								}
-							}
-
 							&:nth-child(even) {
 								.cd-timeline-content {
 									&::before {
 										border-right-color: $dark-border-color;
+										border-left: $transparent-color;
 									}
 								}
 							}
@@ -3520,11 +3378,68 @@ body {
 						}
 					}
 
+
+					.form-builder-header-1,
+					.form-builder-2-header {
+						background-color: $dark-body-background;
+					}
+
+					.form-builder {
+						.nav-primary {
+							.show {
+								>.nav-link {
+									color: $white;
+								}
+							}
+
+							.nav-link {
+								color: $dark-all-font-color;
+
+								&.active {
+									color: $white;
+								}
+							}
+
+							.nav-pills.nav-primary {
+								.show {
+									>.nav-link {
+										color: $white;
+									}
+								}
+
+								.nav-link {
+									color: $dark-all-font-color;
+
+									&.active {
+										color: $white;
+									}
+								}
+							}
+
+						}
+
+						.drag-box {
+							fieldset {
+								border: 1px solid $dark-border-color;
+							}
+						}
+
+						.help-block {
+							color: $dark-small-font-color;
+						}
+					}
+
 					#viewhtml {
 						.render {
 							background-color: $dark-card-background;
 							color: $dark-all-font-color;
 							border-color: $dark-border-color;
+						}
+					}
+
+					.form-builder-column {
+						.drag-bx {
+							border: 1px dotted $dark-border-color;
 						}
 					}
 
@@ -3761,20 +3676,14 @@ body {
 						border: 1px solid $dark-card-border !important;
 					}
 
+
+
 					.border-1 {
 						border: 1px solid $dark-body-background !important;
 					}
 
 					.border-2 {
 						border: 2px solid $dark-body-background !important;
-					}
-
-					.grid-showcase {
-						span {
-							&.border-2 {
-								border: 2px solid $dark-card-border !important;
-							}
-						}
 					}
 
 					.border-3 {
@@ -3835,19 +3744,9 @@ body {
 							background-color: $dark-body-background;
 						}
 
-						.border-t-#{$var} {
-							border: none !important;
-							border-top: 1px solid nth($helper-border-color, $i) !important;
-						}
-
 						.b-t-#{$var} {
 							border: 1px solid nth($helper-border-color, $i) !important;
 							background-color: $dark-body-background;
-						}
-
-						.border-b-#{$var} {
-							border: none !important;
-							border-bottom: 1px solid nth($helper-border-color, $i) !important;
 						}
 
 						.b-b-#{$var} {
@@ -3855,19 +3754,9 @@ body {
 							background-color: $dark-body-background;
 						}
 
-						.border-l-#{$var} {
-							border: none !important;
-							border-left: 1px solid nth($helper-border-color, $i) !important;
-						}
-
 						.b-l-#{$var} {
 							border: 1px solid nth($helper-border-color, $i) !important;
 							background-color: $dark-body-background;
-						}
-
-						.border-r-#{$var} {
-							border: none !important;
-							border-right: 1px solid nth($helper-border-color, $i) !important;
 						}
 
 						.b-r-#{$var} {
@@ -3879,6 +3768,545 @@ body {
 							border: 1px solid nth($helper-border-color, $i) !important;
 						}
 					}
+
+					.blog-box {
+						.blog-date {
+							color: $dark-all-font-color;
+						}
+
+						.blog-details,
+						.blog-details-main {
+							.blog-social {
+								li {
+									color: $dark-small-font-color;
+									border-right: 1px solid $dark-card-border;
+
+									&:first-child {
+										border-right: 1px solid $dark-card-border;
+									}
+
+									&:last-child {
+										border-right: none;
+									}
+								}
+							}
+
+							p {
+								color: $dark-all-font-color;
+							}
+
+							.single-blog-content-top {
+								border-top: 1px solid $dark-border-color;
+
+								p {
+									color: $dark-small-font-color;
+								}
+							}
+						}
+					}
+
+					.comment-box {
+						.media {
+							h6 {
+								span {
+									color: $dark-small-font-color;
+								}
+							}
+
+							img {
+								border: 1px solid $dark-card-border;
+							}
+						}
+
+						p {
+							color: $dark-small-font-color;
+						}
+
+						.comment-social {
+							li {
+								color: $dark-small-font-color;
+
+								&:first-child {
+									border-right: 1px solid $dark-border-color;
+								}
+							}
+						}
+
+						hr {
+							border-top: 1px solid $dark-border-color;
+						}
+					}
+
+					.table-hover {
+						>tbody {
+							>tr {
+								&:hover {
+									--bs-table-accent-bg: #1d1e26;
+
+									td,
+									th {
+										color: $white;
+									}
+								}
+							}
+						}
+					}
+
+					ul.the-icons {
+						li {
+							border: 1px dotted $dark-card-border;
+							color: $sidebar-submenu-font-color;
+							display: inline-block;
+							padding: 10px;
+
+							&:hover {
+								background: $black;
+								box-shadow: 0 0 3px $dark-card-background;
+							}
+
+							em {
+								display: none;
+							}
+						}
+					}
+
+					.button-builder-wrap {
+						.box {
+							background-color: $dark-card-background;
+							border: 1px solid $dark-border-color;
+						}
+
+						.button-preview {
+							h2 {
+								color: $dark-all-font-color;
+							}
+						}
+
+						pre.well {
+							background-color: $dark-card-background !important;
+						}
+					}
+
+					.crm-activity {
+						>li {
+							+li {
+								border-top: 1px solid $dark-border-color;
+							}
+
+							h6 {
+								color: $dark-all-font-color;
+							}
+						}
+
+						ul.dates {
+							li {
+								color: $dark-small-font-color;
+							}
+						}
+					}
+
+					#donut-color-chart-morris,
+					#donut-color-chart-morris-daily {
+						svg {
+							text {
+								fill: $dark-all-font-color;
+							}
+						}
+					}
+
+					.custom-card {
+						.card-profile {
+							img {
+								background-color: $dark-card-background;
+							}
+						}
+
+						.profile-details {
+							h6 {
+								color: $dark-small-font-color;
+							}
+						}
+
+						.card-social {
+							li {
+								a {
+									color: $dark-small-font-color;
+								}
+							}
+						}
+
+						.card-footer {
+							>div {
+								h6 {
+									color: $dark-small-font-color;
+								}
+
+								+div {
+									border-left: 1px solid $dark-card-inbox;
+								}
+							}
+
+						}
+					}
+
+					.form-control {
+						background-color: $dark-body-background;
+						color: $dark-all-font-color;
+						border: 1px solid $dark-border-color;
+
+						&.touchspin {
+							background-color: $dark-card-background;
+						}
+					}
+
+					.checkbox,
+					.radio {
+						label {
+							&::before {
+								background-color: $dark-body-background;
+								border: 1px solid $dark-border-color;
+								color: $dark-all-font-color;
+							}
+						}
+					}
+
+					.dropdown-basic {
+						.dropdown {
+							.dropdown-content {
+								background-color: $dark-body-background;
+
+								a {
+									color: $dark-all-font-color;
+									background-color: $transparent-color !important;
+									border-color: $dark-card-background;
+
+									&:hover {
+										background-color: $dark-card-background !important;
+									}
+								}
+
+								.dropdown-header {
+									color: $dark-all-font-color;
+								}
+
+								.dropdown-divider {
+									border: 1px solid $dark-border-color;
+								}
+							}
+						}
+					}
+
+					.dropup-basic {
+						.dropup {
+							.dropup-content {
+								background-color: $dark-body-background;
+
+								a {
+									color: $dark-all-font-color;
+
+									&:hover,
+									&.active {
+										background-color: $dark-card-background;
+									}
+								}
+							}
+						}
+					}
+
+					.dropzone.dz-clickable {
+						.dz-message {
+							h6 {
+								color: $dark-all-font-color;
+							}
+
+							span {
+								color: $dark-small-font-color;
+							}
+						}
+					}
+
+					.dropzone {
+						.dz-preview {
+							background-color: $dark-body-background;
+
+							.dz-details {
+								background-color: $dark-card-background;
+							}
+						}
+					}
+
+					.browser-widget {
+						.media-body {
+							column-rule: 1px solid $dark-card-border;
+
+							h4 {
+								color: $dark-all-font-color;
+
+								span {
+									color: $dark-all-font-color;
+								}
+							}
+
+							span {
+								color: $dark-small-font-color;
+							}
+						}
+					}
+
+					.email-wrap {
+						.email-app-sidebar {
+							.media {
+								img {
+									border: 2px solid $dark-body-background;
+								}
+							}
+
+							.main-menu {
+								>li {
+									a {
+										color: $dark-all-font-color;
+
+										&:hover {
+											background-color: $dark-body-background;
+										}
+									}
+								}
+							}
+
+							ul {
+								li {
+									a {
+										>.title {
+											color: $dark-all-font-color;
+										}
+									}
+								}
+							}
+						}
+
+						.email-right-aside {
+							.email-body {
+								.row {
+									.col-xl-4 {
+										border-right: 1px solid rgba(0, 0, 0, 0.1);
+									}
+								}
+
+								.inbox {
+									.media.active {
+										background-color: $dark-body-background;
+									}
+								}
+							}
+						}
+
+						.media-body {
+							h6 {
+								color: $dark-all-font-color;
+
+								small {
+									color: $dark-small-font-color;
+
+									span {
+										color: $dark-small-font-color;
+									}
+								}
+							}
+
+							p {
+								color: $dark-small-font-color;
+							}
+						}
+
+						.email-top {
+							border-bottom: 1px solid $dark-border-color;
+						}
+
+						p {
+							color: $dark-small-font-color;
+						}
+
+						.email-content {
+							.email-top {
+								.user-emailid:after {
+									border: 1px solid $dark-border-color;
+								}
+							}
+						}
+
+						.notification-popup {
+							p {
+								color: $white;
+							}
+						}
+					}
+
+					.dropdown-menu {
+						background-color: $dark-body-background;
+						border: 1px solid $dark-card-background;
+
+						a {
+							color: $dark-all-font-color;
+							background: $transparent-color;
+							border-top-color: $dark-card-background;
+
+							&:hover {
+								background-color: $dark-card-background;
+							}
+						}
+					}
+
+					.icon-lists {
+						div {
+							i {
+								color: $dark-small-font-color;
+							}
+
+							&:hover {
+								background-color: $dark-body-background;
+							}
+						}
+					}
+
+					.redial-social-widget {
+						i {
+							background-color: $dark-card-background;
+						}
+					}
+
+					.b-b-light {
+						border-bottom: 1px solid $dark-card-border !important;
+					}
+
+					.b-r-dark {
+						border-right: 1px solid $white !important;
+					}
+
+					.testimonial {
+						i {
+							color: $dark-border-color;
+						}
+
+						p {
+							color: $dark-all-font-color;
+						}
+
+						h5 {
+							color: $dark-all-font-color;
+						}
+
+						span {
+							color: $dark-small-font-color;
+						}
+					}
+
+					.grid-showcase {
+						span {
+							background-color: $dark-card-background;
+							border: 1px solid $dark-card-border;
+						}
+					}
+
+					.grid-align {
+						.row {
+							background-color: $dark-border-color;
+							border: 1px solid $dark-border-color;
+						}
+					}
+
+					.page-builder {
+						.ge-html-output {
+							background-color: $dark-body-background;
+							color: $dark-small-font-color;
+							border: 1px solid $dark-card-border;
+						}
+
+						.btn-grid {
+							background-color: $dark-card-background;
+							color: $dark-small-font-color !important;
+							border-right: 1px solid $dark-border-color;
+						}
+
+						.ge-mainControls {
+							.ge-addRowGroup {
+								.ge-row-icon {
+									.column {
+										border-left: 3px solid $dark-card-background;
+									}
+								}
+							}
+						}
+
+						.btn-code,
+						.btn-screen {
+							color: $dark-small-font-color;
+							border-right: 1px solid $dark-border-color;
+						}
+
+						.ge-canvas.ge-editing {
+							.row {
+								background-color: $dark-body-background;
+							}
+
+							.column {
+								border: 1px solid $dark-border-color;
+								background-color: $dark-card-background;
+							}
+
+							.ge-tools-drawer {
+								.ge-details {
+									input {
+										background-color: $dark-body-background;
+										border-color: $dark-border-color;
+										color: $dark-small-font-color;
+									}
+
+									.btn-group {
+										a {
+											color: $dark-small-font-color;
+										}
+									}
+								}
+							}
+						}
+
+						.ge-content-type-ckeditor {
+							color: $dark-all-font-color;
+						}
+					}
+
+					.search-page {
+						.info-block {
+							border: 1px solid $dark-border-color;
+						}
+					}
+
+					.card-absolute {
+
+						.bg-primary,
+						.bg-secondary {
+							h5 {
+								color: $white;
+							}
+						}
+					}
+
+					.timeline-small {
+						.media {
+							.timeline-round {
+
+								&.timeline-line-1,
+								&.small-line,
+								&.medium-line {
+									&:after {
+										background-color: $dark-card-border;
+									}
+								}
+							}
+						}
+					}
+
+					/* body end*/
 				}
 
 				.footer {
@@ -3914,6 +4342,130 @@ body {
 
 				h2 {
 					background-color: $dark-card-background;
+				}
+			}
+
+			.chat-box {
+				.about {
+					.name {
+						color: $dark-all-font-color;
+					}
+				}
+
+				.chat-menu {
+					border-left: 1px solid $dark-border-color;
+
+					.nav-tabs {
+						border-bottom: 1px solid $dark-border-color;
+
+						.nav-item {
+							.nav-link {
+								&.active {
+									color: $dark-all-font-color !important;
+								}
+							}
+						}
+					}
+
+					.user-profile {
+						.image {
+							.icon-wrapper {
+								background-color: $dark-card-background;
+								box-shadow: 1px 1px 3px 1px $dark-body-background;
+							}
+
+							.avatar {
+								img {
+									border: 5px solid $dark-border-color;
+								}
+							}
+						}
+
+						.social-media {
+							a {
+								color: $dark-small-font-color;
+							}
+						}
+
+						.follow {
+							span {
+								color: $dark-small-font-color;
+							}
+
+							.follow-num {
+								color: $dark-all-font-color;
+							}
+						}
+					}
+				}
+
+				.status {
+					color: $dark-small-font-color;
+
+					p {
+						color: $dark-all-font-color !important;
+					}
+				}
+
+				.chat-right-aside {
+					.chat {
+						.chat-header {
+							border-bottom: 1px solid $dark-border-color;
+
+							.chat-menu-icons {
+								li {
+									a {
+										i {
+											color: $dark-small-font-color;
+										}
+									}
+								}
+							}
+
+							img {
+								box-shadow: 1px 1px 4px 1px $dark-body-background;
+							}
+						}
+
+						.chat-msg-box {
+							.my-message {
+								border: 1px solid $dark-border-color
+							}
+
+							.message {
+								color: $dark-all-font-color;
+							}
+
+							.other-message {
+								background-color: $dark-body-background;
+							}
+						}
+
+						.chat-message {
+							background-color: $dark-card-background;
+							border-top: 1px solid $dark-border-color;
+
+							.input-group {
+								.form-control {
+									background-color: $dark-card-background;
+								}
+							}
+						}
+					}
+				}
+
+				.chat-history {
+					.call-icons {
+						ul {
+							li {
+								border: 1px solid $dark-border-color;
+
+								a {
+									color: $dark-small-font-color;
+								}
+							}
+						}
+					}
 				}
 			}
 
@@ -4348,12 +4900,40 @@ body {
 			}
 
 			@media screen and (max-width: 1660px) {
+				.chat-box {
+					.chat-history {
+						.call-icons {
+							ul {
+								li {
+									border: 1px solid $dark-border-color;
+								}
+							}
+						}
+
+						.total-time {
+							h2 {
+								color: $dark-all-font-color;
+							}
+						}
+					}
+				}
+
 				.caller-img {
 					img {
 						opacity: 0.7;
 					}
 				}
 
+				.chat-box {
+					.chat-history {
+						.call-content {
+							>div {
+								background-color: rgba(0, 0, 0, 0.75);
+								background-blend-mode: overlay;
+							}
+						}
+					}
+				}
 			}
 
 			@media only screen and (max-width: 1199px) {
@@ -5063,8 +5643,6 @@ body {
 					}
 				}
 			}
-
-
 		}
 
 		.todo {
@@ -5353,6 +5931,14 @@ body {
 					background-color: $dark-card-background;
 					color: $dark-all-font-color;
 					border: 1px solid $dark-card-border;
+				}
+			}
+		}
+
+		.stepwizard {
+			.stepwizard-row {
+				&:before {
+					background-color: $dark-card-border;
 				}
 			}
 		}
@@ -5959,35 +6545,43 @@ body {
 		}
 
 		// dropdown dark mode
+		.dark-form {
+			.form-label {
+				color: $dark-all-font-color;
+			}
+
+			.form-control {
+				border: 1px solid $dark-all-font-color !important;
+			}
+
+			.form-check {
+				.form-check-input {
+					border: 1px solid $dark-all-font-color;
+				}
+
+				.form-check-label {
+					color: $dark-all-font-color;
+				}
+			}
+
+			h6 {
+				color: $dark-all-font-color;
+			}
+
+			.helper-truncate {
+				color: $dark-all-font-color;
+				background-color: transparent;
+			}
+		}
 
 		.dark-input-type {
 			.input-group {
+				background-color: $dark-card-background;
+				color: $dark-all-font-color;
 
 				.input-group-text {
 					background: transparent;
 					border: unset;
-				}
-			}
-		}
-
-		.heading-dropdown {
-			.dropdown-menu {
-				>li {
-					&:first-child {
-						>a {
-							background-color: $card-body-color;
-						}
-					}
-				}
-			}
-		}
-
-		.heading-dropdown {
-			.dropdown-menu {
-				a {
-					&.dropdown-item {
-						color: $dark-card-border;
-					}
 				}
 			}
 		}
@@ -5997,26 +6591,9 @@ body {
 			.accordion-item {
 				.accordion-collapse {
 					p {
-						color: $dark-body-background;
-					}
-
-					.accordion-body {
-						background-color: $dark-card-background;
-
-						h6 {
-							border: 0;
-						}
+						color: $dark-body-background
 					}
 				}
-
-				&:last-of-type {
-					.accordion-button.collapsed {
-						background-color: $dark-card-background;
-					}
-				}
-
-				border: 1px solid $dark-card-border;
-				background-color: $dark-card-border;
 			}
 
 			.collapse-wrapper {
@@ -6027,13 +6604,6 @@ body {
 				border-radius: unset;
 			}
 		}
-
-		.accordions-content {
-			li {
-				color: $dark-card-background;
-			}
-		}
-
 
 		// List dark mode
 		.dark-list {
@@ -6056,12 +6626,6 @@ body {
 		}
 
 		// Typography dark mode
-		.card-wrapper {
-			.sub-title {
-				border-bottom: unset !important;
-			}
-		}
-
 		.dark-blockquote {
 			.blockquote {
 				p {
@@ -6069,7 +6633,6 @@ body {
 				}
 			}
 		}
-
 
 		// Modal dark mode
 		.dark-sign-up {
@@ -6143,11 +6706,12 @@ body {
 		// helper-classes
 
 		.dark-helper {
-			background-color: rgba($dark-body-background, 0.4);
+			h6 {
+				color: $dark-body-background;
+			}
 
-			h6,
 			span {
-				color: $dark-all-font-color;
+				color: $dark-card-background;
 			}
 
 			.text-muted {
@@ -6157,735 +6721,6 @@ body {
 
 		.font-dark {
 			color: $dark-all-font-color !important;
-		}
-
-		// treeview
-		.treejs {
-			.treejs-node__disabled {
-				color: $light-all-font-color;
-			}
-
-			.treejs-switcher:before {
-				border-top: 4px solid $dark-all-font-color
-			}
-		}
-
-		// range-slider 
-		.irs-min,
-		.irs-max {
-			color: $dark-small-font-color;
-			background-color: $dark-card-inbox;
-		}
-
-		// Ribbons 
-		.ribbon-wrapper,
-		.ribbon-wrapper-bottom,
-		.ribbon-vertical-left-wrapper,
-		.ribbon-wrapper-right,
-		.ribbon-vertical-right-wrapper {
-			&.alert-light-light {
-				background-color: $dark-card-inbox;
-			}
-		}
-
-		// Paginations
-		.pagination {
-			.page-item {
-				.page-link {
-					&.rounded-circle {
-						color: $dark-all-font-color !important;
-					}
-				}
-			}
-		}
-
-		// Timeline
-		.dark-timeline {
-			.date-content {
-				color: $dark-all-font-color !important;
-				background-color: $dark-body-background !important;
-			}
-		}
-
-		// dashboard-7
-		.student-leader-wrapper {
-			.student-leader-content {
-				border-bottom: 1px solid $dark-card-border;
-			}
-		}
-
-		.attendance-card {
-			.left-overview-content {
-				.svg-box {
-					box-shadow: unset;
-					border: 1px solid $dark-card-border;
-				}
-			}
-		}
-
-		.task-table {
-			.main-task-wrapper {
-				.square-white {
-					box-shadow: unset;
-					border: 1px solid transparent;
-				}
-			}
-		}
-
-		.income-wrapper {
-			ul {
-				li {
-					+li {
-						border-left: 1px dashed $dark-card-border;
-
-						@media (max-width:1735px) {
-							border-left: unset;
-						}
-					}
-				}
-			}
-		}
-
-		.icons-box-2 {
-			.open-options {
-				.dropdown-menu {
-					background-color: $dark-body-background;
-				}
-			}
-		}
-
-		.performance-wrapper {
-			.performance-right {
-				p {
-					color: var(--body-font-color);
-				}
-			}
-		}
-
-		// dashboard-8
-		.main-product-wrapper {
-			.product-body {
-				.product-search {
-					&.input-group {
-						>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-							color: $dark-small-font-color;
-						}
-
-						.input-group-text {
-							border: 1px solid $dark-card-border;
-						}
-
-						.form-control {
-							border: 1px solid $dark-card-border;
-							border-left: unset;
-							background-color: $dark-card-background;
-
-							[dir="rtl"] & {
-								border: 1px solid $dark-card-border;
-								border-right: unset;
-							}
-						}
-					}
-				}
-			}
-		}
-
-		.our-product-wrapper {
-			box-shadow: 0px 3px 17px rgb(113 113 137 / 18%);
-		}
-
-		// grid 
-		.grid-showcase {
-			span {
-				background-color: $dark-body-background;
-			}
-		}
-
-
-		// forms
-		.custom-input #validationCustom03.form-control,
-		.custom-input #validationCustom03 .form-select,
-		.custom-input #validationCustom05.form-control,
-		.custom-input #validationCustom05 .form-select,
-		.custom-input #validationCustomUsername.form-control,
-		.custom-input #validationCustomUsername .form-select {
-			border-color: $dark-body-background;
-
-		}
-
-		.form-control[type=file]:not(:disabled):not([readonly]) {
-			color: $light-all-font-color;
-			background-color: $dark-body-background;
-			border-color: $dark-body-background;
-		}
-
-		.custom-input {
-
-			.form-control,
-			.form-select {
-				background-color: $dark-body-background;
-				border-color: $dark-body-background;
-				color: $light-all-font-color;
-			}
-		}
-
-		.vertical-main-wizard {
-			.header-vertical-wizard {
-				.nav-link {
-
-					&:active,
-					&.active {
-						.vertical-wizard {
-							.vertical-wizard-content {
-								h6 {
-									color: $dark-small-font-color;
-								}
-
-							}
-						}
-					}
-				}
-			}
-		}
-
-		// Advance Init table
-		td.highlight {
-			background-color: $dark-datatable-odd !important;
-		}
-
-		// Base-input 
-		.card-wrapper,
-		.dark-field {
-			.form-control {
-				background-color: $dark-body-background;
-				border-color: $dark-body-background;
-				color: $light-all-font-color ;
-			}
-		}
-
-		.form-control-sm {
-			background-color: $dark-body-background;
-			border-color: $dark-body-background;
-		}
-
-		.dark-inputs {
-			.form-control {
-				&.btn-square {
-					background-color: $dark-body-background;
-					border-color: $dark-body-background;
-				}
-
-				&.btn-pill {
-					background-color: $dark-body-background;
-					border-color: $dark-body-background;
-				}
-
-				&.input-air-primary {
-					background-color: $dark-body-background;
-					border-color: $dark-body-background;
-				}
-			}
-		}
-
-		.horizontal-wizard-wrapper {
-			.main-horizontal-header {
-				.horizontal-options {
-					.nav-link {
-						.horizontal-wizard {
-							.stroke-icon-wizard {
-								color: $dark-body-background;
-							}
-						}
-					}
-				}
-			}
-		}
-
-		// Touchspin
-		.touchspin-wrapper,
-		.pre-post-touchspin {
-			input[type="number"] {
-				&.input-touchspin {
-					background-color: $dark-body-background;
-					color: $dark-all-font-color;
-				}
-			}
-		}
-
-		// unique checkbox checked
-		.variation-box {
-			.selection-box {
-				input {
-					&[type=checkbox]:checked~div {
-						color: $bg-dark-color;
-					}
-				}
-			}
-		}
-
-		// datepicker
-		.flatpickr-calendar {
-			box-shadow: unset;
-
-			&.animate {
-
-				background-color: $dark-body-background;
-			}
-		}
-
-		.flatpickr-time {
-			border: 1px solid $dark-card-inbox;
-
-			input {
-				background: $dark-datatable-sorting-even;
-			}
-		}
-
-		.main-inline-calender {
-			&.input-group {
-				.flatpickr-rContainer {
-					.flatpickr-days {
-						.dayContainer {
-							.flatpickr-day {
-								&:hover {
-									background-color: $dark-card-background;
-									color: $dark-all-font-color;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		// Select2 
-		.tagify__dropdown__item--active {
-			background-color: $dark-body-background;
-		}
-
-		.tagify__input {
-			color: $dark-small-font-color;
-
-			&::before {
-				color: $dark-small-font-color;
-			}
-		}
-
-		.tagify {
-			border-color: $dark-card-border;
-			--tags-focus-border-color: #374558;
-		}
-
-		.international-num {
-			input {
-				border-color: $dark-card-border;
-				background-color: $dark-card-background;
-			}
-
-			.results {
-				ul {
-					border: 1px solid $dark-card-border;
-				}
-			}
-		}
-
-		.iti__country-list {
-			background-color: $dark-card-background;
-		}
-
-		.select-box {
-			.selection-option {
-				&:hover {
-					background-color: $dark-datatable-sorting-even;
-				}
-			}
-
-			.options-container.active {
-
-				~ {
-					.search-box {
-						input {
-							background-color: $dark-all-font-color;
-						}
-					}
-				}
-
-			}
-		}
-
-		// Tables
-		.table-hover {
-			>tbody {
-				>tr:hover {
-					--bs-table-accent-bg: #1d1e26;
-				}
-			}
-		}
-
-		// Authentication
-
-		.main-qr-code {
-			.modal-toggle-wrapper {
-				.modal-img {
-					.qr-content {
-						.alert {
-							background-color: $dark-body-background;
-							border-color: $dark-card-inbox;
-
-							i {
-								color: $dark-all-font-color;
-							}
-
-							div {
-								color: $dark-all-font-color;
-							}
-						}
-					}
-				}
-
-				form {
-					.form-control {
-						background-color: $dark-body-background;
-						border-color: $dark-card-inbox;
-
-					}
-				}
-			}
-		}
-
-		.authentication-options {
-			.radio-wrapper {
-				li {
-					.form-check-label {
-						span {
-							>span {
-								color: $dark-small-font-color;
-							}
-						}
-					}
-				}
-			}
-		}
-
-		// Typeahead
-		.typeahead-wrapper {
-			.theme-form {
-				.form-control {
-					background-color: $dark-body-background !important;
-					border-color: $dark-body-background !important;
-				}
-			}
-		}
-
-		// Letter_box
-		.compose-modal {
-			form {
-				.form-control {
-					background-color: $dark-body-background;
-					border-color: $dark-card-border;
-					color: $dark-small-font-color;
-				}
-			}
-		}
-
-		.toolbar-box {
-			.ql-snow {
-				.ql-stroke {
-					stroke: $dark-small-font-color;
-				}
-
-				.ql-tooltip {
-					background-color: $dark-body-background;
-					box-shadow: unset;
-					border: 0;
-
-					&.ql-editing {
-						input[type=text] {
-							background-color: $dark-card-background;
-							border: 0;
-							color: $dark-small-font-color;
-						}
-					}
-
-				}
-
-				a {
-					color: $light-all-font-color;
-				}
-			}
-
-			.ql-editor.ql-blank::before {
-				color: $light-all-font-color;
-			}
-		}
-
-
-		.email-body {
-			.mail-header-wrapper {
-				.mail-body {
-					.mail-search {
-						.form-control {
-							background-color: $dark-body-background;
-							border: 0;
-							color: $light-all-font-color;
-
-							&::placeholder {
-								color: $light-all-font-color;
-							}
-						}
-
-
-						i {
-							color: $light-all-font-color;
-						}
-					}
-
-					.dropdown-menu {
-						.dropdown-item {
-							background: $dark-body-background;
-							opacity: 1;
-							border: 0;
-							color: $light-all-font-color;
-
-
-							&:hover {
-								background-color: $dark-card-background;
-							}
-						}
-					}
-				}
-			}
-		}
-
-		.inbox-options {
-			.light-square {
-				&.btn-group {
-					.dropdown-menu {
-						background: $dark-editor-document;
-
-						.dropdown-item {
-							&:hover {
-								background-color: $light-all-font-color;
-								color: $dark-small-font-color;
-							}
-						}
-					}
-				}
-			}
-		}
-
-		.inbox-security {
-			background-color: $dark-body-background;
-		}
-
-		.mail-pagination {
-
-			.pagination-number,
-			.pagination-button {
-				background-color: $dark-card-inbox;
-			}
-		}
-
-
-		// Add-product 
-		.flatpicker-calender {
-			&.product-date {
-				.form-control {
-					&.flatpickr-input {
-						border: unset;
-						background-color: $dark-body-background;
-					}
-				}
-			}
-		}
-
-		.price-wrapper {
-			.radio-wrapper {
-				li {
-					.form-check-input {
-						border: 1px solid $dark-card-border;
-
-						~.form-check-label {
-							span {
-								color: $dark-small-font-color;
-
-							}
-						}
-					}
-				}
-			}
-		}
-
-		.product-buttons {
-			.btn {
-
-				&:hover,
-				&:active {
-					color: $dark-all-font-color;
-				}
-
-				svg {
-					stroke: $dark-all-font-color;
-				}
-			}
-		}
-
-		.ql-formats {
-			.ql-picker-label {
-				&::before {
-					color: $dark-all-font-color;
-				}
-			}
-		}
-
-		// list-product
-
-		.list-product {
-			.datatable-pagination {
-				.datatable-active {
-					.datatable-pagination-list-item-link {
-						background-color: var(--theme-deafult);
-						color: var(--white);
-					}
-				}
-
-				.datatable-pagination-list-item-link {
-					background-color: $dark-body-background;
-					color: $dark-small-font-color;
-				}
-			}
-
-			.datatable-input {
-				&:focus {
-					outline: unset;
-				}
-			}
-
-			.datatable-selector {
-
-				color: $dark-all-font-color;
-				background-color: $dark-body-background;
-			}
-		}
-
-		.list-product-header {
-			.collapse {
-				.list-product-body {
-					border: unset !important;
-				}
-			}
-		}
-
-		// tables
-		.table {
-			--bs-table-bg: trasparnt;
-		}
-
-		// private-chat
-		.left-sidebar-wrapper {
-			.left-sidebar-chat {
-				.input-group {
-					.input-group-text {
-						background-color: $dark-body-background;
-					}
-
-					.form-control {
-						background-color: $dark-body-background;
-						border: unset;
-						color: $dark-all-font-color;
-
-						&::placeholder {
-							color: $dark-all-font-color;
-
-						}
-					}
-				}
-			}
-
-			.advance-options {
-				.chats-user {
-					span {
-						color: $dark-all-font-color;
-					}
-				}
-			}
-		}
-
-		.search-contacts {
-			.form-control {
-				background-color: $dark-body-background;
-				border-color: $dark-card-border;
-				color: $light-all-font-color;
-
-				&::placeholder {
-					color: $dark-small-font-color;
-				}
-			}
-		}
-
-		.right-sidebar-title {
-			span {
-				color: $dark-all-font-color;
-			}
-		}
-
-		.right-sidebar-Chats {
-			.msger-chat {
-				background: $dark-card-inbox;
-			}
-
-			.msger-inputarea {
-				background: $dark-card-background;
-			}
-
-			.msger-input {
-				&:focus {
-					background-color: $dark-body-background;
-				}
-			}
-		}
-
-
-		.fg-emoji-picker-search {
-
-			input,
-			.fg-emoji-picker-search-icon {
-				background-color: $dark-body-background;
-				color: $light-all-font-color;
-			}
-		}
-
-		.fg-emoji-picker-category-title {
-			background-color: $dark-card-inbox;
-		}
-
-		// Add-post 
-		.add-post {
-			form {
-
-				label,
-				.col-form-label {
-					color: $dark-small-font-color;
-				}
-
-				.form-control {
-					background-color: $dark-body-background;
-					color: $light-all-font-color;
-					border: unset;
-
-					&::placeholder {
-						color: $light-all-font-color;
-					}
-				}
-			}
-		}
-
-		.ql-container {
-			&.ql-snow {
-				.ql-editor {
-					color: $light-all-font-color;
-				}
-			}
 		}
 	}
 
@@ -7217,10 +7052,12 @@ body {
 			display: none;
 		}
 	}
+
 }
 
 // =======================  Dark Body only  ======================= //
 
+
 /**=====================
-	4.1. Dark CSS ends
+55. theme layout CSS ends
 ==========================**/

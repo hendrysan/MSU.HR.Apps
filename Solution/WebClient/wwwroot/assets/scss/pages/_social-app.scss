@@ -1,5 +1,5 @@
 /**=====================
-    3.37 Social-app CSS start
+     79. social app css start
 ==========================**/
 .user-profile {
   .hovercard {
@@ -40,13 +40,12 @@
       }
     }
   }
-
   .card-footer {
     >div {
       h3 {
         font-size: 16px;
       }
-    }
+    } 
   }
 }
 
@@ -103,6 +102,7 @@
   .media {
     margin-bottom: 20px;
     display: flex;
+    justify-content: center;
     align-items: center;
 
     &:last-child {
@@ -146,11 +146,9 @@
 
 .new-users-social {
   margin-bottom: 30px;
-
   svg {
     cursor: pointer;
   }
-
   .media {
     img {
       width: 58px;
@@ -431,5 +429,5 @@
 }
 
 /**=====================
-    3.37 Social-app CSS end
+     79. social app CSS end
 ==========================**/

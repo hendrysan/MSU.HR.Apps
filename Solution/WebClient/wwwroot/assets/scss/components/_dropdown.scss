@@ -1,17 +1,6 @@
 /**=====================
-	2.14 Dropdown CSS Start
+     Dropdown CSS Start
 ==========================**/
-.img-cropper {
-	.dropup {
-		.dropdown-toggle {
-			&::after {
-				content: '';
-				display: none;
-			}
-		}
-	}
-}
-
 .dropdown-auto {
 	overflow: auto;
 }
@@ -44,11 +33,6 @@
 
 		&.btn-primary {
 			color: $white;
-		}
-
-		&:focus {
-			box-shadow: none;
-			border: unset;
 		}
 	}
 
@@ -121,10 +105,6 @@
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
 			padding: 10px;
-		}
-
-		&.dropdown {
-			margin-bottom: 0;
 		}
 	}
 
@@ -221,7 +201,7 @@
 	}
 }
 
-
+// dropdown
 .dropdown-block {
 	li {
 		.dropdown-item {
@@ -267,42 +247,6 @@
 			background-color: unset;
 			border: none;
 		}
-	}
-}
-
-.dark-form {
-	.form-label {
-		color: var(--text-gray);
-	}
-
-	.form-control {
-		border: 1px solid var(--text-gray) !important;
-	}
-
-	.form-check {
-		.form-check-input {
-			border: 1px solid var(--text-gray);
-		}
-
-		.form-check-label {
-			color: var(--text-gray);
-		}
-	}
-
-	h6 {
-		color: var(--text-gray);
-	}
-
-	p {
-		&.dropdown-item {
-			padding: 7px 0 0 0;
-			border-top: 1px solid var(--chart-dashed-border);
-		}
-	}
-
-	.helper-truncate {
-		color: var(--text-gray);
-		background-color: transparent;
 	}
 }
 
@@ -414,16 +358,6 @@
 btn-group {
 	.dropdown-wrapper {
 		z-index: 2;
-
-		.input-group {
-			.input-group-text {
-				padding: 0px 8px 0px 0px;
-
-				[dir="rtl"] & {
-					padding: 0px 0px 0px 8px;
-				}
-			}
-		}
 	}
 }
 
@@ -447,20 +381,6 @@ btn-group {
 	}
 }
 
-.heading-dropdown {
-	.dropdown-menu {
-		>li {
-			&:first-child {
-				>a {
-					border-bottom: 4px solid var(--recent-border);
-					border-top: 0;
-					background-color: $light-background;
-				}
-			}
-		}
-	}
-}
-
 /**=====================
-	2.14 Dropdown CSS Ends
+    Dropdown CSS Ends
 ==========================**/

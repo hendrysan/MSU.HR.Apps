@@ -1,5 +1,5 @@
 /**=====================
-  3.24 Kanban CSS start
+   61. base_inputs CSS start
 ==========================**/
 .jkanban-container {
   .btn {
@@ -51,7 +51,6 @@
   box-shadow: 1px 5px 24px 0 rgba(68, 102, 242, 0.05);
   overflow: hidden;
   width: calc(100% / 3 - 30px) !important;
-
   .kanban-drag {
     background: $body-color;
   }
@@ -61,12 +60,6 @@
   background: transparent;
   padding: 0;
   margin-bottom: 20px;
-
-  .kanban-box {
-    .badge {
-      line-height: 13px;
-    }
-  }
 
   p {
     opacity: 0.7;
@@ -166,7 +159,6 @@ footer {
     margin-bottom: 10px;
     margin-left: 20px;
   }
-
   .kanban-container {
     .kanban-board {
       width: 320px !important;
@@ -205,5 +197,5 @@ footer {
 }
 
 /**=====================
-   3.24 Kanban CSS ends
+    61. base_inputs CSS ends
 ==========================**/

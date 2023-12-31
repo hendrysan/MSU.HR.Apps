@@ -1,5 +1,5 @@
 /**=====================
-   3.34 Progress CSS Start
+    Progress CSS Start
 ==========================**/
 .progress-showcase {
 	.progress {
@@ -19,23 +19,9 @@
 	height: 20px;
 }
 
-.progress-number {
-	button {
-		width: 2rem;
-		height: 2rem;
-	}
 
-	.progress-wrapper {
-		height: 1px;
-
-		&.progress {
-			background-color: var(--recent-dashed-border);
-		}
-
-		.progress-bar {
-			background-color: var(--theme-deafult);
-		}
-	}
+.progress-wrapper {
+	height: 1px;
 }
 
 .progress-btn {
@@ -127,5 +113,5 @@
 }
 
 /**=====================
-   3.34 Progress CSS Ends
+    Progress CSS Ends
 ==========================**/

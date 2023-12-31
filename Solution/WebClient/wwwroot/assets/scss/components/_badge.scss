@@ -1,5 +1,5 @@
 /**=====================
-    2.4 Badge CSS start
+     Badge CSS start
 ==========================**/
 
 .badge-spacing {
@@ -52,7 +52,7 @@ a.badge {
 
 .badge {
   padding: $badge-padding;
-  font-family: Roboto, sans-serif;
+  font-family: $font-roboto, $font-serif;
   font-weight: 500;
 
   &+.badge {
@@ -64,10 +64,6 @@ a.badge {
     height: $badge-svg-size;
     padding-top: 3px;
   }
-}
-
-.b-ln-height {
-  line-height: 5px;
 }
 
 @each $pill-badge-name,
@@ -120,13 +116,6 @@ $round-badge-color in (primary, var(--theme-deafult)),
   background-color: var(--theme-secondary);
 }
 
-.badge-heading {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding-bottom: 8px;
-}
-
 /**=====================
-  2.4 Badge CSS Ends
+    Badge CSS Ends
 ==========================**/

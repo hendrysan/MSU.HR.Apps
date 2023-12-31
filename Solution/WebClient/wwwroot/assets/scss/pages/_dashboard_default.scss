@@ -1,5 +1,5 @@
 /**=====================
-  3.13 Dashboard_default CSS Start
+53. Dashboard CSS Start
 ==========================**/
 //index dashboard css start
 
@@ -9,18 +9,16 @@
 
 @keyframes bounce-effect {
   0% {
-    transform: translateY(0);
-    transition: 0.5s;
+      transform: translateY(0);
+      transition: 0.5s;
   }
-
   50% {
-    transform: translateY(-5px);
-    transition: 0.5s;
+      transform: translateY(-5px);
+       transition: 0.5s;
   }
-
   100% {
-    transform: translateY(0);
-    transition: 0.5s;
+      transform: translateY(0);
+      transition: 0.5s;
   }
 }
 
@@ -28,13 +26,11 @@
   0% {
     transform: scale(1);
   }
-
   50% {
-    transform: scale(1.2);
+      transform: scale(1.2);
   }
-
   100% {
-    transform: scale(1);
+      transform: scale(1);
   }
 }
 
@@ -50,18 +46,11 @@ $badge-light-color in (primary, $primary-color),
   .badge-light-#{$badge-light-name} {
     background-color: lighten($badge-light-color, 38%);
     color: $badge-light-color;
-
-    &:hover {
-      background-color: lighten($badge-light-color, 38%);
-      color: $badge-light-color;
-    }
   }
 }
-
 .badge-light-light {
   background-color: lighten($badge-light-color, 55%);
 }
-
 .badge-light-primary {
   background-color: rgba($primary-color, 0.1);
 }
@@ -69,14 +58,8 @@ $badge-light-color in (primary, $primary-color),
 .badge-light-success {
   background-color: rgba($success-color, 0.15);
 }
-
 .badge-light-secondary {
   background-color: rgba($secondary-color, 0.08);
-}
-
-// select2
-.badge-light-warning {
-  background-color: rgba($warning-color, 0.1);
 }
 
 .table {
@@ -86,219 +69,185 @@ $badge-light-color in (primary, $primary-color),
     }
   }
 }
-
 .overall-card {
   .balance-card {
     @media (max-width:1712px) {
       padding: 12px;
     }
   }
-
   @media (max-width: 1662px) and (min-width:1600px) {
     .col-xl-9 {
       width: 73%;
     }
-
     .col-xl-3 {
       width: 27%;
     }
   }
-
   @media (max-width: 1650px) and (min-width:1600px) {
     .col-xl-9 {
       width: 72%;
     }
-
     .col-xl-3 {
       width: 28%;
     }
   }
-
   @media (max-width: 1600px) and (min-width:1500px) {
     .col-xl-9 {
       width: 70%;
     }
-
     .col-xl-3 {
       width: 30%;
     }
   }
-
-  @media (max-width: 1500px) and (min-width:1200px) {
+   @media (max-width: 1500px) and (min-width:1200px) {
     .col-xl-9 {
       width: 65%;
     }
-
     .col-xl-3 {
       width: 35%;
     }
   }
 }
-
 /* Clock styles */
 .clockbox {
   margin-bottom: -5px;
-
   svg {
     width: 45px;
     height: 45px;
-
     @media (max-width: 767px) {
       height: 36px;
     }
   }
 }
-
 .clockbox,
 #clock {
-  width: 100%;
+    width: 100%;
 }
-
 .circle {
-  fill: $white;
-  stroke: rgba($white, 0.4);
-  stroke-width: 80px;
-  stroke-miterlimit: 10;
+    fill: $white;
+    stroke: rgba($white,0.4);
+    stroke-width: 80px;
+    stroke-miterlimit: 10;
 }
 
 .mid-circle {
-  fill: #000;
+    fill: #000;
 }
-
 .hour-marks {
-  fill: none;
-  stroke: $theme-body-sub-title-color;
-  stroke-width: 9;
-  stroke-miterlimit: 10;
+    fill: none;
+    stroke: $theme-body-sub-title-color;
+    stroke-width: 9;
+    stroke-miterlimit: 10;
 }
 
 .hour-hand {
-  fill: none;
-  stroke: #ff7e00;
-  stroke-width: 17;
-  stroke-miterlimit: 10;
+    fill: none;
+    stroke: #ff7e00;
+    stroke-width: 17;
+    stroke-miterlimit: 10;
 }
 
 .minute-hand {
-  fill: none;
-  stroke: #ff7e00;
-  stroke-width: 11;
-  stroke-miterlimit: 10;
+    fill: none;
+    stroke: #ff7e00;
+    stroke-width: 11;
+    stroke-miterlimit: 10;
 }
 
 .second-hand {
-  fill: none;
-  stroke: $warning-color;
-  stroke-width: 15px;
-  stroke-miterlimit: 10;
+    fill: none;
+    stroke: $warning-color;
+    stroke-width: 15px;
+    stroke-miterlimit: 10;
 }
-
 .sizing-box {
-  fill: none;
+    fill: none;
 }
-
 #hour,
 #minute,
 #second {
-  transform-origin: 300px 300px;
-  transition: transform .5s ease-in-out;
+    transform-origin: 300px 300px;
+    transition: transform .5s ease-in-out;
 }
-
 .widget-grid {
   .height-equal {
     @media (min-width: 1400px) {
       min-height: unset !important;
     }
   }
-
-  >.col-xxl-auto {
+  > .col-xxl-auto {
     @media (min-width: 1400px) {
       width: 22.22%;
     }
   }
 }
-
 .order-chart {
-  >div {
+  > div {
     margin-top: -25px;
     margin-bottom: -43px;
   }
-
   svg {
     path {
       clip-path: inset(7% 0% 0% 0% round 0.6rem);
     }
   }
 }
-
 .growth-wrap {
   .card-header {
     position: relative;
     z-index: 1;
   }
 }
-
 .growth-wrapper {
-  >div {
+  > div {
     margin-top: -54px;
     margin-bottom: -25px;
-
     @media (max-width: 1481px) {
       margin-top: -50px;
     }
   }
 }
-
 .profit-chart {
-  >div {
+  > div {
     margin-top: -45px;
     margin-bottom: -48px;
   }
-
   .apexcharts-canvas {
     .apexcharts-tooltip-text-label {
       display: none;
     }
   }
 }
-
 .widget-1 {
   background-image: url(../images/dashboard/widget-bg.png);
   background-size: cover;
   margin-bottom: 25px;
-
   i {
-    font-weight: 700;
-    font-size: 12px;
+      font-weight: 700;
+      font-size: 12px;
   }
-
   .f-w-500 {
-    display: flex;
-    align-items: center;
-
-    @media (max-width: 1580px) and (min-width: 1200px) {
-      display: none;
+      display: flex;
+      align-items: center;
+      @media (max-width: 1580px) and (min-width: 1200px) {
+        display: none;
+      }
     }
-  }
-
   .card-body {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     padding: 18px 25px;
-
     @media (max-width: 1720px) {
       padding: 18px;
     }
   }
-
   .widget-round {
     position: relative;
     display: inline-block;
     border-width: 1px;
     border-style: solid;
     border-radius: 100%;
-
     .bg-round {
       width: 56px;
       height: 56px;
@@ -310,12 +259,10 @@ $badge-light-color in (primary, $primary-color),
       margin: 6px;
       position: relative;
       z-index: 1;
-
       svg {
         width: 24px;
         height: 24px;
       }
-
       .half-circle {
         height: 52px;
         position: absolute;
@@ -325,16 +272,13 @@ $badge-light-color in (primary, $primary-color),
         background: $white;
         z-index: -1;
       }
-
       @media (max-width:1600px) {
         width: 40px;
         height: 40px;
-
-        svg {
-          width: 22px;
-          height: 22px;
-        }
-
+         svg {
+            width: 22px;
+            height: 22px;
+         }
         .half-circle {
           height: 40px;
           left: -10px;
@@ -343,42 +287,33 @@ $badge-light-color in (primary, $primary-color),
         }
       }
     }
-
     &.primary {
       border-color: var(--theme-deafult);
     }
-
     &.secondary {
       border-color: var(--theme-secondary);
     }
-
     &.success {
       border-color: $success-color;
     }
-
     &.warning {
       border-color: $warning-color;
     }
   }
-
   .widget-content {
     display: flex;
     align-items: center;
     gap: 15px;
-
     @media (max-width:1600px) {
       gap: 10px;
     }
-
     h4 {
       margin-bottom: 4px;
     }
   }
-
   &:hover {
     transform: translateY(-5px);
     transition: 0.5s;
-
     .widget-round {
       .svg-fill:not(.half-circle) {
         animation: tada 1.5s ease infinite;
@@ -386,7 +321,6 @@ $badge-light-color in (primary, $primary-color),
     }
   }
 }
-
 .widget-with-chart {
   .card-body {
     align-items: center;
@@ -396,109 +330,86 @@ $badge-light-color in (primary, $primary-color),
 .profile-box {
   background: $gradient-bg-primary;
   color: $white;
-
   .cartoon {
     position: absolute;
     bottom: -15px;
     right: 20px;
     animation: bounce-effect 5s infinite ease-in;
-
     [dir="rtl"] & {
       right: unset !important;
       left: 5px;
     }
-
     @media (max-width: 1660px) {
       right: 30px;
       text-align: right;
-
       [dir="rtl"] & {
         left: -6px;
         text-align: left;
       }
-
       img {
         width: 80%;
       }
     }
-
     @media (max-width: 1500px) {
       img {
-        width: 60%;
+         width: 60%;
       }
     }
-
     @media (max-width: 767px) {
       right: 10px;
-
       [dir="rtl"] & {
         left: -10px;
       }
-
       img {
         width: 52%;
       }
     }
-
-    @media (max-width: 575px) {
+     @media (max-width: 575px) {
       right: 30px;
-
       [dir="rtl"] & {
         left: 10px;
       }
-
       img {
         width: 48%;
       }
     }
   }
-
   .greeting-user {
     p {
       width: 60%;
-
       @media (max-width: 1500px) {
         width: 70%;
       }
-
       @media (max-width: 1199px) {
         width: 80%;
       }
-
       @media (max-width: 767px) {
         width: 98%;
       }
-
       @media (max-width: 600px) {
         width: 100%;
       }
-
       @media (max-width: 575px) {
         width: 98%;
       }
     }
   }
-
   .whatsnew-btn {
     margin-top: 3.5rem;
-
-    @media (max-width: 1500px) {
-      margin-top: 1.7rem;
+   @media (max-width: 1500px) {
+     margin-top: 1.7rem;
+   }
+   @media (max-width: 991px) {
+     margin-top: 3.5rem;
+   }
+   @media (max-width: 638px) {
+     margin-top: 2rem;
+   }
+   .btn {
+    @media (max-width: 767px) {
+      padding: 6px 10px;
     }
-
-    @media (max-width: 991px) {
-      margin-top: 3.5rem;
-    }
-
-    @media (max-width: 638px) {
-      margin-top: 2rem;
-    }
-
-    .btn {
-      @media (max-width: 767px) {
-        padding: 6px 10px;
-      }
-    }
+   }
   }
 }
 
@@ -507,20 +418,16 @@ $badge-light-color in (primary, $primary-color),
   justify-content: space-between;
   align-items: center;
   gap: 4px;
-
   a {
     i {
-      font-size: 11px;
+      font-size: 14px;
       margin-bottom: -2px;
     }
-
     &.btn {
       padding: 8px 12px;
-
       @media (max-width:575px) {
         padding: 5px;
       }
-
       &.badge-light-primary {
         &:hover {
           background-color: var(--theme-deafult);
@@ -529,65 +436,52 @@ $badge-light-color in (primary, $primary-color),
     }
   }
 }
-
 .user-details {
   display: flex;
   align-items: center;
   gap: 15px;
-
   @media (max-width: 1399px) {
     gap: 6px;
   }
-
   .customers {
     width: 200px;
   }
-
-  @media (max-width: 575px) {
+   @media (max-width: 575px) {
     flex-wrap: wrap;
-  }
+   }
 }
-
 .papernote-wrap {
   .banner-img {
     border-radius: 15px;
     width: 100%;
   }
-
   .note-labels {
     display: flex;
     align-items: center;
-
-    >* {
+    > * {
       padding: 3px 0;
     }
-
     ul {
       display: flex;
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
-
       @media (max-width: 575px) {
         gap: 4px;
       }
     }
-
     .badge {
       font-size: 14px;
       padding: 6px 12px;
-
       @media (max-width: 575px) {
         font-size: 12px;
         padding: 5px 6px;
       }
     }
-
     .last-label {
       padding-left: 16px;
       margin-left: 16px;
       border-left: 1px dashed rgba($theme-body-sub-title-color, 0.7);
-
       [dir="rtl"] & {
         padding-left: unset;
         margin-left: unset;
@@ -596,11 +490,9 @@ $badge-light-color in (primary, $primary-color),
         border-left: none;
         border-right: 1px dashed rgba($theme-body-sub-title-color, 0.7);
       }
-
       @media (max-width: 575px) {
         padding-left: 8px;
         margin-left: 8px;
-
         [dir="rtl"] & {
           margin-right: 8px;
           padding-right: 8px;
@@ -608,7 +500,6 @@ $badge-light-color in (primary, $primary-color),
       }
     }
   }
-
   .light-card {
     width: 40px;
     height: 40px;
@@ -620,7 +511,6 @@ $badge-light-color in (primary, $primary-color),
     border: 1px solid rgba($theme-body-sub-title-color, 0.2);
   }
 }
-
 .appointment-sec {
   .card-header-right-icon {
     select {
@@ -642,10 +532,8 @@ $badge-light-color in (primary, $primary-color),
       }
     }
   }
-
   .bottom-btn {
     text-align: center;
-
     a {
       font-family: $font-roboto, $font-serif;
       font-weight: bold;
@@ -661,7 +549,6 @@ $badge-light-color in (primary, $primary-color),
 .notification {
   ul {
     position: relative;
-
     &::before {
       position: absolute;
       content: "";
@@ -670,23 +557,19 @@ $badge-light-color in (primary, $primary-color),
       top: 12px;
       left: 2px;
       height: calc(100% - 12px);
-
       [dir="rtl"] & {
         left: unset;
         right: 2px;
       }
     }
   }
-
   li {
     padding-bottom: 22px;
   }
-
   div[class*="activity-dot-"] {
     margin-top: 12px;
     animation: round 1.3s ease-in-out infinite;
   }
-
   .card {
     .d-flex {
       .w-100 {
@@ -701,8 +584,7 @@ $badge-light-color in (primary, $primary-color),
         h6 {
           margin-bottom: 5px;
           position: relative;
-
-          ~p {
+          ~ p {
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 1;
             text-emphasis: inherit;
@@ -711,15 +593,14 @@ $badge-light-color in (primary, $primary-color),
             text-overflow: ellipsis;
             display: block;
             width: 260px;
-
             @media (max-width: 767px) {
-              -webkit-line-clamp: unset;
-              text-emphasis: unset;
-              white-space: unset;
-              text-overflow: unset;
-              display: block;
-              width: unset;
-              overflow: visible;
+                -webkit-line-clamp: unset;
+                text-emphasis: unset;
+                white-space: unset;
+                text-overflow: unset;
+                display: block;
+                width: unset;
+                overflow: visible;
             }
           }
 
@@ -760,7 +641,6 @@ $badge-light-color in (primary, $primary-color),
       }
     }
   }
-
   .date-content {
     padding: 4px 8px;
     border-radius: 5px;
@@ -768,10 +648,9 @@ $badge-light-color in (primary, $primary-color),
 }
 
 .schedule-container {
-  >div {
+  > div {
     margin-bottom: -40px;
   }
-
   svg {
     path {
       clip-path: inset(1% 0% 0% 0% round 1.5rem);
@@ -782,113 +661,90 @@ $badge-light-color in (primary, $primary-color),
 .purchase-card {
   text-align: center;
   margin-top: 200px;
-
   @media (max-width:1560px) {
     margin-top: 170px;
   }
-
   @media (max-width:1399px) {
-    margin-top: 160px;
+     margin-top: 160px;
   }
-
   @media (max-width: 500px) {
-    margin-top: 110px;
+      margin-top: 110px;
   }
-
   @media (max-width: 420px) {
     margin-top: 90px;
   }
-
   img {
     margin-top: -208px;
-
     @media (max-width:1560px) {
       margin-top: -170px;
     }
-
     @media (max-width: 1399px) {
       width: 70%;
       margin: -160px auto 0 auto;
     }
-
     @media (max-width: 1366px) {
       width: 76%;
     }
-
     @media (max-width: 1199px) {
       width: 86%;
     }
-
     @media (max-width: 991px) {
       width: 72%;
     }
-
     @media (max-width: 767px) {
       width: 50%;
     }
-
     @media (max-width: 500px) {
       margin-top: -110px;
     }
-
     @media (max-width: 420px) {
       margin-top: -90px;
       width: 60%;
     }
   }
-
   .purchase-btn {
     min-width: auto;
   }
 }
 
 .user-list {
-  column-count: 2;
-  column-rule-style: dashed;
-  column-rule-color: rgba($theme-body-sub-title-color, 0.7);
-  column-gap: 120px;
-  column-rule-width: 1px;
-
-  @media (max-width: 1780px) {
-    column-gap: 80px;
-  }
-
-  @media (max-width: 1660px) {
-    column-gap: 40px;
-  }
-
-  @media (max-width: 360px) {
-    column-gap: 25px;
-  }
-
+    column-count: 2;
+    column-rule-style: dashed;
+    column-rule-color: rgba($theme-body-sub-title-color, 0.7);
+    column-gap: 120px;
+    column-rule-width: 1px;
+    @media (max-width: 1780px) {
+      column-gap: 80px;
+    }
+    @media (max-width: 1660px) {
+      column-gap: 40px;
+    }
+    @media (max-width: 360px) {
+      column-gap: 25px;
+    }
   li {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
     width: 100%;
-
     @media (max-width: 1540px) {
       gap: 5px;
     }
-
     i {
       font-size: 12px;
       font-weight: 700;
     }
-
     h5 {
       @media (max-width: 360px) {
         font-size: 16px;
       }
     }
-
     span {
       @media (max-width: 360px) {
         font-size: 13px;
       }
     }
-
     &:hover {
       .user-box {
         svg {
@@ -897,11 +753,9 @@ $badge-light-color in (primary, $primary-color),
       }
     }
   }
-
   .user-icon {
     border-radius: 100%;
     display: inline-block;
-
     .user-box {
       margin: 3px;
       width: 47px;
@@ -910,29 +764,23 @@ $badge-light-color in (primary, $primary-color),
       display: flex;
       align-items: center;
       justify-content: center;
-
       @media (max-width: 1540px) {
         width: 30px;
         height: 30px;
-
         svg {
           width: 18px;
           height: 18px;
         }
       }
     }
-
     &.primary {
       border: 1px solid $primary-color;
-
       .user-box {
         background: lighten($primary-color, 25%);
       }
     }
-
     &.success {
       border: 1px solid $success-color;
-
       .user-box {
         background: lighten($success-color, 40%);
       }
@@ -948,7 +796,6 @@ $badge-light-color in (primary, $primary-color),
         border-top: none;
         padding: 15px 0;
         vertical-align: middle;
-
         &:first-child {
           width: 50px;
         }
@@ -969,19 +816,16 @@ $badge-light-color in (primary, $primary-color),
           padding: 4px 12px;
         }
       }
-
       .img-content-box {
         a {
           color: var(--body-font-color);
           transition: 0.5s;
           display: inline-block !important;
         }
-
         span {
           display: block;
         }
       }
-
       &:hover {
         .img-content-box {
           a {
@@ -990,13 +834,11 @@ $badge-light-color in (primary, $primary-color),
           }
         }
       }
-
       &:first-child {
         td {
           padding-top: 0 !important;
         }
       }
-
       &:last-child {
         td {
           padding-bottom: 0 !important;
@@ -1004,13 +846,11 @@ $badge-light-color in (primary, $primary-color),
       }
     }
   }
-
   &.customer-table {
     table {
       tr {
         td {
           padding: 10px 0;
-
           img {
             min-width: 40px;
           }
@@ -1033,23 +873,19 @@ $badge-light-color in (primary, $primary-color),
     color: var(--theme-deafult);
     font-size: 22px;
   }
-
   svg {
     stroke: var(--theme-deafult);
   }
 }
-
 .balance-card {
   display: flex;
   padding: 15px;
   border-radius: 5px;
   gap: 15px;
   transition: 0.5s;
-
   @media (max-width: 1199px) {
-    gap: 8px;
+     gap: 8px;
   }
-
   .svg-box {
     width: 43px;
     height: 43px;
@@ -1059,16 +895,13 @@ $badge-light-color in (primary, $primary-color),
     display: flex;
     align-items: center;
     justify-content: center;
-
     @media (max-width: 1199px) {
       width: 35px;
       height: 35px;
     }
-
     svg {
       height: 20px;
       fill: rgba($theme-body-sub-title-color, 0.85);
-
       @media (max-width: 1199px) {
         height: 17px;
       }
@@ -1135,23 +968,18 @@ $badge-light-color in (primary, $primary-color),
 .fill-primary {
   fill: $primary-color;
 }
-
 .fill-secondary {
   fill: $secondary-color;
 }
-
 .fill-success {
   fill: $success-color;
 }
-
 .fill-warning {
   fill: $warning-color;
 }
-
 .fill-info {
   fill: $info-color;
 }
-
 .fill-danger {
   fill: $danger-color;
 }
@@ -1160,7 +988,6 @@ $badge-light-color in (primary, $primary-color),
   box-shadow: none;
   border: 1px solid #f1f3ff !important;
   border-radius: 5px;
-
   .total-num {
     color: $theme-body-font-color;
     margin: 0;
@@ -1255,11 +1082,9 @@ $badge-light-color in (primary, $primary-color),
     text-align: center;
     column-count: 3;
     column-rule: 1px solid $light-color;
-
     p {
       margin-bottom: 5px;
     }
-
     span {
       margin-bottom: 0;
       color: $theme-body-sub-title-color;
@@ -1280,7 +1105,7 @@ $badge-light-color in (primary, $primary-color),
 .testimonial {
   i {
     font-size: 60px;
-    color: rgba(43, 43, 43, 0.7);
+    color: rgba(43,43,43,0.7);
     position: absolute;
     left: 0;
     top: 0;
@@ -1320,35 +1145,28 @@ $badge-light-color in (primary, $primary-color),
 
 //chart widget css
 .chart-widget-top {
-
   #chart-widget1,
   #chart-widget2,
   #chart-widget3 {
     margin-bottom: -14px;
-
     .apexcharts-xaxistooltip {
       display: none;
     }
   }
-
   span {
     color: $font-gray-color;
   }
 }
-
 .bar-chart-widget {
   .apexcharts-legend {
     bottom: 0 !important;
-
     .apexcharts-legend-series {
       margin: 0 10px !important;
     }
-
     .apexcharts-legend-marker {
-      margin-right: 5px;
+      margin-right: 5px ;
     }
   }
-
   .top-content {
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
@@ -1385,42 +1203,33 @@ $badge-light-color in (primary, $primary-color),
   }
 
 }
-
 .skill-chart {
   margin-bottom: -48px;
-
   .apexcharts-legend {
     .apexcharts-legend-series {
       span {
         display: block;
       }
-
       .apexcharts-legend-text {
         margin: 10px 0 20px;
       }
     }
   }
 }
-
 .progress-chart {
   margin: -11px 0 -20px;
-
   .apexcharts-canvas {
     svg {
-
-      path,
-      rect {
+      path, rect {
         clip-path: inset(1% 0% 0% 0% round 1rem);
       }
     }
   }
 }
-
 .bottom-content {
   span {
     color: $theme-body-sub-title-color;
   }
-
   .block-bottom {
     display: block;
   }
@@ -1509,35 +1318,27 @@ $badge-light-color in (primary, $primary-color),
     animation: am-moving-dashes 1s linear infinite;
   }
 }
-
 .chart-container {
-
-  .apexcharts-xaxis-label,
-  .apexcharts-yaxis-label {
+  .apexcharts-xaxis-label , .apexcharts-yaxis-label  {
     font-size: 14px !important;
     color: $font-gray-color !important;
   }
-
   .apexcharts-xaxis-annotations {
     rect {
       clip-path: inset(1% 0% 0% 0% round 0.2rem);
-    }
+    }  
   }
 }
 
 .crypto-chart {
   margin-left: -20px;
-
   .apexcharts-tooltip-title {
     display: none;
   }
-
   .apexcharts-tooltip-series-group {
-
-    &:last-child,
-    &.active {
-      padding-bottom: 0;
-    }
+      &:last-child, &.active {
+        padding-bottom: 0;
+      }
   }
 }
 
@@ -1800,6 +1601,19 @@ $badge-light-color in (primary, $primary-color),
   margin-left: 3px;
 }
 
+// date range picker page
+.daterangepicker {
+  .ltr {
+    tr {
+      td {
+        &.active {
+          color: $white;
+        }
+      }
+    }
+  }
+}
+
 // typeahead page
 // typeahead page
 .twitter-typeahead {
@@ -1824,8 +1638,8 @@ span.twitter-typeahead {
     background-color: $white;
     background-clip: padding-box;
     border-radius: 0.25rem;
-    -webkit-box-shadow: 0 0 20px rgba(89, 102, 122, 0.1);
-    box-shadow: 0 0 20px rgba(89, 102, 122, 0.1);
+    -webkit-box-shadow: 0 0 20px rgba(89,102,122,0.1);
+    box-shadow: 0 0 20px rgba(89,102,122,0.1);
     border: none;
     padding: 0;
   }
@@ -1838,7 +1652,6 @@ span.twitter-typeahead {
     border-top: 1px solid $light-semi-gray;
     background: $white;
     cursor: pointer;
-
     &:hover,
     &:focus {
       background-color: $white;
@@ -1862,70 +1675,56 @@ span.twitter-typeahead {
     }
   }
 }
-
 .chart-right {
   position: relative;
 }
-
 .balance-data {
   display: flex;
   gap: 15px;
   position: absolute;
   top: -50px;
   right: 2%;
-
   [dir="rtl"] & {
     right: unset;
     left: 2%;
   }
-
   @media (max-width:991px) {
     top: -42px;
     right: -65%;
-
     [dir="rtl"] & {
       left: -65%;
     }
   }
-
   @media (max-width: 575px) {
     display: none;
   }
-
   li {
     display: flex;
     align-items: center;
     font-weight: 500;
   }
-
   .circle {
-    display: inline-block;
+    display:inline-block;
     width: 6px;
     height: 6px;
     border-radius: 100%;
   }
 }
-
 .current-sale-container {
   padding-right: 12px;
-
   [dir="rtl"] & {
     padding-right: unset;
     padding-left: 12px;
   }
-
-  >div {
+  > div {
     margin: -22px 0 -30px -16px;
-
     @media (max-width: 1199px) {
       margin-bottom: 0;
     }
-
     @media (max-width: 404px) {
       margin-bottom: -30px;
     }
   }
-
   .apexcharts-xaxistooltip {
     color: var(--theme-deafult);
     background: rgba($primary-color, 0.1);
@@ -1940,24 +1739,20 @@ span.twitter-typeahead {
     background: rgba($primary-color, 0.1);
     color: var(--theme-deafult);
   }
-
   &.order-container {
     @media (max-width:575px) {
       padding-right: 0;
-
       [dir="rtl"] & {
         padding-left: 0;
       }
     }
-
-    >div {
+    > div {
       @media (max-width:404px) {
         margin-bottom: 0;
       }
     }
   }
 }
-
 .recent-circle {
   min-width: 10px;
   height: 10px;
@@ -1965,33 +1760,27 @@ span.twitter-typeahead {
   display: inline-block;
   margin-top: 5px;
 }
-
 .recent-wrapper {
   align-items: center;
-
   .order-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 36px;
-
     @media (max-width: 1199px) {
       gap: 20px;
     }
-
     @media (max-width: 575px) {
       justify-content: center;
       flex-wrap: wrap;
       flex-direction: row;
     }
-
     li {
       display: flex;
       align-items: flex-start;
       gap: 8px;
     }
   }
-
   .recent-chart {
     .apexcharts-canvas {
       .apexcharts-datalabel-label {
@@ -2001,12 +1790,10 @@ span.twitter-typeahead {
       }
     }
   }
-
-  >div {
+  > div {
     @media (max-width: 1560px) and (min-width: 1400px) {
       width: 100%;
     }
-
     &:last-child {
       @media (max-width: 1560px) and (min-width: 1400px) {
         display: none;
@@ -2014,10 +1801,8 @@ span.twitter-typeahead {
     }
   }
 }
-
 .apexcharts-series.apexcharts-radial-series {
   position: relative;
-
   &::after {
     position: absolute;
     content: '';
@@ -2168,7 +1953,6 @@ footer {
     li {
       padding-bottom: 20px;
     }
-
     .card {
       .card-body {
         .d-flex {
@@ -2243,5 +2027,5 @@ footer {
 }
 
 /**=====================
-  3.13 Dashboard_default CSS Ends
+53. Dashboard CSS Ends
 ==========================**/

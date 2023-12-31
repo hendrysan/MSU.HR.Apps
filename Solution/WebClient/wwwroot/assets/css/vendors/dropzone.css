@@ -611,7 +611,3 @@
   left: 50%;
   margin-left: -27px;
 }
-
-.product-upload .dropzone {
-  border: 2px solid var(--chart-dashed-border);
-}
