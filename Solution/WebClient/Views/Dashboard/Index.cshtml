@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Dashboard Page";
+    Layout = "_LayoutMain";
+}
+
+
+
+<div class="row">
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h4>@ViewData["Title"]</h4>
+                </div>
+                <div class="ml-auto">
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xxl-7 col-lg-12 box-col-12">
+                    <div class="card">
+                        <div class="card-header card-no-border">
+                            <h5>Calendar Working</h5>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="row m-0 overall-card">
+                                @await Html.PartialAsync("_CalendarPartial")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-5 col-lg-12 box-col-12">
+                    <div class="card height-equal">
+                        <div class="card-header card-no-border">
+                            <div class="header-top">
+                                <h5>Annual Leave Information</h5>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            <p>
+                                <h2>12 </h2> Days available
+                            </p>
+
+                        </div>
+                        <div class="card-footer text-end">
+                            <a href="#">Request time off <i class="fa fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+
+

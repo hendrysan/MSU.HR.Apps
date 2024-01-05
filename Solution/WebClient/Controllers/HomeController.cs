@@ -27,7 +27,7 @@ namespace WebClient.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Dashboard");
         }
 
         public IActionResult Privacy()
