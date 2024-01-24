@@ -347,37 +347,32 @@
             console.log(link);
             console.log(current.indexOf(link));
             if (link) {
-                if (link == "/") {
+                if (current.indexOf(link) != -1) {
+                    $(this).parents().children("a").addClass("active");
+                    $(this).parents().parents().children("ul").css("display", "block");
                     $(this).addClass("active");
-                } else {
-                    if (current.indexOf(link) != -1) {
-                        $(this).parents().children("a").addClass("active");
-                        $(this).parents().parents().children("ul").css("display", "block");
-                        $(this).addClass("active");
-                        $(this)
-                            .parent()
-                            .parent()
-                            .parent()
-                            .children("a")
-                            .find("div")
-                            .replaceWith(
-                                '<div class="according-menu"><i class="fa fa-angle-down"></i></div>'
-                            );
-                        $(this)
-                            .parent()
-                            .parent()
-                            .parent()
-                            .parent()
-                            .parent()
-                            .children("a")
-                            .find("div")
-                            .replaceWith(
-                                '<div class="according-menu"><i class="fa fa-angle-down"></i></div>'
-                            );
-                        return false;
-                    }
+                    $(this)
+                        .parent()
+                        .parent()
+                        .parent()
+                        .children("a")
+                        .find("div")
+                        .replaceWith(
+                            '<div class="according-menu"><i class="fa fa-angle-down"></i></div>'
+                        );
+                    $(this)
+                        .parent()
+                        .parent()
+                        .parent()
+                        .parent()
+                        .parent()
+                        .children("a")
+                        .find("div")
+                        .replaceWith(
+                            '<div class="according-menu"><i class="fa fa-angle-down"></i></div>'
+                        );
+                    return false;
                 }
-
             }
         });
     }

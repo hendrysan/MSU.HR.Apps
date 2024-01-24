@@ -13,13 +13,14 @@ namespace WebClient.Controllers
         private readonly ILogger<GrantAccessController> _logger = logger;
         private readonly IGrantAccessRepository _grantAccessRepository = grantAccessRepository;
 
-        public IActionResult Index()
+        public IActionResult WebClient()
         {
+            var data = _grantAccessRepository.ListAccess(EnumEntities.EnumSource.WebClient);
+
             return View();
         }
 
         [HttpPost]
-        [Obsolete]
         public async Task<JsonResult> PostDataTableGrantAccess()
         {
             _logger.LogInformation("Data Table Start");

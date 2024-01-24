@@ -1,6 +1,5 @@
 ﻿using Commons.Loggers;
 using Infrastructures;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
 using Models.Requests;
@@ -187,6 +186,30 @@ namespace Repositories.Implements
                 var role = await _context.MasterRoles.FirstOrDefaultAsync(i => i.Code == roleCode);
 
                 var access = await _context.GrantAccesses.Where(i => i.Role == role && i.Source == source)
+                    .ToListAsync();
+
+                if (access.Count > 0)
+                {
+                    response.List = access.ToList();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Message = ex.Message;
+                await DiscordLogger.SendAsync(repositoryName, ex);
+            }
+
+            return response;
+        }
+
+        public async Task<GrandAccessListResponse> ListAccess(EnumSource source)
+        {
+            GrandAccessListResponse response = new();
+            try
+            {
+                var access = await _context.GrantAccesses.Where(i => i.Source == source)
                     .ToListAsync();
 
                 if (access.Count > 0)
