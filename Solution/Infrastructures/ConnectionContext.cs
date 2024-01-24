@@ -32,13 +32,16 @@ namespace Infrastructures
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+
+            //var con = _configuration.GetConnectionString("PostgreSQLConnection");
+
             var env = Environment.GetEnvironmentVariables(EnvironmentVariableTarget.Machine);
 
             var val = env["MSU_HRIS_PostgreSQLConnection"]?.ToString();
 
 
-            var con = _configuration.GetConnectionString(val);
-            optionsBuilder.UseNpgsql(con);
+            //var con = _configuration.GetConnectionString(val);
+            optionsBuilder.UseNpgsql(val);
 
         }
 
